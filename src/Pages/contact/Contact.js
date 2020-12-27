@@ -1,7 +1,7 @@
 import React from 'react';
 import './Contact.css';
 import Header from '../../Components/Header';
-// import Footer from '../../Components/Footer';
+import Footer from '../../Components/Footer';
 import DynamicIcon from '../../Components/Helpers/DynamicIcon';
 import Fade from 'react-reveal/Fade';
 
@@ -24,7 +24,7 @@ export default function Contact(props) {
                         </Fade>
                     </div>
                 </div>
-                {/* <Footer appText={appText} userLang={userLang} handleChangeLang={handleChangeLang} /> */}
+                <Footer/>
             </div>
         </>
     );

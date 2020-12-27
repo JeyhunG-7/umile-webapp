@@ -37,7 +37,6 @@
 .header .page-link{
     line-height: 80px;
     color: #42474c;
-    text-decoration: none;
 }
 
 .footer .page-link,
@@ -54,4 +53,5 @@
     font-size: 1.0625em;
     font-weight: 500;
     letter-spacing: 0.02em;
+    text-decoration: none;
 }

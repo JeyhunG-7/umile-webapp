@@ -18,7 +18,7 @@ export default function Header(props) {
                     </a>
                     <div className="body-sub-2">
                         <a href="/contact" className="page-link">Contact Us</a>
-                        <a href="/sign" className="page-link">Sign In</a>
+                        <a href="/signin" className="page-link">Sign In</a>
                     </div>
                 </div>
             </nav>
