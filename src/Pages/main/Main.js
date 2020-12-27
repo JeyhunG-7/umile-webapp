@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Main.css';
+import Header from '../../Components/Header';
+import Intro from './Components/Intro';
 
 export default function Main(props) {
     return (
-        <p>Hello World</p>
+        <div id="main" className="main">
+            <Header pageName={props.pageName}/>
+            <Intro/>
+        </div>
     );
 }
