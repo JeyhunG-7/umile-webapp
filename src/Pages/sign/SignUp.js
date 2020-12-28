@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Sign.css';
 import Header from '../../Components/Header';
 import Validate from 'validate.js';
 import Fade from 'react-reveal/Fade';
+import { useLocation } from 'react-router-dom';
 
 export default function SignUp(props) {
     const fname = useRef(null);
@@ -11,6 +12,11 @@ export default function SignUp(props) {
     const phone = useRef(null);
     const compName = useRef(null);
     const password = useRef(null);
+
+    const params = props.match.params;
+
+    const [isLoading, setLoading] = useState(true);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const [stateObj, setMessage] = useState({
         fnameMessage: null,
@@ -69,7 +75,34 @@ export default function SignUp(props) {
         }
     };
 
-    const submitSignIn = e => {
+    useEffect(async () => {
+        if (!params.token){
+            setLoading(false);
+            setErrorMessage('Sign up is invitation only');
+            return;
+        }
+
+        try{
+            var rawData = await fetch('http://localhost:8080/api/clients/validate', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({token: params.token})
+            });
+            var response = await rawData.json();
+        } catch(e){
+            return;
+        }
+
+        setLoading(false);
+        if (!response.success){
+            setErrorMessage('Invalid token');
+        }
+    });
+
+    const submitSignIn = async e => {
         let check = Validate({
             fname: fname.current.value,
             lname: lname.current.value,
@@ -94,7 +127,31 @@ export default function SignUp(props) {
         console.log("check: ", check);
 
         if (!check) {
-            //BE call
+            try{
+                console.log("Send api call");
+                var rawData = await fetch('http://localhost:8080/api/clients/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email.current.value,
+                        first_name: fname.current.value,
+                        last_name: lname.current.value,
+                        phone: phone.current.value,
+                        company_name: compName.current.value,
+                        password: password.current.value,
+                        token: params.token
+                    })
+                });
+                var response = await rawData.json();
+                console.log(response);
+            } catch(e){
+                console.log(e);
+                // TODO: Show error
+                return;
+            }
         }
     }
 
@@ -114,84 +171,114 @@ export default function SignUp(props) {
         }
     }
 
+    function renderLoadingUi(){
+        return (
+            <div className="sign-sec signup">
+                <p>Loading...</p>
+            </div>
+        )
+    }
+
+    function renderErrorMessageUi(){
+        return (
+            <div className="sign-sec signup">
+                <p>{errorMessage}</p>
+            </div>
+        )
+    }
+
+    function renderSignupUi(){
+        return (
+            <div className="sign-sec signup">
+                <div className="sign-body">
+                    <div className="sign-header">Let's Go!</div>
+                    <div className="names">
+                        <div className={(!stateObj.fnameMessage ? 'user-input fname' : 'user-input fname error')}>
+                            <label>First Name</label>
+                            <i className="lni lni-user user-icon"></i>
+                            <input name="first name"
+                                ref={fname}
+                                type="text"
+                                placeholder="Kenan"
+                                onKeyPress={handleOnKeyPress} />
+                            <span className="helper-txt">{stateObj.fnameMessage}</span>
+                        </div>
+                        <div className={(!stateObj.lnameMessage ? 'user-input lname' : 'user-input lname error')}>
+                            <label>Last Name</label>
+                            <i className="lni lni-user user-icon"></i>
+                            <input name="email"
+                                ref={lname}
+                                type="text"
+                                placeholder="Ron"
+                                onKeyPress={handleOnKeyPress} />
+                            <span className="helper-txt">{stateObj.lnameMessage}</span>
+                        </div>
+                    </div>
+
+                    <div className={(!stateObj.emailMessage ? 'user-input' : 'user-input error')}>
+                        <label>Email</label>
+                        <i className="lni lni-envelope email-icon"></i>
+                        <input name="email"
+                            ref={email}
+                            type="email"
+                            placeholder="example@address.com"
+                            onKeyPress={handleOnKeyPress} />
+                        <span className="helper-txt">{stateObj.emailMessage}</span>
+                    </div>
+
+                    <div className={(!stateObj.phoneMessage ? 'user-input' : 'user-input error')}>
+                        <label>Phone Number</label>
+                        <i className="lni lni-apartment company-icon"></i>
+                        <input name="phone"
+                            ref={phone}
+                            type="text"
+                            placeholder="(123) 456-78-90"
+                            onKeyPress={handleOnKeyPress} />
+                        <span className="helper-txt">{stateObj.phoneMessage}</span>
+                    </div>
+
+                    <div className={(!stateObj.compNameMessage ? 'user-input' : 'user-input error')}>
+                        <label>Company Name</label>
+                        <i className="lni lni-apartment company-icon"></i>
+                        <input name="email"
+                            ref={compName}
+                            type="text"
+                            placeholder="UMile"
+                            onKeyPress={handleOnKeyPress} />
+                        <span className="helper-txt">{stateObj.compNameMessage}</span>
+                    </div>
+
+                    <div className={(!stateObj.passMessage ? 'user-input password' : 'user-input error password')}>
+                        <label>Password</label>
+                        <i className="lni lni-lock-alt password-icon"></i>
+                        <input name="email"
+                            ref={password}
+                            type="password"
+                            placeholder="••••••"
+                            onKeyPress={handleOnKeyPress} />
+                        <span className="helper-txt">{stateObj.passMessage}</span>
+                    </div>
+                    <button className="btn-sign" onClick={submitSignIn}>Sign Up</button>
+                </div>
+            </div>
+        )
+    }
+
+    var uiToRender;
+    if (isLoading){
+        uiToRender = renderLoadingUi();
+    } else if (errorMessage !== ''){
+        uiToRender = renderErrorMessageUi();
+    } else {
+        uiToRender = renderSignupUi();
+    }
+
     return (
         <div id="main" className="main">
             <Header pageName={props.pageName} />
             <Fade>
-                <div className="sign-sec signup">
-                    <div className="sign-body">
-                        <div className="sign-header">Let's Go!</div>
-                        <div className="names">
-                            <div className={(!stateObj.fnameMessage ? 'user-input fname' : 'user-input fname error')}>
-                                <label>First Name</label>
-                                <i className="lni lni-user user-icon"></i>
-                                <input name="first name"
-                                    ref={fname}
-                                    type="text"
-                                    placeholder="Kenan"
-                                    onKeyPress={handleOnKeyPress} />
-                                <span className="helper-txt">{stateObj.fnameMessage}</span>
-                            </div>
-                            <div className={(!stateObj.lnameMessage ? 'user-input lname' : 'user-input lname error')}>
-                                <label>Last Name</label>
-                                <i className="lni lni-user user-icon"></i>
-                                <input name="email"
-                                    ref={lname}
-                                    type="text"
-                                    placeholder="Ron"
-                                    onKeyPress={handleOnKeyPress} />
-                                <span className="helper-txt">{stateObj.lnameMessage}</span>
-                            </div>
-                        </div>
-
-                        <div className={(!stateObj.emailMessage ? 'user-input' : 'user-input error')}>
-                            <label>Email</label>
-                            <i className="lni lni-envelope email-icon"></i>
-                            <input name="email"
-                                ref={email}
-                                type="email"
-                                placeholder="example@address.com"
-                                onKeyPress={handleOnKeyPress} />
-                            <span className="helper-txt">{stateObj.emailMessage}</span>
-                        </div>
-
-                        <div className={(!stateObj.phoneMessage ? 'user-input' : 'user-input error')}>
-                            <label>Phone Number</label>
-                            <i className="lni lni-apartment company-icon"></i>
-                            <input name="phone"
-                                ref={phone}
-                                type="text"
-                                placeholder="(123) 456-78-90"
-                                onKeyPress={handleOnKeyPress} />
-                            <span className="helper-txt">{stateObj.phoneMessage}</span>
-                        </div>
-
-                        <div className={(!stateObj.compNameMessage ? 'user-input' : 'user-input error')}>
-                            <label>Company Name</label>
-                            <i className="lni lni-apartment company-icon"></i>
-                            <input name="email"
-                                ref={compName}
-                                type="text"
-                                placeholder="UMile"
-                                onKeyPress={handleOnKeyPress} />
-                            <span className="helper-txt">{stateObj.compNameMessage}</span>
-                        </div>
-
-                        <div className={(!stateObj.passMessage ? 'user-input password' : 'user-input error password')}>
-                            <label>Password</label>
-                            <i className="lni lni-lock-alt password-icon"></i>
-                            <input name="email"
-                                ref={password}
-                                type="password"
-                                placeholder="••••••"
-                                onKeyPress={handleOnKeyPress} />
-                            <span className="helper-txt">{stateObj.passMessage}</span>
-                        </div>
-                        <button className="btn-sign" onClick={submitSignIn}>Sign Up</button>
-                    </div>
-                </div>
-
+                {uiToRender}
             </Fade>
         </div>
-    );
+    )
 }
