@@ -91,8 +91,6 @@ export default function SignUp(props) {
             }
         });
 
-        console.log("check: ", check);
-
         if (!check) {
             //BE call
         }
@@ -190,7 +188,6 @@ export default function SignUp(props) {
                         <button className="btn-sign" onClick={submitSignIn}>Sign Up</button>
                     </div>
                 </div>
-
             </Fade>
         </div>
     );
