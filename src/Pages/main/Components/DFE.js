@@ -26,7 +26,7 @@ export default function DesignedForEveryone(props) {
 
                             <div className="dfe-body-2">
                                 <div className="dfe-desc">
-                                    <h4 className="dfe-desc-hdr">Shopify Integration</h4>
+                                    <h4 className="dfe-desc-hdr">Shopify Integration <span>(Coming soon)</span></h4>
                                     <p className="dfe-txt-body">We have created a plugin for your Shopify online store to take care of deliveries within the city.</p>
                                 </div>
                                 <div className="lottie">
