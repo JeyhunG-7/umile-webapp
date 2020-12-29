@@ -176,3 +176,12 @@
 .names .lname{
     margin-left: 5px;
 }
+
+.sign-body .error-txt{
+    width: 100%;
+    text-align: center;
+    color: #e70000;
+    float: left;
+    letter-spacing: 1px;
+    z-index: 1;
+}

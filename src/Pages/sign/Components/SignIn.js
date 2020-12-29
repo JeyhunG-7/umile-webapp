@@ -11,6 +11,9 @@ export default function SignInComponent(props) {
         passMessage: null
     });
 
+    const [errorMessage, setErrorMessage] = useState('');
+    const [isProcessing, setProcessing] = useState(false);
+
     const constraints = {
         email: {
             email: {
@@ -24,7 +27,7 @@ export default function SignInComponent(props) {
         }
     };
 
-    const submitSignIn = e => {
+    const submitSignIn = async e => {
         let check = Validate({
             email: email.current.value,
             password: password.current.value
@@ -39,7 +42,30 @@ export default function SignInComponent(props) {
         });
 
         if (!check) {
-            //BE call
+            try{
+                setProcessing(true);
+                var rawData = await fetch('http://localhost:8080/api/clients/login', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: email.current.value,
+                        password: password.current.value,
+                    })
+                });
+                var response = await rawData.json();
+                setProcessing(false);
+                if (!response.success){
+                    setErrorMessage(response.message);
+                }
+            } catch(e){
+                console.log(e);
+                setProcessing(false);
+                // TODO: Show error
+                return;
+            }
         }
     }
 
@@ -86,7 +112,10 @@ export default function SignInComponent(props) {
                         onKeyPress={handleOnKeyPress} />
                     <span className="helper-txt">{stateObj.passMessage}</span>
                 </div>
-                <button className="btn-sign" onClick={submitSignIn}>Sign In</button>
+                <button className="btn-sign" onClick={submitSignIn}>{ isProcessing ? 'Loading...' : 'Sign In'}</button>
+                <span className="error-txt">
+                    {errorMessage}
+                </span>
             </div>
         </div>
     );
