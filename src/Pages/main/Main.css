@@ -212,3 +212,14 @@
 .dfe-body-2 .dfe-txt-body{
     margin-left: auto;
 }
+
+
+.coming-soon {
+    font-size: 12px;
+    background-color: #2993ec;
+    color: white;
+    border: 1px #2993ec solid;
+    border-radius: 5px;
+    padding: 2px;
+    vertical-align: middle;
+}
