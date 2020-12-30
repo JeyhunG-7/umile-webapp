@@ -100,7 +100,7 @@ export default function SignUp(props) {
         if (!response.success){
             setErrorMessage('Invalid token');
         }
-    });
+    }, []);
 
     const submitSignIn = async e => {
         let check = Validate({
