@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import '../Sign.css';
+import { IsSignedInAsync, AuthenticateAsync }  from './../../../Components/Helpers/Authenticator';
 import Validate from 'validate.js';
 
 export default function SignInComponent(props) {
@@ -27,6 +28,14 @@ export default function SignInComponent(props) {
         }
     };
 
+    IsSignedInAsync().then(isSignedIn => {
+        if (isSignedIn){
+            //TODO: Navigate to the app, skip login page
+            console.log('User is signed in');
+        }
+    });
+
+
     const submitSignIn = async e => {
         let check = Validate({
             email: email.current.value,
@@ -42,30 +51,11 @@ export default function SignInComponent(props) {
         });
 
         if (!check) {
-            try{
-                setProcessing(true);
-                var rawData = await fetch('http://localhost:8080/api/clients/login', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        username: email.current.value,
-                        password: password.current.value,
-                    })
-                });
-                var response = await rawData.json();
-                setProcessing(false);
-                if (!response.success){
-                    setErrorMessage(response.message);
-                }
-            } catch(e){
-                console.log(e);
-                setProcessing(false);
-                // TODO: Show error
-                return;
-            }
+            setProcessing(true);
+            var result = await AuthenticateAsync(email.current.value, password.current.value);
+            setProcessing(false);
+            console.log(result);
+            setErrorMessage(result[1]);
         }
     }
 
