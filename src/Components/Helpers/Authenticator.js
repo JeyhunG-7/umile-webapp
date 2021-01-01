@@ -50,7 +50,5 @@ export async function AuthenticateAsync(email, password) {
     } catch(e){
         console.error(e);
         return [false, 'Something went wrong while login in. Please try again later'];
-    }
-
-    
+    }    
 }

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../Sign.css';
 import { IsSignedInAsync, AuthenticateAsync }  from './../../../Components/Helpers/Authenticator';
 import Validate from 'validate.js';
@@ -28,12 +28,13 @@ export default function SignInComponent(props) {
         }
     };
 
-    IsSignedInAsync().then(isSignedIn => {
+    useEffect(async () => {
+        var isSignedIn = await IsSignedInAsync();
         if (isSignedIn){
             //TODO: Navigate to the app, skip login page
             console.log('User is signed in');
         }
-    });
+    }, [])
 
 
     const submitSignIn = async e => {

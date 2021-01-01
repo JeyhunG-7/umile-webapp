@@ -9,6 +9,9 @@ export default function ForgotPass(props) {
         emailMessage: null
     });
 
+    const [showSuccess, setSuccess] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
+
     const constraints = {
         email: {
             email: {
@@ -17,7 +20,7 @@ export default function ForgotPass(props) {
         }
     };
 
-    const submitForgotPass = e => {
+    const submitForgotPass = async e => {
         let check = Validate({
             email: email.current.value
         }, constraints);
@@ -30,7 +33,26 @@ export default function ForgotPass(props) {
         });
 
         if (!check) {
-            //BE call
+            try{
+                var rawData = await fetch('http://localhost:8080/api/clients/emailforgotpassword', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email.current.value
+                    })
+                });
+                var response = await rawData.json();
+                if (response.success){
+                    console.log('SUCCESS: ', response);
+                    setSuccess(true);
+                    setSuccessMessage(response.data);
+                }
+            } catch(e){
+                console.error(e);
+            } 
         }
     }
 
@@ -49,10 +71,9 @@ export default function ForgotPass(props) {
         props.handleHideForgotPass();
     }
 
-    return (
-        <div className="sign-sec">
-            <div className="sign-body">
-                <div className="sign-header">Welcome back!</div>
+    function _renderInputView(){
+        return (
+            <>
                 <div className={(!stateObj.emailMessage ? 'user-input' : 'user-input error')}>
                     <label>Email</label>
                     <i className="lni lni-envelope email-icon"></i>
@@ -65,6 +86,24 @@ export default function ForgotPass(props) {
                 </div>
                 <button className="btn-sign" onClick={submitForgotPass}>Send me the link</button>
                 <button className="btn-back-to-signin" onClick={handleHideForgotPass}>or Sign In</button>
+            </>
+        );
+    }
+
+    function _renderSuccessView(){
+        return (
+            <>
+                <i className="lni lni-checkmark-circle email-icon" style={{color: 'green'}}></i>
+                <label>{successMessage}</label>
+            </>
+        )
+    }
+
+    return (
+        <div className="sign-sec">
+            <div className="sign-body">
+                <div className="sign-header">Forgot password?</div>
+                {showSuccess ? _renderSuccessView() : _renderInputView()}
             </div>
         </div>
     );
