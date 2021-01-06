@@ -1,18 +1,20 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, forwardRef} from 'react';
 import '../Main.css';
 import DynamicIcon from '../../../Components/Helpers/DynamicIcon';
 import Fade from 'react-reveal/Fade';
 
-export default function ContactUs(props) {
+const ContactUs = React.forwardRef((props, ref) => {
     const name = useRef(null);
     const email = useRef(null);
+    const message = useRef(null);
 
     const [stateObj, setMessage] = useState({
         nameMessage: null,
-        emailMessage: null
+        emailMessage: null,
+        messageMessage: null
     });
 
-    function sendMessage(){
+    function sendMessage() {
         console.log("getdi");
     }
 
@@ -23,20 +25,35 @@ export default function ContactUs(props) {
             setMessage({
                 ...stateObj,
                 nameMessage: null,
-                emailMessage: null
+                emailMessage: null,
+                messageMessage: null
             });
         }
     }
+
+    function addAutoResize() {
+        document.querySelectorAll('[data-autoresize]').forEach(function (element) {
+            element.style.boxSizing = 'border-box';
+            var offset = element.offsetHeight - element.clientHeight;
+            element.addEventListener('input', function (event) {
+                event.target.style.height = 'auto';
+                event.target.style.height = event.target.scrollHeight + offset + 'px';
+            });
+            element.removeAttribute('data-autoresize');
+        });
+    }
+
+    addAutoResize();
 
     return (
         <>
             <Fade>
                 <section id="contact-us" className="sec-contact-us">
-                    <div className="div-contact-us">
+                    <div className="div-contact-us" ref={ref}>
                         <h3>Get in Touch</h3>
-                        <DynamicIcon type="contactUs" width='300' height='300' />
+                        <DynamicIcon type="contactUs" width='200' height='200' />
                         <p>Contact our team to discuss solutions that fit the needs of your business.</p>
-                        <div style={{display: 'flex', flexDirection: 'row'}}>
+                        <div className="div-name-email">
                             <div className={(!stateObj.nameMessage ? 'user-input name' : 'user-input name error')}>
                                 <i className="lni lni-user user-icon"></i>
                                 <input name="name"
@@ -57,9 +74,26 @@ export default function ContactUs(props) {
                                 <span className="helper-txt">{stateObj.emailMessage}</span>
                             </div>
                         </div>
+
+                        <div className="div-message">
+                            <i className="far fa-comment-dots"></i>
+                            <textarea data-autoresize
+                                className="textarea"
+                                maxLength="160"
+                                rows="1"
+                                placeholder="Message"
+                                ref={message}
+                                onKeyPress={handleOnKeyPress}></textarea>
+                        </div>
+                        <button className="send-message">
+                            <i className='far fa-paper-plane'></i>
+                            <span>Send</span>
+                        </button>
                     </div>
                 </section>
             </Fade>
         </>
     );
-}
+});
+
+export default ContactUs;

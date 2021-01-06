@@ -6,13 +6,16 @@ import Shopify from '../../../Images/shopify_integration.png';
 
 export default function DesignedForEveryone(props) {
 
+    function handleScrollToContactUs(){
+        props.handleScrollToContactUs();
+    }
+
     return (
         <>
             <Fade>
                 <section className="sec-dfe">
                     <div className="div-dfe">
                         <h3>Designed for Everyone</h3>
-
                         <div className="dfe-body">
                             <div className="dfe-body-1a">
                                 <div className="dfe-body-1b">
@@ -22,7 +25,7 @@ export default function DesignedForEveryone(props) {
                                     <div className="dfe-desc">
                                         <h4 className="dfe-desc-hdr">Easy-to-use platform</h4>
                                         <p className="dfe-txt-body">Delivery orders can be submitted in a couple of clicks via UMile Web Platform.</p>
-                                        <button className="learn-more">Learn More</button>
+                                        <button className="learn-more" onClick={handleScrollToContactUs}>Learn More</button>
                                     </div>
                                 </div>
                             </div>
@@ -32,7 +35,7 @@ export default function DesignedForEveryone(props) {
                                 <div className="dfe-desc">
                                     <h4 className="dfe-desc-hdr">Shopify integration <span className="coming-soon">Coming soon</span></h4>
                                     <p className="dfe-txt-body">We have created a plugin for your Shopify online store to take care of deliveries within the city.</p>
-                                    <button className="learn-more">Learn More</button>
+                                    <button className="learn-more" onClick={handleScrollToContactUs}>Learn More</button>
                                 </div>
                                 <div className="lottie">
                                     <img alt="shopify-integration" src={Shopify} style={{ height: 250, width: 'auto' }} />
@@ -48,7 +51,7 @@ export default function DesignedForEveryone(props) {
                                 <div className="dfe-desc">
                                     <h4 className="dfe-desc-hdr">API integration <span className="coming-soon">Coming soon</span></h4>
                                     <p className="dfe-txt-body">Your development team is enabled to integrate UMile’s delivery functionality into your own apps and websites.</p>
-                                    <button className="learn-more">Learn More</button>
+                                    <button className="learn-more" onClick={handleScrollToContactUs}>Learn More</button>
                                 </div>
                             </div>
                             </div>

@@ -6,9 +6,8 @@ import Fade from 'react-reveal/Fade';
 export default function Intro(props) {
     const screenX = window.screen.width;
 
-    function scrotTo() {
-        console.log("girdi scroll to");
-        // document.getElementById("how-works").scrollIntoView({ block: 'center', behavior: 'smooth' });
+    function handleScrollToContactUs() {
+        props.handleScrollToContactUs();
     }
 
     return (
@@ -19,11 +18,9 @@ export default function Intro(props) {
                     <div className="intro-div">
                         <div className="intro-text">
                             <h3>City-Wide delivery is simplified</h3>
-                            {/* <p>Thousands of businesses of all sizes—from local producers to large enterprises—imagine delivery as bottleneck for operations.
-                                    Use UMile’s software and APIs to reimagine the delivery.</p> */}
                             <p>We bring together everything that’s required to process your orders for delivery within city of Calgary. 
                                 UMile empowers deliveries for businesses of small and medium sizes.</p>
-                            <button className="start" onClick={scrotTo}>Get started</button>
+                            <button className="start" onClick={handleScrollToContactUs}>Get started</button>
                         </div>
                         <div className="intro-lottie">
                             <DynamicIcon type="introMain" width={screenX > 600 ? '527' : '300'} height={screenX > 600 ? '530' : '298'} />
