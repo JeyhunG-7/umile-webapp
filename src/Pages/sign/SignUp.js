@@ -3,7 +3,6 @@ import './Sign.css';
 import Header from '../../Components/Header';
 import Validate from 'validate.js';
 import Fade from 'react-reveal/Fade';
-import { useLocation } from 'react-router-dom';
 
 export default function SignUp(props) {
     const fname = useRef(null);

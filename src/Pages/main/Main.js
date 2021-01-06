@@ -5,6 +5,7 @@ import Footer from '../../Components/Footer';
 import Intro from './Components/Intro';
 import UniPlatform from './Components/UniPlatform';
 import DesignedForEveryone from './Components/DFE';
+import ContactUs from './Components/ContactUs';
 
 export default function Main(props) {
 
@@ -14,6 +15,7 @@ export default function Main(props) {
             <Intro />
             <UniPlatform />
             <DesignedForEveryone/>
+            <ContactUs/>
             <Footer />
         </div>
     );
