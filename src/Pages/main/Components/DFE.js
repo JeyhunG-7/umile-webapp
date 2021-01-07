@@ -15,7 +15,7 @@ export default function DesignedForEveryone(props) {
             <Fade>
                 <section className="sec-dfe">
                     <div className="div-dfe">
-                        <h3>Designed for Everyone</h3>
+                        <h3>UMile is designed for everyone</h3>
                         <div className="dfe-body">
                             <div className="dfe-body-1a">
                                 <div className="dfe-body-1b">

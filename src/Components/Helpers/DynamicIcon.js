@@ -8,6 +8,7 @@ import * as unifiedPlatform from "../../Lottie/unified-platform.json";
 import * as dfe_1 from "../../Lottie/designed-for-everyone-1.json";
 import * as dfe_2 from "../../Lottie/designed-for-everyone-2.json";
 import * as dfe_3 from "../../Lottie/designed-for-everyone-3.json";
+import * as hwd_3 from "../../Lottie/how-we-do-3.json";
 
 export default function DynamicIcon(props) {
     let showLoop = props.loop;
@@ -57,6 +58,14 @@ export default function DynamicIcon(props) {
             loop: showLoop,
             autoplay: true,
             animationData: dfe_3.default,
+            rendererSettings: {
+                preserveAspectRatio: "xMidYMid slice"
+            }
+        },
+        hwd_3: {
+            loop: showLoop,
+            autoplay: true,
+            animationData: hwd_3.default,
             rendererSettings: {
                 preserveAspectRatio: "xMidYMid slice"
             }

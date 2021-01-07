@@ -6,6 +6,7 @@ import Intro from './Components/Intro';
 import UniPlatform from './Components/UniPlatform';
 import DesignedForEveryone from './Components/DFE';
 import ContactUs from './Components/ContactUs';
+import HowWeDo from './Components/HowWeDo';
 
 export default function Main(props) {
     const contactUs = useRef();
@@ -18,7 +19,8 @@ export default function Main(props) {
         <div id="main" className="main">
             <Header pageName={props.pageName} />
             <Intro handleScrollToContactUs={handleScrollToContactUs}/>
-            <UniPlatform />
+            {/* <UniPlatform /> */}
+            <HowWeDo/>
             <DesignedForEveryone handleScrollToContactUs={handleScrollToContactUs}/>
             <ContactUs ref={contactUs}/>
             <Footer />

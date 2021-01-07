@@ -345,6 +345,14 @@
   line-height: 22px;
 }
 
+.div-contact-us .textarea:focus{
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
+}
+
 .div-contact-us .textarea::placeholder{
     color: #b9bec7;
     font-size: 16px;
@@ -357,4 +365,78 @@
 
 .send-message i{
     margin-right: 8px;
+}
+
+
+/* How it works */
+.how-we-do-container{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 100px 0;
+    background-color: #f5f8fa;
+    z-index: -1;
+
+}
+
+.how-we-do-div{
+    position: relative;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    align-self: center;
+    width: 1260px;
+    grid-row-gap: 20px;
+    grid-template-rows: auto;
+}
+
+.how-we-do-div h3{
+    margin: 0px 0 60px 0;
+    text-align: center;
+    font-size: 2.65em;
+    color: #3A4554;
+    letter-spacing: 0.015em;
+    opacity: 0.9;
+}
+
+.how-we-do-div .steps{
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    grid-auto-columns: 1fr;
+    grid-column-gap: 48px;
+    grid-row-gap: 40px;
+    grid-template-rows: auto;
+}
+
+.steps ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    position: relative;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    align-items: center;
+    grid-row-gap: 20px;
+    grid-template-rows: auto;
+}
+
+.steps .hdr{
+    margin: 0;
+    text-align: center;
+    font-size: 21px;
+    color: #3A4554;
+    letter-spacing: 0.015em;
+    opacity: 0.9;
+}
+
+.steps .text{
+    width: 90%;
+    margin: 0;
+    line-height: 28px;
+    text-align: center;
+    letter-spacing: 0.015em;
+    font-size: 18px;
+    color: #76879D;
+    letter-spacing: 0.015em;
 }

@@ -80,7 +80,7 @@ const ContactUs = React.forwardRef((props, ref) => {
                             <textarea data-autoresize
                                 className="textarea"
                                 maxLength="160"
-                                rows="1"
+                                rows="3"
                                 placeholder="Message"
                                 ref={message}
                                 onKeyPress={handleOnKeyPress}></textarea>
