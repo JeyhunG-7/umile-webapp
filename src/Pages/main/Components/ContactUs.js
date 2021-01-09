@@ -1,7 +1,8 @@
 import React, { useRef, useState, forwardRef} from 'react';
 import '../Main.css';
-import DynamicIcon from '../../../Components/Helpers/DynamicIcon';
 import Fade from 'react-reveal/Fade';
+
+import Icon from '../../../Images/main-contact-us.png';
 
 const ContactUs = React.forwardRef((props, ref) => {
     const name = useRef(null);
@@ -51,7 +52,7 @@ const ContactUs = React.forwardRef((props, ref) => {
                 <section id="contact-us" className="sec-contact-us">
                     <div className="div-contact-us" ref={ref}>
                         <h3>Get in Touch</h3>
-                        <DynamicIcon type="contactUs" width='200' height='200' />
+                        <img alt='Icon' src={Icon} style={{margin: '10px 0'}}/>
                         <p>Contact our team to discuss solutions that fit the needs of your business.</p>
                         <div className="div-name-email">
                             <div className={(!stateObj.nameMessage ? 'user-input name' : 'user-input name error')}>

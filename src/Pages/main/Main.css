@@ -430,6 +430,13 @@
     opacity: 0.9;
 }
 
+.steps .lottie img{
+    display: flex;
+    margin: auto;
+    width: 150px;
+    height: 150px;
+}
+
 .steps .text{
     width: 90%;
     margin: 0;
