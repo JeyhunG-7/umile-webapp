@@ -3,6 +3,7 @@ import '../Main.css';
 import DynamicIcon from '../../../Components/Helpers/DynamicIcon';
 import Fade from 'react-reveal/Fade';
 import Shopify from '../../../Images/shopify_integration.png';
+import API from '../../../Images/api_integration.png';
 
 export default function DesignedForEveryone(props) {
 
@@ -38,7 +39,7 @@ export default function DesignedForEveryone(props) {
                                     <button className="learn-more" onClick={handleScrollToContactUs}>Learn More</button>
                                 </div>
                                 <div className="lottie">
-                                    <img alt="shopify-integration" src={Shopify} style={{ height: 250, width: 'auto' }} />
+                                    <img alt="shopify-integration" src={Shopify} style={{ height: 250, width: 'auto', display: 'flex', margin: 'auto' }} />
                                 </div>
                             </div>
                             </div>
@@ -46,7 +47,7 @@ export default function DesignedForEveryone(props) {
                             <div className="dfe-body-3a">
                                 <div className="dfe-body-3b">
                                 <div className="lottie">
-                                    <DynamicIcon type="dfe_3" width='300' loop={true} />
+                                    <img alt="shopify-integration" src={API} style={{ height: 250, width: 'auto', display: 'flex', margin: 'auto' }} />
                                 </div>
                                 <div className="dfe-desc">
                                     <h4 className="dfe-desc-hdr">API integration <span className="coming-soon">Coming soon</span></h4>
