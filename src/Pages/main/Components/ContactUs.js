@@ -1,4 +1,4 @@
-import React, { useRef, useState, forwardRef} from 'react';
+import React, { useRef, useState} from 'react';
 import '../Main.css';
 import Fade from 'react-reveal/Fade';
 

@@ -248,7 +248,7 @@ export default function SignUp(props) {
                     <div className={(!stateObj.passMessage ? 'user-input password' : 'user-input error password')}>
                         <label>Password</label>
                         <i className="lni lni-lock-alt password-icon"></i>
-                        <input name="email"
+                        <input name="password"
                             ref={password}
                             type="password"
                             placeholder="••••••"

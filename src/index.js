@@ -9,6 +9,7 @@ import Contact from './Pages/contact/Contact';
 import Main from './Pages/main/Main';
 import NotFound from './Pages/404/404';
 import Privacy from './Pages/privacy/Privacy';
+import ResetPassword from './Pages/reset-password/ResetPassword';
 import SignIn from './Pages/sign/SignIn';
 import SignUp from './Pages/sign/SignUp';
 import Terms from './Pages/terms/Terms';
@@ -42,6 +43,7 @@ export default function App() {
           <Route exact path="/privacy" render={(props) => <Privacy {...props} pageName="Privacy Policy" />} />
           <Route exact path="/terms" render={(props) => <Terms {...props} pageName="Terms of Use" />} />
           <Route exact path="/signin" render={(props) => <SignIn {...props} pageName="Sign In" />} />
+          <Route exact path="/reset-password" render={(props) => <ResetPassword {...props} pageName="Reset Password" />} />
           <Route path="/signup/:token" render={(props) => <SignUp {...props} pageName="Sign Up" />} />
           <Route exact path="/" render={(props) => <Main {...props} pageName="Main" />} />
           <Route path="/404" render={(props) => <NotFound {...props} pageName="404" />} />

@@ -4,11 +4,12 @@ import Lottie from "react-lottie";
 import * as contactUs from "../../Lottie/contact-us.json";
 import * as introMain from "../../Lottie/main-intro.json";
 import * as unifiedPlatform from "../../Lottie/unified-platform.json";
+import * as notFound from "../../Lottie/not-found.json";
+import * as resetPassword from "../../Lottie/reset-password.json";
 
 import * as dfe_1 from "../../Lottie/designed-for-everyone-1.json";
 import * as dfe_2 from "../../Lottie/designed-for-everyone-2.json";
 import * as dfe_3 from "../../Lottie/designed-for-everyone-3.json";
-import * as hwd_3 from "../../Lottie/how-we-do-3.json";
 
 export default function DynamicIcon(props) {
     let showLoop = props.loop;
@@ -62,10 +63,18 @@ export default function DynamicIcon(props) {
                 preserveAspectRatio: "xMidYMid slice"
             }
         },
-        hwd_3: {
+        notFound: {
             loop: showLoop,
             autoplay: true,
-            animationData: hwd_3.default,
+            animationData: notFound.default,
+            rendererSettings: {
+                preserveAspectRatio: "xMidYMid slice"
+            }
+        },
+        resetPassword: {
+            loop: showLoop,
+            autoplay: true,
+            animationData: resetPassword.default,
             rendererSettings: {
                 preserveAspectRatio: "xMidYMid slice"
             }
