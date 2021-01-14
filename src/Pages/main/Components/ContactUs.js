@@ -16,20 +16,37 @@ const ContactUs = React.forwardRef((props, ref) => {
         messageMessage: null
     });
 
-    function sendMessage() {
-        console.log("getdi");
+    async function sendMessage() {
+        try{
+            var rawData = await fetch('http://localhost:8080/api/contact/getintouch', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email.current.value,
+                    name: name.current.value,
+                    message: message.current.value
+                })
+            });
+            var response = await rawData.json();
+            if (response.success){
+                //TODO: Show success
+                console.log('Success');
+            } else {
+                //TODO: Show error
+                console.log('Error');
+            }
+        } catch(e){
+            console.error(e);
+            console.log('Something went wrong while login in. Please try again later');
+        }
     }
 
     function handleOnKeyPress(e) {
         if (e && e.charCode === 13) {
             sendMessage();
-        } else {
-            setMessage({
-                ...stateObj,
-                nameMessage: null,
-                emailMessage: null,
-                messageMessage: null
-            });        
         }
 
         // need to wrap inside setTimeout to get next tick
@@ -97,7 +114,7 @@ const ContactUs = React.forwardRef((props, ref) => {
                                 <span id="maximum">/ 160</span>
                             </div>
                         </div>
-                        <button className="send-message">
+                        <button className="send-message" onClick={sendMessage}>
                             <i className='far fa-paper-plane'></i>
                             <span>Send</span>
                         </button>
