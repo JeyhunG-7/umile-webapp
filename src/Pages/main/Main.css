@@ -447,3 +447,9 @@
     color: #76879D;
     letter-spacing: 0.015em;
 }
+
+#the-count {
+    float: right;
+    padding: 0.1rem 0 0 0;
+    font-size: 0.875rem;
+  }

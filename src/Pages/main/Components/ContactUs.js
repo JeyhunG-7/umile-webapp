@@ -8,7 +8,8 @@ const ContactUs = React.forwardRef((props, ref) => {
     const name = useRef(null);
     const email = useRef(null);
     const message = useRef(null);
-
+    
+    const [currentCount, setCount] = useState(0);
     const [stateObj, setMessage] = useState({
         nameMessage: null,
         emailMessage: null,
@@ -28,8 +29,13 @@ const ContactUs = React.forwardRef((props, ref) => {
                 nameMessage: null,
                 emailMessage: null,
                 messageMessage: null
-            });
+            });        
         }
+
+        // need to wrap inside setTimeout to get next tick
+        setTimeout(() => {
+            setCount(message.current.value.length);
+        }, 0);
     }
 
     function addAutoResize() {
@@ -84,7 +90,12 @@ const ContactUs = React.forwardRef((props, ref) => {
                                 rows="3"
                                 placeholder="Message"
                                 ref={message}
-                                onKeyPress={handleOnKeyPress}></textarea>
+                                onPaste={handleOnKeyPress}
+                                onKeyDown={handleOnKeyPress}></textarea>
+                            <div id="the-count">
+                                <span id="current">{currentCount}</span>
+                                <span id="maximum">/ 160</span>
+                            </div>
                         </div>
                         <button className="send-message">
                             <i className='far fa-paper-plane'></i>
