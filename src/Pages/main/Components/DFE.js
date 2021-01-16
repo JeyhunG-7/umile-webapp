@@ -4,6 +4,7 @@ import DynamicIcon from '../../../Components/Helpers/DynamicIcon';
 import Fade from 'react-reveal/Fade';
 import Shopify from '../../../Images/shopify_integration.png';
 import API from '../../../Images/api_integration.png';
+import EasyToUse from '../../../Images/dfe-easy-to-use.png';
 
 export default function DesignedForEveryone(props) {
 
@@ -21,7 +22,8 @@ export default function DesignedForEveryone(props) {
                             <div className="dfe-body-1a">
                                 <div className="dfe-body-1b">
                                     <div className="lottie">
-                                        <DynamicIcon type="dfe_1" height='300' loop={true} />
+                                        {/* <DynamicIcon type="dfe_1" height='300' loop={true} /> */}
+                                        <img slt="easy-to-use" src={EasyToUse} style={{width: 300, height: 'auto'}}/>
                                     </div>
                                     <div className="dfe-desc">
                                         <h4 className="dfe-desc-hdr">Easy-to-use platform</h4>
@@ -35,7 +37,7 @@ export default function DesignedForEveryone(props) {
                                 <div className="dfe-body-2b">
                                 <div className="dfe-desc">
                                     <h4 className="dfe-desc-hdr">Shopify integration <span className="coming-soon">Coming soon</span></h4>
-                                    <p className="dfe-txt-body">We have created a plugin for your Shopify online store to take care of deliveries within the city.</p>
+                                    <p className="dfe-txt-body">We have created a plugin for your Shopify online store to take care of deliveries within city of Calgary.</p>
                                     <button className="learn-more" onClick={handleScrollToContactUs}>Learn More</button>
                                 </div>
                                 <div className="lottie">

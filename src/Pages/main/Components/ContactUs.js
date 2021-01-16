@@ -51,8 +51,8 @@ const ContactUs = React.forwardRef((props, ref) => {
             <Fade>
                 <section id="contact-us" className="sec-contact-us">
                     <div className="div-contact-us" ref={ref}>
-                        <h3>Get in Touch</h3>
-                        <img alt='Icon' src={Icon} style={{margin: '10px 0'}}/>
+                        <h3>Let's get in touch!</h3>
+                        <img alt='Icon' src={Icon} style={{height: '24%', width: 'auto', margin: '4% 0'}}/>
                         <p>Contact our team to discuss solutions that fit the needs of your business.</p>
                         <div className="div-name-email">
                             <div className={(!stateObj.nameMessage ? 'user-input name' : 'user-input name error')}>

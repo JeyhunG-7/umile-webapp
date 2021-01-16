@@ -433,7 +433,7 @@
 .steps .lottie img{
     display: flex;
     margin: auto;
-    width: 150px;
+    width: 'auto';
     height: 150px;
 }
 
@@ -446,4 +446,20 @@
     font-size: 18px;
     color: #76879D;
     letter-spacing: 0.015em;
+}
+
+/* Pricing */
+.sec-contact-us{
+    display: flex;
+    justify-content: center;
+    height: calc(100vmin - 140px);
+    width: 100%;
+}
+
+.div-contact-us{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 1080px;
 }

@@ -3,10 +3,11 @@ import './Main.css';
 import Header from '../../Components/Header';
 import Footer from '../../Components/Footer';
 import Intro from './Components/Intro';
-import UniPlatform from './Components/UniPlatform';
+// import UniPlatform from './Components/UniPlatform';
 import DesignedForEveryone from './Components/DFE';
 import ContactUs from './Components/ContactUs';
 import HowWeDo from './Components/HowWeDo';
+import Pricing from './Components/Pricing';
 
 export default function Main(props) {
     const contactUs = useRef();
@@ -22,6 +23,7 @@ export default function Main(props) {
             {/* <UniPlatform /> */}
             <HowWeDo/>
             <DesignedForEveryone handleScrollToContactUs={handleScrollToContactUs}/>
+            <Pricing/>
             <ContactUs ref={contactUs}/>
             <Footer />
         </div>
