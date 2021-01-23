@@ -7,13 +7,14 @@ import step1 from '../../../Images/main-steps-1.png';
 import step2 from '../../../Images/main-steps-2.png';
 import step3 from '../../../Images/main-steps-3.png';
 
-export default function HowWeDo(props) {
+// export default function HowWeDo(props) {
+const HowWeDo = React.forwardRef((props, ref) => {
 
     return (
 
         <Fade>
             <section id="how-we-do" className="how-we-do-container">
-                <div className="how-we-do-div">
+                <div className="how-we-do-div" ref={ref}>
                     <h3>Streamlining city-wide delivery</h3>
                     <div className="steps">
                         <ul className="step-1">
@@ -43,4 +44,6 @@ export default function HowWeDo(props) {
         </Fade>
 
     );
-}
+});
+
+export default HowWeDo;

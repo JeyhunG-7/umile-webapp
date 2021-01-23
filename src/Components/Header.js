@@ -6,6 +6,10 @@ import LogoTransperent from '../Images/logo_transparent.png';
 
 export default function Header(props) {
 
+    function handleNavToSection(val) {
+        props.navToSection(val);
+    }
+
     return (
         <>
             <Helmet>
@@ -17,8 +21,17 @@ export default function Header(props) {
                         <img src={LogoTransperent} alt="Transperent Logo" />
                     </a>
                     <div className="body-sub-2">
-                        <a href="/contact" className="page-link">Contact Us</a>
-                        <a href="/signin" className="page-link">Sign In</a>
+                        {
+                            props.showNav
+                                ? <>
+                                    <button className="sec-link-btn" onClick={() => handleNavToSection('about')}>About</button>
+                                    <button className="sec-link-btn" onClick={() => handleNavToSection('pricing')}>Pricing</button>
+                                    <button className="sec-link-btn" onClick={() => handleNavToSection('contact')}>Contact us</button>
+                                </>
+                                : <>
+                                    <a href="/" className="page-link">Home</a>
+                                </>
+                        }
                     </div>
                 </div>
             </nav>

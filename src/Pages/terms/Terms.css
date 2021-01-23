@@ -1,0 +1,26 @@
+.terms-sec{
+    width: 50%;
+    min-height: calc(100vh - 200px);
+    padding-top: 110px;
+    padding-bottom: 30px;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    color: #657786;
+    overflow-y: none;
+    scroll-behavior: smooth;
+}
+
+.terms-sec .email-link{
+    font-size: 16px;
+    text-decoration: none;
+    color: #2993ec;
+}
+
+@media only screen and (max-device-width: 600px) {
+    .terms-sec{
+        width: 80%;
+    }
+}

@@ -34,7 +34,19 @@
     padding-top: 27px;
 }
 
-.header .page-link{
+.header .sec-link-btn{
+    padding: 0;
+    outline: none;
+    border: none;
+    background-color: transparent;
+}
+
+.header .sec-link-btn:hover{
+    cursor: pointer;
+}
+
+.header .page-link,
+.header .sec-link-btn{
     line-height: 80px;
     color: #42474c;
 }
@@ -48,7 +60,8 @@
 
 .header .page-link,
 .footer .page-link,
-.footer .copywrite{
+.footer .copywrite,
+.header .sec-link-btn{
     margin: 0 15px;
     font-size: 1.0625em;
     font-weight: 500;
