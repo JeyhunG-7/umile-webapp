@@ -78,7 +78,7 @@ export default function SignInComponent(props) {
     }
 
     return (
-        <div className="sign-sec">
+        <div className="sign-sec sign-in">
             <div className="sign-body">
                 <div className="sign-header">Welcome back!</div>
                 <div className={(!stateObj.emailMessage ? 'user-input' : 'user-input error')}>

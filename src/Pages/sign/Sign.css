@@ -185,3 +185,14 @@
     letter-spacing: 1px;
     z-index: 1;
 }
+
+
+.sign-in-page{
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.sign-in-page .bg-square{
+    z-index: 0;
+}

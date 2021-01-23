@@ -1,4 +1,4 @@
-import React, { useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import '../Main.css';
 import Fade from 'react-reveal/Fade';
 
@@ -8,7 +8,7 @@ const ContactUs = React.forwardRef((props, ref) => {
     const name = useRef(null);
     const email = useRef(null);
     const message = useRef(null);
-    
+
     const [currentCount, setCount] = useState(0);
     const [stateObj, setMessage] = useState({
         nameMessage: null,
@@ -17,7 +17,7 @@ const ContactUs = React.forwardRef((props, ref) => {
     });
 
     async function sendMessage() {
-        try{
+        try {
             var rawData = await fetch('http://localhost:8080/api/contact/getintouch', {
                 method: 'POST',
                 headers: {
@@ -31,14 +31,14 @@ const ContactUs = React.forwardRef((props, ref) => {
                 })
             });
             var response = await rawData.json();
-            if (response.success){
+            if (response.success) {
                 //TODO: Show success
                 console.log('Success');
             } else {
                 //TODO: Show error
                 console.log('Error');
             }
-        } catch(e){
+        } catch (e) {
             console.error(e);
             console.log('Something went wrong while login in. Please try again later');
         }
@@ -75,7 +75,7 @@ const ContactUs = React.forwardRef((props, ref) => {
                 <section id="contact-us" className="sec-contact-us">
                     <div className="div-contact-us" ref={ref}>
                         <h3>Let's get in touch!</h3>
-                        <img alt='Icon' src={Icon} style={{height: '24%', width: 'auto', margin: '4% 0'}}/>
+                        <img alt='Icon' src={Icon} style={{ height: '24%', width: 'auto', margin: '4% 0' }} />
                         <p>Contact our team to discuss solutions that fit the needs of your business.</p>
                         <div className="div-name-email">
                             <div className={(!stateObj.nameMessage ? 'user-input name' : 'user-input name error')}>
@@ -109,10 +109,7 @@ const ContactUs = React.forwardRef((props, ref) => {
                                 ref={message}
                                 onPaste={handleOnKeyPress}
                                 onKeyDown={handleOnKeyPress}></textarea>
-                            <div id="the-count">
-                                <span id="current">{currentCount}</span>
-                                <span id="maximum">/ 160</span>
-                            </div>
+                            <div className="count">{160 - currentCount}</div>
                         </div>
                         <button className="send-message" onClick={sendMessage}>
                             <i className='far fa-paper-plane'></i>

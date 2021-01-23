@@ -17,7 +17,8 @@ export default function SignIn(props) {
     }
 
     return (
-        <div id="main" className="main">
+        <div id="main" className="main sign-in-page">
+            <div className="bg-square"></div>
             <Header pageName={props.pageName} />
             <Fade>
                 {

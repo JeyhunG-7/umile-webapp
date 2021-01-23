@@ -3,7 +3,6 @@ import './Main.css';
 import Header from '../../Components/Header';
 import Footer from '../../Components/Footer';
 import Intro from './Components/Intro';
-// import UniPlatform from './Components/UniPlatform';
 import DesignedForEveryone from './Components/DFE';
 import ContactUs from './Components/ContactUs';
 import HowWeDo from './Components/HowWeDo';
@@ -17,10 +16,10 @@ export default function Main(props) {
     }
 
     return (
-        <div id="main" className="main">
+        <div id="main" className="main main-page">
             <Header pageName={props.pageName} />
+            <div className="bg-square"></div>
             <Intro handleScrollToContactUs={handleScrollToContactUs}/>
-            {/* <UniPlatform /> */}
             <HowWeDo/>
             <DesignedForEveryone handleScrollToContactUs={handleScrollToContactUs}/>
             <Pricing/>
