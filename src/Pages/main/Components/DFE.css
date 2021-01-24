@@ -209,3 +209,30 @@
         grid-row-gap: 5px;
     }
 }
+
+@media only screen and (max-device-width: 600px) {
+    .div-dfe h3{
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+    .dfe-body-1b, .dfe-body-2b, .dfe-body-3b{
+        width: 100%;
+    }
+    .dfe-desc{
+        width: 90%;
+        grid-row-gap: 10px;
+    }
+    .dfe-desc-hdr{
+        text-align: center;
+    }
+    .dfe-txt-body{
+        width: 100%;
+        font-size: 18px;
+        line-height: 24px;
+        text-align: center;
+    }
+    .dfe-desc .learn-more{
+        margin: auto;
+        text-align: center;
+    }
+}

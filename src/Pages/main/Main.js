@@ -9,17 +9,19 @@ import HowWeDo from './Components/HowWeDo';
 import Pricing from './Components/Pricing';
 
 export default function Main(props) {
+    const screenX = window.screen.width;
+
     const contactUs = useRef();
     const pricing = useRef();
     const about = useRef();
 
     function handleNavToSection(val){
         if(val === 'contact'){
-            contactUs.current.scrollIntoView({ behavior: 'smooth' });
+            contactUs.current.scrollIntoView({ behavior: 'smooth', block: (screenX > 600 ? 'center' : 'start') });
         } else if(val === 'about'){
-            about.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            about.current.scrollIntoView({ behavior: 'smooth', block: (screenX > 600 ? 'center' : 'start') });
         } else if(val === 'pricing'){
-            pricing.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            pricing.current.scrollIntoView({ behavior: 'smooth', block: (screenX > 600 ? 'center' : 'start') });
         }
     }
 

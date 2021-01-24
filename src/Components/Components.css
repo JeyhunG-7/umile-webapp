@@ -31,7 +31,7 @@
 
 .header .a-logo img{
     height: 30px;
-    padding-top: 27px;
+    padding-top: 23px;
 }
 
 .header .sec-link-btn{
@@ -67,4 +67,17 @@
     font-weight: 500;
     letter-spacing: 0.02em;
     text-decoration: none;
+}
+
+@media (max-width: 1260px){
+    .header .a-logo{
+        margin-left: 15px;
+    }
+}
+
+@media only screen and (max-device-width: 600px) {
+    /* Header */
+    .header .body-sub-2 .about{
+        display: none;
+    }
 }

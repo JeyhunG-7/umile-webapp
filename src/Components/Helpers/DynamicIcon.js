@@ -6,6 +6,8 @@ import * as introMain from "../../Lottie/main-intro.json";
 import * as unifiedPlatform from "../../Lottie/unified-platform.json";
 import * as notFound from "../../Lottie/not-found.json";
 import * as resetPassword from "../../Lottie/reset-password.json";
+import * as loading from "../../Lottie/loader-circle.json";
+import * as doneLoading from "../../Lottie/done-loading.json";
 
 import * as dfe_1 from "../../Lottie/designed-for-everyone-1.json";
 import * as dfe_2 from "../../Lottie/designed-for-everyone-2.json";
@@ -75,6 +77,22 @@ export default function DynamicIcon(props) {
             loop: showLoop,
             autoplay: true,
             animationData: resetPassword.default,
+            rendererSettings: {
+                preserveAspectRatio: "xMidYMid slice"
+            }
+        },
+        loading: {
+            loop: showLoop,
+            autoplay: true,
+            animationData: loading.default,
+            rendererSettings: {
+                preserveAspectRatio: "xMidYMid slice"
+            }
+        },
+        doneLoading: {
+            loop: showLoop,
+            autoplay: true,
+            animationData: doneLoading.default,
             rendererSettings: {
                 preserveAspectRatio: "xMidYMid slice"
             }

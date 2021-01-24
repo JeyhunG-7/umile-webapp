@@ -24,7 +24,7 @@ export default function Header(props) {
                         {
                             props.showNav
                                 ? <>
-                                    <button className="sec-link-btn" onClick={() => handleNavToSection('about')}>About</button>
+                                    <button className="sec-link-btn about" onClick={() => handleNavToSection('about')}>About</button>
                                     <button className="sec-link-btn" onClick={() => handleNavToSection('pricing')}>Pricing</button>
                                     <button className="sec-link-btn" onClick={() => handleNavToSection('contact')}>Contact us</button>
                                 </>

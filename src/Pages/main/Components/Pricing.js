@@ -9,8 +9,8 @@ const Pricing = React.forwardRef((props, ref) => {
             <Fade>
                 <section className="sec-pricing">
                     <div ref={ref} style={{height: '100%'}}>
-                        <h3>Simple and transperent pricing</h3>
-                        <p className="header-desc">UMile provides next day delivery services within city limits of Calgary</p>
+                        <h3>Simple and transparent pricing</h3>
+                        <p className="header-desc">UMile provides next day delivery services within Calgary city limits</p>
                         <div className="body-pricing">
                             <div className="col-bd cob-1">
                                 <div className="container-bd cbd-1">

@@ -27,7 +27,7 @@ const HowWeDo = React.forwardRef((props, ref) => {
                                 <img src={step2}/>
                             </li>
                             <li className="hdr">Next day delivery</li>
-                            <li className="text">We provide B2B and B2C next day delivery services for small and medium size businesses in Calgary. </li>
+                            <li className="text">We provide B2B and B2C next day delivery services for small and medium-size businesses in Calgary. </li>
                         </ul>
                         <ul className="step-3">
                             <li className="lottie">

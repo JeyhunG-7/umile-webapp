@@ -2,7 +2,7 @@
 .sec-contact-us{
     display: flex;
     justify-content: center;
-    height: calc(100vh - 140px);
+    min-height: calc(100vh - 140px);
     width: 100%;
 }
 
@@ -32,8 +32,18 @@
     letter-spacing: 0.015em;
 }
 
+.div-contact-us img{
+    width: auto; 
+    height: 150px;
+    margin: 4% 0;
+}
+
 .div-contact-us .user-input{
     margin-bottom: 15px;
+}
+
+.user-input.error .helper-txt{
+    top: 38px;
 }
 
 .div-contact-us .user-input .user-icon,
@@ -94,6 +104,25 @@
     font-size: 16px;
 }
 
+.div-message.error .helper-txt{
+    position: absolute;
+    display: flex;
+    top: 38px;
+    color: #e70000;
+    float: left;
+    font-size: 12px;
+    letter-spacing: 1px;
+    z-index: 1;
+}
+
+.div-message.error textarea{
+    border-color: #e70000;
+}
+
+.div-contact-us .user-input.error .helper-txt{
+    top: 38px;
+}
+
 .div-contact-us .count{
     position: absolute;
     right: 8px;
@@ -110,6 +139,17 @@
 
 .send-message i{
     margin-right: 8px;
+}
+
+.div-lottie-submit{
+    margin-top: 3%;
+    
+    width: 60%;
+    text-align: center;
+    font-size: 20px;
+    color: #76879D;
+    line-height: 28px;
+    letter-spacing: 0.015em;
 }
 
 @media (max-width: 1080px){
@@ -151,5 +191,33 @@
     .send-message{
         margin-top: 5%;
         width: 150px;
+    }
+}
+
+@media only screen and (max-device-width: 600px) {
+    .div-contact-us h3{
+        font-size: 1.60em;
+    }
+    .div-contact-us img{
+        height: 100px;
+   }
+   .div-contact-us p{
+       width: 90%;
+   }
+   .div-name-email{
+        width: 80%;
+    }
+    .div-contact-us .user-input input{
+        width: 100%;
+        border: none;
+    }
+    .div-contact-us .textarea{
+        border: none;
+    }
+    .div-contact-us .user-input .user-icon, .div-contact-us .user-input .email-icon{
+        top: 12px;
+    }
+    .div-message i{
+        top: 13px;
     }
 }

@@ -160,3 +160,23 @@
         padding: 0 10%;
     }
 }
+
+@media only screen and (max-device-width: 600px) {
+    .how-we-do-div h3{
+        margin: 0;
+    }
+    .steps .lottie img{
+        height: 125px;
+    }
+    .steps .hdr{
+        font-size: 20px;
+    }
+    .steps .text{
+        width: 90%;
+        font-size: 18px;
+        padding: 0 5%;
+    }
+    .steps ul{
+        margin-top: 20px;
+    }
+}

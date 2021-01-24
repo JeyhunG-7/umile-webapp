@@ -151,3 +151,22 @@
         font-size: 2.25em;
     }
 }
+
+@media only screen and (max-device-width: 600px) {
+    .intro-div{
+        padding: 9% 0;
+    }
+    .intro-text{
+        margin: 18px;
+    }
+    .intro-text h3{
+        margin-top: 5%;
+        font-size: 2.05em;
+    }
+    .intro-text p{
+        font-size: 18px;
+    }
+    .intro-lottie img{
+        width: 75%;
+    }
+}
