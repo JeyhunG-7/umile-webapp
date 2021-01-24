@@ -13,10 +13,6 @@ export default function Main(props) {
     const pricing = useRef();
     const about = useRef();
 
-    function handleScrollToContactUs(){
-        contactUs.current.scrollIntoView({ behavior: 'smooth' });
-    }
-
     function handleNavToSection(val){
         if(val === 'contact'){
             contactUs.current.scrollIntoView({ behavior: 'smooth' });
@@ -33,7 +29,7 @@ export default function Main(props) {
             <div className="bg-square"></div>
             <Intro navToSection={handleNavToSection}/>
             <HowWeDo ref={about}/>
-            <DesignedForEveryone handleScrollToContactUs={handleScrollToContactUs}/>
+            <DesignedForEveryone navToSection={handleNavToSection}/>
             <Pricing ref={pricing}/>
             <ContactUs ref={contactUs}/>
             <Footer />

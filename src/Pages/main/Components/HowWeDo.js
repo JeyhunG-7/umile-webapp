@@ -1,5 +1,5 @@
 import React from 'react';
-import '../Main.css';
+import './HowWeDo.css';
 import Fade from 'react-reveal/Fade';
 
 // Sourced from icons8.com
@@ -7,11 +7,9 @@ import step1 from '../../../Images/main-steps-1.png';
 import step2 from '../../../Images/main-steps-2.png';
 import step3 from '../../../Images/main-steps-3.png';
 
-// export default function HowWeDo(props) {
 const HowWeDo = React.forwardRef((props, ref) => {
 
     return (
-
         <Fade>
             <section id="how-we-do" className="how-we-do-container">
                 <div className="how-we-do-div" ref={ref}>
@@ -42,7 +40,6 @@ const HowWeDo = React.forwardRef((props, ref) => {
                 </div>
             </section>
         </Fade>
-
     );
 });
 

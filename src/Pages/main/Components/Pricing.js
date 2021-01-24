@@ -1,5 +1,5 @@
 import React from 'react';
-import '../Main.css';
+import './Pricing.css';
 import Fade from 'react-reveal/Fade';
 
 const Pricing = React.forwardRef((props, ref) => {
@@ -8,7 +8,7 @@ const Pricing = React.forwardRef((props, ref) => {
         <>
             <Fade>
                 <section className="sec-pricing">
-                    <div ref={ref}>
+                    <div ref={ref} style={{height: '100%'}}>
                         <h3>Simple and transperent pricing</h3>
                         <p className="header-desc">UMile provides next day delivery services within city limits of Calgary</p>
                         <div className="body-pricing">

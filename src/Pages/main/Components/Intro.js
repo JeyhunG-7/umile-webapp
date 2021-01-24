@@ -1,5 +1,5 @@
 import React from 'react';
-import '../Main.css';
+import './Intro.css';
 import Fade from 'react-reveal/Fade';
 import IntroImg from '../../../Images/main-intro.png';
 
@@ -21,7 +21,7 @@ export default function Intro(props) {
                             <button className="start" onClick={handleNavToSection}>Get started</button>
                         </div>
                         <div className="intro-lottie">
-                            <img alt="intro" src={IntroImg} style={{ width: 525, height: 'auto', display: 'flex', marginLeft: 'auto' }} />
+                            <img alt="intro" src={IntroImg}/>
                         </div>
                     </div>
                 </section>

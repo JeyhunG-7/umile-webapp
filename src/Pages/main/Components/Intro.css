@@ -1,0 +1,153 @@
+
+
+/** Intro Section**/
+.intro-container{
+    display: flex;
+    justify-content: center;
+    height: calc(100vh - 80px);
+    width: 100%;
+    padding-top: 80px;
+    z-index: 10;
+}
+
+.intro-div{
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    width: 1260px;
+    grid-column-gap: 48px;
+    grid-row-gap: 40px;
+    grid-template-rows: auto;
+}
+
+.intro-text{
+    padding-left: 20px;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-row-gap: 25px;
+    grid-template-rows: auto;
+    z-index: 10;
+}
+
+.intro-text h3{
+    margin-bottom: 0px;
+    font-size: 3.75em;
+    color: #3A4554;
+    opacity: 0.9;
+    letter-spacing: -0.015em;
+}
+
+.intro-text p{
+    margin: 0;
+    font-size: 18px;
+    color: #76879D;
+    line-height: 1.55em;
+    letter-spacing: 0.015em;
+}
+
+.intro-lottie{
+    z-index: 10;
+}
+
+.intro-lottie img{
+    display: flex; 
+    height: auto; 
+    width: 525px; 
+    margin-left: auto;
+}
+
+.intro-container .start,
+.send-message{
+    width: 200px;
+    padding: 5px 20px;
+    border-radius: 4px;
+    font-size: 15px;
+    line-height: 1.6em;
+    background-color: #2993ec;
+    color: #fff;
+    white-space: nowrap;
+    outline: none;
+    border: none;
+    transition: all .15s ease-in-out;
+}
+
+.intro-container .start:hover,
+.send-message:hover{
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+@media (max-width: 1260px){
+    .intro-div{
+        width: 1080px;
+    }
+}
+
+@media (max-width: 1080px){
+    /** Intro Section**/
+    .intro-div{
+        width: 800px;
+        grid-column-gap: 30px;
+    }
+    .intro-text{
+        padding-left: 10px;
+        grid-row-gap: 15px;
+    }
+    .intro-text h3{
+        font-size: 2.55em;
+        letter-spacing: 0.015em;
+    }
+    .intro-text p{
+        font-size: 16px;
+        line-height: 1.45em;
+    }
+    .intro-lottie img{
+        width: 375px; 
+    }
+}
+
+@media (max-width: 799px){
+    /** Intro Section**/
+    .intro-div{
+        display: flex;
+        flex-direction: column-reverse;
+        width: 700px;
+    }
+    .intro-text{
+        height: 30%;
+        margin: 0 50px 20% 50px;
+        padding: 0px;
+    }
+    .intro-text h3{
+        font-size: 2.55em;
+        letter-spacing: 0.015em;
+    }
+    .intro-text p{
+        font-size: 16px;
+        line-height: 1.45em;
+    }
+    .intro-lottie img{
+        display: flex;
+        width: 50%;
+        margin: auto;
+    }
+}
+
+@media (max-width: 600px){
+    /** Intro Section**/
+    .intro-container{
+        height: auto;
+    }
+    .intro-div{
+        width: 500px;
+        padding: 50px 0;
+    }
+    .intro-text{
+        height: auto;
+        margin: 0 50px 5% 50px;
+    }
+    .intro-text h3{
+        font-size: 2.25em;
+    }
+}

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import '../Main.css';
+import './ContactUs.css';
 import Fade from 'react-reveal/Fade';
 
 import Icon from '../../../Images/main-contact-us.png';
