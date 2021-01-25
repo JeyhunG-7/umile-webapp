@@ -48,14 +48,16 @@ class App extends React.Component {
           <Router>
             { this.state.isLoggedIn ? <Sidebar/> : <></> }
             <Switch>
+              {/* Public Routes */}
               <Route exact path="/signin" render={(props) => <SignIn {...props} pageName="Sign In" />} />
               <Route exact path="/reset-password" render={(props) => <ResetPassword {...props} pageName="Reset Password" />} />
               <Route path="/signup/:token" render={(props) => <SignUp {...props} pageName="Sign Up" />} />
-              
-              
+              <Route path="/404" render={(props) => <NotFound {...props} pageName="404" />} />
+
+              {/* Private Routes */}
               <PrivateRoute exact path="/" auth={this.state.isLoggedIn} component={Main} pageName="Main" />
               <PrivateRoute exact path="/profile" auth={this.state.isLoggedIn} component={Profile} pageName="Profile" />
-              <Route path="/404" render={(props) => <NotFound {...props} pageName="404" />} />
+              
               <Redirect from='*' to='/404'/>
             </Switch>
           </Router>
