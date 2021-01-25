@@ -52,3 +52,29 @@ export async function AuthenticateAsync(email, password) {
         return [false, 'Something went wrong while login in. Please try again later'];
     }    
 }
+
+export async function logoutAsync() {
+    var auth_token = GetAuthToken();
+    if (!auth_token){
+        return false;
+    }
+
+    try{
+        var rawData = await fetch('http://localhost:8080/api/clients/logout', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${auth_token}`
+            }
+        });
+        var response = await rawData.json();
+        
+        if (!response.success){
+            console.log('Error while logging out');
+        }
+    } catch(e){
+        console.error(e);
+    } finally {
+        RemoveAuthToken();
+        return true;
+    }
+}

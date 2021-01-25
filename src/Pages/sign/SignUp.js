@@ -73,31 +73,34 @@ export default function SignUp(props) {
         }
     };
 
-    useEffect(async () => {
-        if (!params.token){
+    useEffect(() => {
+        async function effect() {
+            if (!params.token){
+                setLoading(false);
+                setErrorMessage('Sign up is invitation only');
+                return;
+            }
+
+            try{
+                var rawData = await fetch('http://localhost:8080/api/clients/validate', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({token: params.token})
+                });
+                var response = await rawData.json();
+            } catch(e){
+                return;
+            }
+
             setLoading(false);
-            setErrorMessage('Sign up is invitation only');
-            return;
+            if (!response.success){
+                setErrorMessage('Invalid token');
+            }
         }
-
-        try{
-            var rawData = await fetch('http://localhost:8080/api/clients/validate', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({token: params.token})
-            });
-            var response = await rawData.json();
-        } catch(e){
-            return;
-        }
-
-        setLoading(false);
-        if (!response.success){
-            setErrorMessage('Invalid token');
-        }
+        effect();
     }, []);
 
     const submitSignIn = async e => {

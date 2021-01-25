@@ -12,6 +12,7 @@ import ListIcon from '@material-ui/icons/List';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { logoutAsync } from './Helpers/Authenticator';
 
 const drawerWidth = 240;
 
@@ -77,8 +78,10 @@ function Sidebar(props) {
         props.history.push(link);
     }
 
-    function logout(){
-        alert("Logout");
+    async function logout(){
+        await logoutAsync();
+        console.log(props.history);
+        window.location.reload();
     }
 
     return (

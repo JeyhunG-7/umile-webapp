@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import '../Sign.css';
 import { IsSignedInAsync, AuthenticateAsync }  from './../../../Components/Helpers/Authenticator';
 import Validate from 'validate.js';
+import { withRouter } from 'react-router-dom';
 
-export default function SignInComponent(props) {
+function SignInComponent(props) {
     const email = useRef(null);
     const password = useRef(null);
 
@@ -28,12 +29,15 @@ export default function SignInComponent(props) {
         }
     };
 
-    useEffect(async () => {
-        var isSignedIn = await IsSignedInAsync();
-        if (isSignedIn){
-            //TODO: Navigate to the app, skip login page
-            console.log('User is signed in');
+    useEffect(() => {
+        async function effect() {
+            var isSignedIn = await IsSignedInAsync();
+            if (isSignedIn){
+                props.history.push('/');
+            }
         }
+
+        effect();
     }, [])
 
 
@@ -55,8 +59,13 @@ export default function SignInComponent(props) {
             setProcessing(true);
             var result = await AuthenticateAsync(email.current.value, password.current.value);
             setProcessing(false);
-            console.log(result);
-            setErrorMessage(result[1]);
+            
+            // result[0] -> isSuccess, result[1] -> errorMessage
+            if (result[0]){
+                window.location.reload();
+            } else {
+                setErrorMessage(result[1]);
+            }
         }
     }
 
@@ -111,3 +120,5 @@ export default function SignInComponent(props) {
         </div>
     );
 }
+
+export default withRouter(SignInComponent)
