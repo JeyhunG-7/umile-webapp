@@ -101,7 +101,7 @@ function Sidebar(props) {
                 <Divider />
 
                 <div className={classes.mainDrawerItems}>
-                    <ListItem button selected={selectedPage === PAGES.dashboard.id} onClick={e => navigateTo("/main2")}>
+                    <ListItem button selected={selectedPage === PAGES.dashboard.id} onClick={e => navigateTo("/")}>
                         <ListItemIcon>
                             <HomeIcon/>
                         </ListItemIcon>

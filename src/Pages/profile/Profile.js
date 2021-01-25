@@ -10,7 +10,7 @@ export default function Profile(props) {
 
     return (
         <div>
-            Hello
+            Profile
         </div>
     );
 }

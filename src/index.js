@@ -7,6 +7,7 @@ import Sidebar from './Components/Sidebar';
 
 // pages
 import Main from './Pages/main/Main';
+import Profile from './Pages/profile/Profile';
 import NotFound from './Pages/404/404';
 import ResetPassword from './Pages/reset-password/ResetPassword';
 import SignIn from './Pages/sign/SignIn';
@@ -19,7 +20,7 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(async () => {
-    const loggedIn = await IsSignedInAsync();
+    const loggedIn = true; //await IsSignedInAsync();
     setIsLoggedIn(loggedIn);
   }, [])
 
