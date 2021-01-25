@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './Sign.css';
-import Header from '../../Components/Header';
 import Validate from 'validate.js';
 import Fade from 'react-reveal/Fade';
 
@@ -272,7 +271,6 @@ export default function SignUp(props) {
 
     return (
         <div id="main" className="main">
-            <Header pageName={props.pageName} />
             <Fade>
                 {uiToRender}
             </Fade>

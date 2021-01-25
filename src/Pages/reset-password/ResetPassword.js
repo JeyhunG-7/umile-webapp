@@ -1,8 +1,6 @@
 import React, {  useRef, useState } from 'react';
 import './ResetPassword.css';
 import Validate from 'validate.js';
-import Header from '../../Components/Header';
-import Footer from '../../Components/Footer';
 import DynamicIcon from '../../Components/Helpers/DynamicIcon';
 import Fade from 'react-reveal/Fade';
 
@@ -78,7 +76,6 @@ export default function ResetPassword(props) {
     return (
         <>
             <div className="main">
-                <Header pageName={props.pageName} />
                 <div className="body">
                     <div className="sec-reset-password">
                         <DynamicIcon type="resetPassword" width={screenX > 600 ? '225' : '300'} height={screenX > 600 ? '225' : '300'} />
@@ -110,7 +107,6 @@ export default function ResetPassword(props) {
                         </Fade>
                     </div>
                 </div>
-                <Footer />
             </div>
         </>
     );
