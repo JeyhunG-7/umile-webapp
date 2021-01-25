@@ -1,16 +1,13 @@
 import React from 'react';
 import './404.css';
-import Header from '../../Components/Header';
 import DynamicIcon from '../../Components/Helpers/DynamicIcon';
 import Fade from 'react-reveal/Fade';
-import Footer from '../../Components/Footer';
 
 export default function NotFound(props) {
     const screenX = window.screen.width;
 
     return (
         <div id="main" className="main">
-            <Header pageName={props.pageName} />
             <div className="body">
                 <div className="sec-404">
                     <DynamicIcon type="notFound" width={screenX > 600 ? '400' : '300'} height={screenX > 600 ? '280' : '210'} />
@@ -20,7 +17,6 @@ export default function NotFound(props) {
                     </Fade>
                 </div>
             </div>
-            <Footer/>
         </div>
     );
 }

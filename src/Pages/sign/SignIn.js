@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './Sign.css';
-import Header from '../../Components/Header';
 import SignInComponent from './Components/SignIn';
 import ForgotPass from './Components/ForgotPass';
 import Fade from 'react-reveal/Fade';
@@ -19,7 +18,6 @@ export default function SignIn(props) {
     return (
         <div id="main" className="main sign-in-page">
             <div className="bg-square"></div>
-            <Header pageName={props.pageName} />
             <Fade>
                 {
                     showForgotPass

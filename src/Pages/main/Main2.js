@@ -1,9 +1,7 @@
 import React, { useRef } from 'react'
-import './Main2.css';
+import './Main.css';
 
-import Sidebar from './../../Components/Sidebar';
-
-export default function Main2(props) {
+export default function Main(props) {
     
 
     return (

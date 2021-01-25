@@ -1,5 +1,6 @@
 .sec-404{
-    min-height: calc(100vh - 60px);
+    min-height: calc(100vh - 140px);
+    padding-top: 80px;
     user-select: none;
     display: flex;
     flex-direction: column;
