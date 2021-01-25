@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { withRouter } from 'react-router-dom';
+
 import { 
     Drawer, Divider,
     ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
@@ -48,10 +50,10 @@ const PAGES = Object.freeze({
         id: 3,
         route: '/neworder'
     }
-})
+});
 
 
-export default function Sidebar(props) {
+function Sidebar(props) {
     const screenX = window.screen.width;
 
     const [selectedPage, setSelectedPage] = useState(-1);
@@ -72,7 +74,7 @@ export default function Sidebar(props) {
     }, [])
 
     function navigateTo(link){
-        alert("Naviagte to: " + link);
+        props.history.push(link);
     }
 
     function logout(){
@@ -135,3 +137,5 @@ export default function Sidebar(props) {
         </>
     );
 }
+
+export default withRouter(Sidebar);
