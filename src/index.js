@@ -8,6 +8,7 @@ import Sidebar from './Components/Sidebar';
 // pages
 import Main from './Pages/main/Main';
 import Profile from './Pages/profile/Profile';
+import Orders from './Pages/orders/Orders';
 import NotFound from './Pages/404/404';
 import ResetPassword from './Pages/reset-password/ResetPassword';
 import SignIn from './Pages/sign/SignIn';
@@ -30,7 +31,6 @@ class App extends React.Component {
       isLoading: true
     })
     const loggedIn = await IsSignedInAsync();
-    console.log("WILL MOUNT: ", loggedIn);
 
     this.setState({
       isLoading: false,
@@ -57,6 +57,7 @@ class App extends React.Component {
               {/* Private Routes */}
               <PrivateRoute exact path="/" auth={this.state.isLoggedIn} component={Main} pageName="Main" />
               <PrivateRoute exact path="/profile" auth={this.state.isLoggedIn} component={Profile} pageName="Profile" />
+              <PrivateRoute exact path="/orders" auth={this.state.isLoggedIn} component={Orders} pageName="Orders" />
               
               <Redirect from='*' to='/404'/>
             </Switch>

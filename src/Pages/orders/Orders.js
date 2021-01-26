@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import './Main.css';
+import './Orders.css';
 import { makeGetRequest } from '../../Utils/Fetch';
 
-export default function Main(props) {
+export default function Orders(props) {
 
     const [orders, setOrders] = useState([]);
     
@@ -12,7 +12,7 @@ export default function Main(props) {
                 auth: true, 
                 query: {
                     cityId: 1,
-                    active: true
+                    active: false
                 }
             }
             var result = await makeGetRequest('/orders/list', opts);
@@ -28,7 +28,7 @@ export default function Main(props) {
     return (
         <>
             <div>
-                Hello
+                Orders
             </div>
         </>
     );

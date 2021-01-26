@@ -1,8 +1,9 @@
 import { GetAuthToken } from "../Components/Helpers/LocalStorage";
 
-export async function makeGetRequest(url, { auth = false }) {
+export async function makeGetRequest(url, { auth = false, query = {} }) {
     try {
         var u = new URL(`http://localhost:8080/api${url}`);
+        u.search = new URLSearchParams(query).toString();
         try{
             var result = null;
             if (auth){
