@@ -1,22 +1,31 @@
+import { GetAuthToken } from "../Components/Helpers/LocalStorage";
 
-/**
- * Custom made requester
- * @param {string} url request url
- * @param {object} param param object 
- * @param {function} err for error message
- */
-export async function makeGetRequest(url, { params = {} } = {}, err) {
+export async function makeGetRequest(url, { auth = false }) {
     try {
         var u = new URL(`http://localhost:8080/api${url}`);
-        u.search = new URLSearchParams(params).toString();
         try{
-            var result = await fetch(u, {
-                method: 'GET',
-                mode: 'cors'
-            });
-            console.log("FETCH PART 1 => ", result);
+            var result = null;
+            if (auth){
+                var auth_token = GetAuthToken();
+                if (!auth_token){
+                    return false;
+                }
+
+                result = await fetch(u, {
+                    method: 'GET',
+                    mode: 'cors',
+                    headers: {
+                        'Authorization': `Bearer ${auth_token}`
+                    }
+                }); 
+            } else {
+                result = await fetch(u, {
+                    method: 'GET',
+                    mode: 'cors'
+                });
+            }
+            
             var data = await result.json();
-            console.log("FETCH PART 2 => ", data);
         } catch(e){
             console.error(e);
             return;
