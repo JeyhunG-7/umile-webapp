@@ -9,6 +9,7 @@ import Sidebar from './Components/Sidebar';
 import Main from './Pages/main/Main';
 import Profile from './Pages/profile/Profile';
 import Orders from './Pages/orders/Orders';
+import NewOrder from './Pages/neworder/NewOrder';
 import NotFound from './Pages/404/404';
 import ResetPassword from './Pages/reset-password/ResetPassword';
 import SignIn from './Pages/sign/SignIn';
@@ -58,6 +59,7 @@ class App extends React.Component {
               <PrivateRoute exact path="/" auth={this.state.isLoggedIn} component={Main} pageName="Main" />
               <PrivateRoute exact path="/profile" auth={this.state.isLoggedIn} component={Profile} pageName="Profile" />
               <PrivateRoute exact path="/orders" auth={this.state.isLoggedIn} component={Orders} pageName="Orders" />
+              <PrivateRoute exact path="/neworder" auth={this.state.isLoggedIn} component={NewOrder} pageName="New Order" />
               
               <Redirect from='*' to='/404'/>
             </Switch>
