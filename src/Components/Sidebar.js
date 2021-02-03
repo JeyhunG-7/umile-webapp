@@ -92,7 +92,7 @@ function Sidebar(props) {
                 className={classes.drawer} 
                 classes={{ paper: classes.drawerPaper, docked: classes.docked }}
             >
-                <div>
+                <div className="sb-header">
                     <ListItem button selected={selectedPage === PAGES.profile.id} onClick={e => navigateTo("/profile")}>
                         <ListItemIcon>
                             <AccountCircleIcon/>
@@ -103,7 +103,7 @@ function Sidebar(props) {
 
                 <Divider />
 
-                <div className={classes.mainDrawerItems}>
+                <div className={`sb-body ${classes.mainDrawerItems}`}>
                     <ListItem button selected={selectedPage === PAGES.dashboard.id} onClick={e => navigateTo("/")}>
                         <ListItemIcon>
                             <HomeIcon/>
@@ -127,7 +127,7 @@ function Sidebar(props) {
                 </div>
                 
 
-                <div>
+                <div className="sb-footer">
                     <ListItem button onClick={e => logout()}>
                         <ListItemIcon>
                             <ExitToAppIcon/>
