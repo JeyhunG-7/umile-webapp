@@ -16,13 +16,17 @@ export async function makeGetRequest(url, { auth = false, query = {} }) {
                     method: 'GET',
                     mode: 'cors',
                     headers: {
-                        'Authorization': `Bearer ${auth_token}`
+                        'Authorization': `Bearer ${auth_token}`,
+                        "Access-Control-Allow-Origin": "*"
                     }
                 }); 
             } else {
                 result = await fetch(u, {
                     method: 'GET',
-                    mode: 'cors'
+                    mode: 'cors',
+                    headers: {
+                        "Access-Control-Allow-Origin": "*"
+                    }
                 });
             }
             
@@ -62,7 +66,8 @@ export async function makePostRequest(url, { obj = undefined, params = {} } = {}
             mode: 'cors',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "*"
             },
             body: JSON.stringify(obj)
         });

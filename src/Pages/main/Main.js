@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import './Main.css';
 import { makeGetRequest } from '../../Utils/Fetch';
 
+import { AddressInput } from '../../Components/AddressInput';
+
 export default function Main(props) {
 
     const [orders, setOrders] = useState([]);
@@ -28,7 +30,9 @@ export default function Main(props) {
     return (
         <>
             <div>
-                Hello
+                Hello<br></br>
+                <AddressInput width="300px"  />
+                
             </div>
         </>
     );
