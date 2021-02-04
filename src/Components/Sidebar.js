@@ -41,7 +41,7 @@ const PAGES = Object.freeze({
     },
     dashboard: {
         id: 1,
-        route: '/main2'
+        route: '/'
     },
     orders: {
         id: 2,
@@ -74,8 +74,9 @@ function Sidebar(props) {
         }
     }, [])
 
-    function navigateTo(link){
-        props.history.push(link);
+    function navigateTo(page){
+        setSelectedPage(page.id)
+        props.history.push(page.route);
     }
 
     async function logout(){
@@ -93,7 +94,7 @@ function Sidebar(props) {
                 classes={{ paper: classes.drawerPaper, docked: classes.docked }}
             >
                 <div className="sb-header">
-                    <ListItem button selected={selectedPage === PAGES.profile.id} onClick={e => navigateTo("/profile")}>
+                    <ListItem button selected={selectedPage === PAGES.profile.id} onClick={e => navigateTo(PAGES.profile)}>
                         <ListItemIcon>
                             <AccountCircleIcon/>
                         </ListItemIcon>
@@ -104,21 +105,21 @@ function Sidebar(props) {
                 <Divider />
 
                 <div className={`sb-body ${classes.mainDrawerItems}`}>
-                    <ListItem button selected={selectedPage === PAGES.dashboard.id} onClick={e => navigateTo("/")}>
+                    <ListItem button selected={selectedPage === PAGES.dashboard.id} onClick={e => navigateTo(PAGES.dashboard)}>
                         <ListItemIcon>
                             <HomeIcon/>
                         </ListItemIcon>
                         <ListItemText primary="Dashboard" />
                     </ListItem>
 
-                    <ListItem button selected={selectedPage === PAGES.orders.id} onClick={e => navigateTo("/orders")}>
+                    <ListItem button selected={selectedPage === PAGES.orders.id} onClick={e => navigateTo(PAGES.orders)}>
                         <ListItemIcon>
                             <ListIcon/>
                         </ListItemIcon>
                         <ListItemText primary="Order History" />
                     </ListItem>
 
-                    <ListItem button selected={selectedPage === PAGES.neworder.id} onClick={e => navigateTo("/neworder")}>
+                    <ListItem button selected={selectedPage === PAGES.neworder.id} onClick={e => navigateTo(PAGES.neworder)}>
                         <ListItemIcon>
                             <AddBoxIcon/>
                         </ListItemIcon>
