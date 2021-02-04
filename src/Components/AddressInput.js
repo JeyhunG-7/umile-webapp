@@ -42,14 +42,14 @@ export function AddressInput(props) {
         });
     }
 
-    function onPlaceSelected(){
-        console.log('Place selected');
+    function onPlaceSelected(val){
+        props.selectedAddress(val);
     }
 
     return (
-            <Autocomplete freeSolo options={list} autoSelect autoHighlight onSelect={onPlaceSelected} fullWidth style={{width: props.width}}
+            <Autocomplete freeSolo options={list} autoSelect autoHighlight onChange={(event, value) => onPlaceSelected(value)} fullWidth style={{width: props.width}}
                         renderInput={
-                            (params) => <TextField {...params} onChange={onInputChange} variant="outlined" label="Address" margin="normal" />
+                            (params) => <TextField {...params} onChange={onInputChange} variant="outlined" label="Address" margin="normal" error={props.errorMessage} helperText={props.errorMessage} />
                         } 
             />
     );
