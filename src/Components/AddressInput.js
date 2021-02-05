@@ -47,9 +47,9 @@ export function AddressInput(props) {
     }
 
     return (
-            <Autocomplete freeSolo options={list} autoSelect autoHighlight onChange={(event, value) => onPlaceSelected(value)} fullWidth style={{width: props.width}}
+            <Autocomplete freeSolo options={list} autoSelect autoHighlight onChange={(event, value) => onPlaceSelected(value)} fullWidth style={{width: props.width, margin: 0}}
                         renderInput={
-                            (params) => <TextField {...params} onChange={onInputChange} variant="outlined" label="Address" margin="normal" error={props.errorMessage} helperText={props.errorMessage} inputProps={{...params.inputProps, autocomplete: 'new-password'}} />
+                            (params) => <TextField {...params} onChange={onInputChange} variant="outlined" label="Address" margin="none" error={props.errorMessage} helperText={props.errorMessage} inputProps={{...params.inputProps, autocomplete: 'new-password'}} />
                         } 
             />
     );

@@ -4,10 +4,10 @@ import Validate from 'validate.js';
 
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
+import Paper from '@material-ui/core/Paper';
 
 import { AddressInput } from '../../Components/AddressInput';
 
@@ -123,15 +123,12 @@ export default function NewOrder(props) {
         }
     }
 
-
     return (
         <Container style={{ padding: 40 }}>
-            <Grid container spacing={2} justify='flex-start'>
-                <Grid item xs={12}>
-                    <h2 style={{ fontWeight: '500', margin: '10px 0' }}>Pick up information</h2>
-                </Grid>
-                <Grid container spacing={2} style={{ margin: 0 }}>
-                    <Grid item xs={3}>
+            <Paper style={{ padding: '3% 5% 4% 5%', borderRadius: 30, width: '60%' }}>
+                <div style={{ position: 'relative', display: 'grid', gridTemplateRows: '1fr 1fr 1fr', width: '100%', gridRowGap: 25, gridTemplateRows: 'auto' }}>
+                    <h2 style={{ fontWeight: '500', margin: '0' }}>Pick up information</h2>
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField
                             label='Name'
                             variant='outlined'
@@ -139,9 +136,8 @@ export default function NewOrder(props) {
                             inputRef={namePickUp}
                             error={stateObj.namePickUpMessage}
                             helperText={stateObj.namePickUpMessage}
+                            style={{ marginRight: 25 }}
                         />
-                    </Grid>
-                    <Grid item xs={3}>
                         <TextField
                             label='Phone'
                             variant='outlined'
@@ -150,20 +146,17 @@ export default function NewOrder(props) {
                             error={stateObj.phonePickUpMessage}
                             helperText={stateObj.phonePickUpMessage}
                         />
-                    </Grid>
-                </Grid>
-                <Grid item xs={3}>
+                    </div>
                     <AddressInput
                         errorMessage={stateObj.addressPickUpMessage}
                         selectedAddress={handleAddressPickUpSelect} />
-                </Grid>
-            </Grid>
-            <Grid container spacing={2} justify='flex-start'>
-                <Grid item xs={12}>
-                    <h2 style={{ fontWeight: '500', margin: '50px 0 10px 0' }}>Drop off information</h2>
-                </Grid>
-                <Grid container spacing={2} style={{ margin: 0 }}>
-                    <Grid item xs={3}>
+                </div>
+            </Paper>
+
+            <Paper style={{ padding: '3% 5% 4% 5%', borderRadius: 30, width: '60%', marginTop: 35}}>
+                <div style={{ position: 'relative', display: 'grid', gridTemplateRows: '1fr 1fr 1fr', width: '100%', gridRowGap: 25, gridTemplateRows: 'auto' }}>
+                    <h2 style={{ fontWeight: '500', margin: '0' }}>Drop off information</h2>
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField
                             label='Name'
                             variant='outlined'
@@ -171,9 +164,8 @@ export default function NewOrder(props) {
                             inputRef={nameDropOff}
                             error={stateObj.nameDropOffMessage}
                             helperText={stateObj.nameDropOffMessage}
+                            style={{ marginRight: 25 }}
                         />
-                    </Grid>
-                    <Grid item xs={3}>
                         <TextField
                             label='Phone'
                             variant='outlined'
@@ -182,17 +174,16 @@ export default function NewOrder(props) {
                             error={stateObj.phoneDropOffMessage}
                             helperText={stateObj.phoneDropOffMessage}
                         />
-                    </Grid>
-                </Grid>
-                <Grid item xs={3}>
+                    </div>
                     <AddressInput
                         errorMessage={stateObj.addressDropOffMessage}
                         selectedAddress={handleAddressDropOffSelect} />
-                </Grid>
-            </Grid>
-            <Button variant='contained' 
-                color='primary' 
-                style={{ display: 'flex', margin: '50px auto' }} 
+                </div>
+            </Paper>
+
+            <Button variant='contained'
+                color='primary'
+                style={{ display: 'flex', margin: '50px auto' }}
                 onClick={submitPlaceOrder}>
                 Place order
             </Button>

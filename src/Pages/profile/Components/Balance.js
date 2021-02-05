@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography';
 
 
 export default function Balance(props) {
-
     const [anchorEl, setAnchorEl] = useState(null);
     const [openPopover, setOpenPopover] = useState(false);
 

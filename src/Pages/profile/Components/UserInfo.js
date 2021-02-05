@@ -8,8 +8,8 @@ import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
-export default function Userinfo(props) {
 
+export default function Userinfo(props) {
     const [anchorEl, setAnchorEl] = useState(null);
     const [openPopover, setOpenPopover] = useState(false);
 

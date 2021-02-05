@@ -8,8 +8,8 @@ import UserInfo from './Components/UserInfo';
 import Balance from './Components/Balance';
 import Location from './Components/Location';
 
-export default function Profile(props) {
 
+export default function Profile(props) {
     const [email, setEmail] = useState('');
     const [companyName, setCompanyName] = useState('');
     const [name, setName] = useState('');
@@ -40,7 +40,6 @@ export default function Profile(props) {
     
     return (
         <Container style={{ padding: 40 }}>
-
             <div style={{ position: 'relative', display: 'grid', gridTemplateColumns: '1fr 1fr',  width: '100%', gridColumnGap: 40, gridTemplateRows: 'auto' }}>
                 <div style={{ position: 'relative', display: 'grid', gridTemplateRows: '1fr 1fr', width: '100%', gridRowGap: 40, gridTemplateRows: 'auto' }}>
                     <UserInfo
@@ -48,11 +47,9 @@ export default function Profile(props) {
                         companyName={companyName}
                         email={email}
                         phone={phone}/>
-
                     <Balance 
                         balance={balance}/>
                 </div>
-
                 <Location
                     addressObj={addressObj}/>
             </div>
