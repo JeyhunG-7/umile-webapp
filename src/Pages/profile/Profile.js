@@ -2,6 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { makeGetRequest } from '../../Utils/Fetch';
 import './Profile.css';
 
+import Container from '@material-ui/core/Container';
+
+import UserInfo from './Components/UserInfo';
+import Balance from './Components/Balance';
+import Location from './Components/Location';
+
 export default function Profile(props) {
 
     const [email, setEmail] = useState('');
@@ -9,12 +15,17 @@ export default function Profile(props) {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [balance, setBalance] = useState('');
+    const [addressObj, setAddressObj] = useState({
+        address: '3625 Shaganappi Trail NW, Calgary',
+        latitude: 51.084885,
+        longitude: -114.155761
+    });
 
     // fetch user information
     useEffect(() => {
-        async function effect(){
+        async function effect() {
             var result = await makeGetRequest('/clients/info', { auth: true });
-            if (!result){
+            if (!result) {
                 // TODO: show error
             } else {
                 setEmail(result.email);
@@ -27,11 +38,37 @@ export default function Profile(props) {
         effect();
     }, []);
     
-    
-
     return (
-        <div>
-            Profile
-        </div>
+        <Container style={{ padding: 40 }}>
+
+            <div style={{ position: 'relative', display: 'grid', gridTemplateColumns: '1fr 1fr',  width: '100%', gridColumnGap: 40, gridTemplateRows: 'auto' }}>
+                <div style={{ position: 'relative', display: 'grid', gridTemplateRows: '1fr 1fr', width: '100%', gridRowGap: 40, gridTemplateRows: 'auto' }}>
+                    <UserInfo
+                        name={name}
+                        companyName={companyName}
+                        email={email}
+                        phone={phone}/>
+
+                    <Balance 
+                        balance={balance}/>
+                </div>
+
+                <Location
+                    addressObj={addressObj}/>
+            </div>
+
+            {/* <Snackbar open={orderPlaced}
+                autoHideDuration={6000}
+                onClose={handleSnackbarClose}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            >
+                <Alert onClose={handleSnackbarClose}
+                    severity="success"
+                    elevation={6}
+                    variant="filled">
+                    Oder has been successfully placed.
+                    </Alert>
+            </Snackbar> */}
+        </Container>
     );
 }
