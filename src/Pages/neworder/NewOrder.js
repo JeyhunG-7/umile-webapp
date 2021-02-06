@@ -11,24 +11,29 @@ import Paper from '@material-ui/core/Paper';
 
 import { AddressInput } from '../../Components/AddressInput';
 
+import { makePostRequest } from '../../Utils/Fetch';
 
 export default function NewOrder(props) {
     const [orderPlaced, setOrderPlaced] = useState(false);
 
     const namePickUp = useRef(null);
     const phonePickUp = useRef(null);
+    const notesPickUp = useRef(null);
     const [addressPickUp, setAddressPickUp] = useState(null);
 
     const nameDropOff = useRef(null);
     const phoneDropOff = useRef(null);
+    const notesDropOff = useRef(null);
     const [addressDropOff, setAddressDropOff] = useState(null);
 
     const [stateObj, setMessage] = useState({
         namePickUpMessage: null,
         phonePickUpMessage: null,
+        notesPickUpMessage: null,
         addressPickUpMessage: null,
         nameDropOffMessage: null,
         phoneDropOffMessage: null,
+        notesDropOffMessage: null,
         addressDropOffMessage: null
     });
 
@@ -77,12 +82,12 @@ export default function NewOrder(props) {
         }
     };
 
-    function handleAddressPickUpSelect(val) {
-        setAddressPickUp(val);
+    function handleAddressPickUpSelect(addr) {
+        setAddressPickUp(addr);
     }
 
-    function handleAddressDropOffSelect(val) {
-        setAddressDropOff(val);
+    function handleAddressDropOffSelect(addr) {
+        setAddressDropOff(addr);
     }
 
     const handleSnackbarClose = (event, reason) => {
@@ -93,7 +98,7 @@ export default function NewOrder(props) {
         setOrderPlaced(false);
     };
 
-    function submitPlaceOrder() {
+    async function submitPlaceOrder() {
         let check = Validate({
             namePickUp: namePickUp.current.value,
             phonePickUp: phonePickUp.current.value,
@@ -116,10 +121,28 @@ export default function NewOrder(props) {
         });
 
         if (!check) {
+            let opts = {
+                auth: true,
+                body: {
+                    cityId: 1,
+                    pickup: {
+                        placeId: addressPickUp,
+                        note: ""
+                    },
+                    dropoff: {
+                        placeId: addressDropOff,
+                        note: ""
+                    }
+                }
+            }
 
-            //Success BE order placed
-            setOrderPlaced(true);
-
+            let result = await makePostRequest('/orders/place', opts);
+            if (result){
+                //Success BE order placed
+                setOrderPlaced(true);
+            } else {
+                //TODO: show error
+            }
         }
     }
 
