@@ -24,20 +24,15 @@ export default function Userinfo(props) {
     };
 
     return (
-        <Paper style={{ padding: '5%', display: 'flex', flexDirection: 'column', alignItems: 'center', borderRadius: 30 }}>
+        <Paper style={{ padding: '5%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 10 }}>
                 <h2 style={{ fontWeight: '500', textAlign: 'center' }}>User Information</h2>
-                <Button
-                    style={{ backgroundColor: 'transparent', height: 40, minWidth: 50, padding: 0 }}
-                    disableElevation={true}
-                    onClick={handleClickInfo}
-                    variant='contained'>
-                    <InfoIcon />
-                </Button>
+                <InfoIcon aria-haspopup="true" onMouseEnter={handleClickInfo} onMouseLeave={handleClosePopover} />
             </div>
             <Popover
                 open={openPopover}
                 anchorEl={anchorEl}
+                style={{ pointerEvents: 'none'}}
                 onClose={handleClosePopover}
                 anchorOrigin={{
                     vertical: 'top',
