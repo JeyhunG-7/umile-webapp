@@ -1,39 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import './Main.css';
-import { makeGetRequest } from '../../Utils/Fetch';
 
-import { AddressInput } from '../../Components/AddressInput';
+import Scheduled from './Components/Scheduled';
+import Placed from './Components/Placed';
 
 export default function Main(props) {
-
-    const [orders, setOrders] = useState([]);
     
-    useEffect(() => {
-        async function effect(){
-            var opts = {
-                auth: true, 
-                query: {
-                    cityId: 1,
-                    active: true
-                }
-            }
-            var result = await makeGetRequest('/orders/list', opts);
-            if (!result){
-                // TODO: show error
-            } else {
-                setOrders(result);
-            }
-        }
-        effect();
-    }, []);
 
     return (
-        <>
-            <div>
-                Hello<br></br>
-                <AddressInput width="300px"  />
-                
-            </div>
-        </>
+        <div style={{ position: 'relative', padding: 40, display: 'grid', gridTemplateRows: '1fr 1fr', width: '100%', gridRowGap: 45, gridTemplateRows: 'auto' }}>
+            <Scheduled/>
+            <Placed/>
+        </div>
     );
 }
