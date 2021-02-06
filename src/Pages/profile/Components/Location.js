@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../Profile.css';
 import Map from '../../../Components/Map';
 import Validate from 'validate.js';
@@ -10,6 +10,7 @@ import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 
 import { AddressInput } from '../../../Components/AddressInput';
+import { makePostRequest } from '../../../Utils/Fetch';
 
 
 export default function Profile(props) {
@@ -30,6 +31,10 @@ export default function Profile(props) {
         }
     };
 
+    useEffect(() => {
+        handleShowAddressUpdate();
+    }, [props.addressObj])
+
     const handleClickInfo = (e, val) => {
         setOpenPopover(true);
         setAnchorEl(e.currentTarget);
@@ -48,7 +53,7 @@ export default function Profile(props) {
         setLocation(val);
     }
 
-    function handleAddressUpdate() {
+    async function handleAddressUpdate() {
         let check = Validate({
             location: location
         }, constraints);
@@ -61,8 +66,18 @@ export default function Profile(props) {
         });
 
         if (!check) {
-            //TO-DO when cancel clicked map recenters to San Fran
-            //Call BE update address
+            let opts = {
+                auth: true,
+                body: {
+                    placeId: location
+                }
+            }
+            let result = await makePostRequest('/clients/home', opts);
+            if (result){
+                props.refresh();
+            } else {
+                //TODO: show error
+            }
         }
     }
 
@@ -77,11 +92,20 @@ export default function Profile(props) {
                 </div>
             );
         } else {
+            if (props.addressObj){
+                return (
+                    <div style={{ border: '1px solid #ebeef0', width: 300, height: 250, margin: 'auto', borderRadius: 3, overflow: 'hidden' }}>
+                        <Map lat={props.addressObj && props.addressObj.lat} lng={props.addressObj && props.addressObj.lng} />
+                    </div>
+                );
+            }
+
             return (
-                <div style={{ border: '1px solid #ebeef0', width: 300, height: 250, margin: 'auto', borderRadius: 3, overflow: 'hidden' }}>
-                    <Map lat={props.addressObj && props.addressObj.latitude} lng={props.addressObj && props.addressObj.longitude} />
+                <div style={{ margin: 'auto', borderRadius: 3, overflow: 'hidden' }}>
+                    No information
                 </div>
             );
+            
         }
     }
 

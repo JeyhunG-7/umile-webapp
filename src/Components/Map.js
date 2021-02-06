@@ -9,11 +9,28 @@ const mapStyles = {
 
 // Source: https://www.digitalocean.com/community/tutorials/how-to-integrate-the-google-maps-api-into-react-applications
 export class MapContainer extends Component {
+    constructor() {
+        super();
+        this.state = {
+            coords: {
+                lat: 0,
+                lng: 0
+            }
+        }
+    }
+
+    componentDidMount(){
+        const _this = this;
+        this.setState({
+            coords: {
+                lat: _this.props.lat,
+                lng: _this.props.lng
+            }
+        });
+    }
+
     render() {
-        let coords = {
-            lat: this.props.lat || 40.45683,
-            lng: this.props.lng || 49.74461
-        };
+        const { coords } = this.state;
 
         return (
             <Map
