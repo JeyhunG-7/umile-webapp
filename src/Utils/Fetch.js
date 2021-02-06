@@ -55,31 +55,38 @@ export async function makeGetRequest(url, { auth = false, query = {} }) {
  * @param {object} param param object 
  * @param {function} err for error message
  */
-export async function makePostRequest(url, { obj = undefined, params = {} } = {}, err) {
-    console.log('OBJ =>', obj);
-    console.log('PARAMS =>', params);
+export async function makePostRequest(url, { auth = false, body = {} }) {
     var u = new URL(`http://localhost:8080/api${url}`);
-    u.search = new URLSearchParams(params).toString();
     try{
+
+        let headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+
+        if (auth){
+            var auth_token = GetAuthToken();
+            if (!auth_token){
+                return false;
+            }
+            
+            headers.Authorization = `Bearer ${auth_token}`;
+        }
+
+        console.log('BODY: ', body);
+
         var result = await fetch(u, {
             method: 'POST',
             mode: 'cors',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                "Access-Control-Allow-Origin": "*"
-            },
-            body: JSON.stringify(obj)
+            headers: headers,
+            body: JSON.stringify(body)
         });
-        console.log("FETCH PART 1 => ", result);
         var data = await result.json();
-        console.log("FETCH PART 2 => ", data);
         if (data.success) {
             return data.data;
         }
     } catch(e){
         console.error(e);
-        err(e);
         return;
     }
     
