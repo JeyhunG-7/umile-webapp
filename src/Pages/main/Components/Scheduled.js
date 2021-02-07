@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../Main.css';
 
 import Paper from '@material-ui/core/Paper';
@@ -6,53 +6,26 @@ import Paper from '@material-ui/core/Paper';
 import OrdersMap from '../../../Components/OrdersMap';
 import NoScheduledOrders from './NoScheduledOrders';
 import OrdersTableHeader from './ScheduledOrder';
+import { makeGetRequest } from '../../../Utils/Fetch';
 
 
 export default function Scheduled(props) {
-    let tmpOrders = [];
+    const [ordersList, setOrdersList] = useState([]);
 
-    tmpOrders = [
-        {
-            id: 1,
-            status: 2,
-            received_date: 1612651443719,
-            pickup: {
-                address: "Warehouse Rd, SE, Calgary",
-                note: "something in here",
-                name: "Kenan",
-                placeId: 1
-            },
-            dropoff: {
-                address: "Green Circle, NW, Calgary",
-                note: "something in here",
-                name: "Sir. Johnson",
-                placeId: 2
-            }
-        },
-        {
-            id: 2,
-            status: 3,
-            received_date: 1612651433719,
-            pickup: {
-                address: "Warehouse Rd, SE, Calgary",
-                note: "something in here",
-                placeId: 1
-            },
-            dropoff: {
-                address: "Green Triangle, SW, Calgary",
-                note: "something in here",
-                name: "Stefanie",
-                placeId: 2
-            }
+    useEffect(() => {
+        async function effect(){
+            var scheduledOrders = [];//await makeGetRequest('/orders/list', {auth: true, query: {cityId: 1, active: true}});
+            setOrdersList(scheduledOrders);
         }
-    ];
+        effect();
+    },[]);
 
     function _renderComponents() {
-        if (tmpOrders.length > 0) {
+        if (ordersList.length > 0) {
             return (
                 <>
                     <OrdersTableHeader header={true} />
-                    <OrdersMap orders={tmpOrders} showScheduled={true}/>
+                    <OrdersMap orders={ordersList} showScheduled={true}/>
                 </>
             );
         } else {
