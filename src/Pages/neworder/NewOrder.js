@@ -148,7 +148,7 @@ export default function NewOrder(props) {
     return (
         <Container style={{ padding: 40 }}>
             <Paper style={{ padding: '3% 5% 4% 5%', width: '60%' }}>
-                <div style={{ position: 'relative', display: 'grid', gridTemplateRows: '1fr 1fr 1fr', width: '100%', gridRowGap: 25, gridTemplateRows: 'auto' }}>
+                <div style={{ position: 'relative', display: 'grid', width: '100%', gridRowGap: 25, gridTemplateRows: 'auto' }}>
                     <h2 style={{ fontWeight: '500', margin: '0' }}>Pick up information</h2>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField
@@ -186,7 +186,7 @@ export default function NewOrder(props) {
             </Paper>
 
             <Paper style={{ padding: '3% 5% 4% 5%', width: '60%', marginTop: 35}}>
-                <div style={{ position: 'relative', display: 'grid', gridTemplateRows: '1fr 1fr 1fr', width: '100%', gridRowGap: 25, gridTemplateRows: 'auto' }}>
+                <div style={{ position: 'relative', display: 'grid', width: '100%', gridRowGap: 25, gridTemplateRows: 'auto' }}>
                     <h2 style={{ fontWeight: '500', margin: '0' }}>Drop off information</h2>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField

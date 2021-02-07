@@ -55,8 +55,6 @@ const PAGES = Object.freeze({
 
 
 function Sidebar(props) {
-    const screenX = window.screen.width;
-
     const [selectedPage, setSelectedPage] = useState(-1);
 
     const classes = useStyles();

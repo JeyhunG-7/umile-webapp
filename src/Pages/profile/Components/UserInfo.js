@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import '../Profile.css';
 
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
 import InfoIcon from '@material-ui/icons/Info';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';

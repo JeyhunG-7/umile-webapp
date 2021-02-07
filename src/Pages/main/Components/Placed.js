@@ -3,7 +3,7 @@ import '../Main.css';
 
 import Paper from '@material-ui/core/Paper';
 
-import OrdersMap from './OrdersMap';
+import OrdersMap from '../../../Components/OrdersMap';
 import NoPlacedOrders from './NoPlacedOrders';
 import OrdersTableHeader from './PlacedOrder';
 
@@ -51,7 +51,7 @@ export default function Placed(props) {
             return (
                 <>
                     <OrdersTableHeader header={true}/>
-                    <OrdersMap orders={tmpOrders} />
+                    <OrdersMap orders={tmpOrders} showPlaced={true}/>
                 </>
             );
         } else {

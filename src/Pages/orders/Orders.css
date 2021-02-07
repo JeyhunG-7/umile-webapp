@@ -1,0 +1,32 @@
+.ul-hdr-history-order-table{
+    position: relative;
+    display: grid;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px 5px;
+    list-style: none;
+    width: 100%;
+    grid-template-columns: 9.8% 17.7% 17.7% 13.8% 13.8%;
+    margin: 0 0 10px 0;
+}
+
+.ul-row-history-order-table{
+    position: relative;
+    display: grid;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px solid grey;
+    border-radius: 15px;
+    padding: 10px 5px;
+    list-style: none;
+    width: 100%;
+    grid-template-columns: 9.8% 17.7% 17.7% 13.8% 13.8%;
+    margin: 0 0 20px 0;
+}
+
+
+.ul-hdr-history-order-table li,
+.ul-row-history-order-table li{
+    text-align: center; 
+    line-height: 20px;
+}

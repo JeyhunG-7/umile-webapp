@@ -43,7 +43,7 @@ export default function Profile(props) {
     return (
         <Container style={{ padding: 40 }}>
             <div style={{ position: 'relative', display: 'grid', gridTemplateColumns: '1fr 1fr',  width: '100%', gridColumnGap: 40, gridTemplateRows: 'auto' }}>
-                <div style={{ position: 'relative', display: 'grid', gridTemplateRows: '1fr 1fr', width: '100%', gridRowGap: 40, gridTemplateRows: 'auto' }}>
+                <div style={{ position: 'relative', display: 'grid', width: '100%', gridRowGap: 40, gridTemplateRows: 'auto' }}>
                     <UserInfo
                         name={name}
                         companyName={companyName}
