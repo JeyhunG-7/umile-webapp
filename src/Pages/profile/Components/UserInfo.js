@@ -26,8 +26,8 @@ export default function Userinfo(props) {
     return (
         <Paper style={{ padding: '5%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 10 }}>
-                <h2 style={{ fontWeight: '500', textAlign: 'center' }}>User Information</h2>
-                <InfoIcon aria-haspopup="true" onMouseEnter={handleClickInfo} onMouseLeave={handleClosePopover} />
+                <h2 style={{ fontWeight: '500', textAlign: 'center', marginRight: 8 }}>User Information</h2>
+                <InfoIcon aria-haspopup="true" onMouseEnter={handleClickInfo} onMouseLeave={handleClosePopover}/>
             </div>
             <Popover
                 open={openPopover}

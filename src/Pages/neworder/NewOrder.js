@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import './NewOrder.css';
 import Validate from 'validate.js';
+import { makePostRequest } from '../../Utils/Fetch';
 
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
@@ -10,8 +11,6 @@ import Alert from '@material-ui/lab/Alert';
 import Paper from '@material-ui/core/Paper';
 
 import { AddressInput } from '../../Components/AddressInput';
-
-import { makePostRequest } from '../../Utils/Fetch';
 
 export default function NewOrder(props) {
     const [orderPlaced, setOrderPlaced] = useState(false);
@@ -148,7 +147,7 @@ export default function NewOrder(props) {
 
     return (
         <Container style={{ padding: 40 }}>
-            <Paper style={{ padding: '3% 5% 4% 5%', borderRadius: 30, width: '60%' }}>
+            <Paper style={{ padding: '3% 5% 4% 5%', width: '60%' }}>
                 <div style={{ position: 'relative', display: 'grid', gridTemplateRows: '1fr 1fr 1fr', width: '100%', gridRowGap: 25, gridTemplateRows: 'auto' }}>
                     <h2 style={{ fontWeight: '500', margin: '0' }}>Pick up information</h2>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -170,13 +169,23 @@ export default function NewOrder(props) {
                             helperText={stateObj.phonePickUpMessage}
                         />
                     </div>
-                    <AddressInput
-                        errorMessage={stateObj.addressPickUpMessage}
-                        selectedAddress={handleAddressPickUpSelect} />
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                        <AddressInput
+                            errorMessage={stateObj.addressPickUpMessage}
+                            selectedAddress={handleAddressPickUpSelect} />
+                        <TextField
+                            label='Notes'
+                            variant='outlined'
+                            fullWidth={true}
+                            inputRef={notesPickUp}
+                            style={{ marginLeft: 25 }}
+                        />
+                    </div>
+                    
                 </div>
             </Paper>
 
-            <Paper style={{ padding: '3% 5% 4% 5%', borderRadius: 30, width: '60%', marginTop: 35}}>
+            <Paper style={{ padding: '3% 5% 4% 5%', width: '60%', marginTop: 35}}>
                 <div style={{ position: 'relative', display: 'grid', gridTemplateRows: '1fr 1fr 1fr', width: '100%', gridRowGap: 25, gridTemplateRows: 'auto' }}>
                     <h2 style={{ fontWeight: '500', margin: '0' }}>Drop off information</h2>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -198,9 +207,19 @@ export default function NewOrder(props) {
                             helperText={stateObj.phoneDropOffMessage}
                         />
                     </div>
-                    <AddressInput
-                        errorMessage={stateObj.addressDropOffMessage}
-                        selectedAddress={handleAddressDropOffSelect} />
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                        <AddressInput
+                            errorMessage={stateObj.addressDropOffMessage}
+                            selectedAddress={handleAddressDropOffSelect} />
+                        <TextField
+                            label='Notes'
+                            variant='outlined'
+                            fullWidth={true}
+                            inputRef={notesDropOff}
+                            style={{ marginLeft: 25 }}
+                        />
+                    </div>
+                    
                 </div>
             </Paper>
 

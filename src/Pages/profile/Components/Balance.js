@@ -26,9 +26,9 @@ export default function Balance(props) {
     return (
         <Paper style={{ padding: '5%' }}>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                <h2 style={{ fontWeight: '500', textAlign: 'center' }}>Balance</h2>
+                <h2 style={{ fontWeight: '500', textAlign: 'center', marginRight: 8 }}>Balance</h2>
                 <InfoIcon aria-haspopup="true" onMouseEnter={handleClickInfo} onMouseLeave={handleClosePopover} />
-                <h2 style={{ fontWeight: '500', textAlign: 'center', marginLeft: 50 }}>{props.balance}</h2>
+                <h2 style={{ fontWeight: '500', textAlign: 'center', marginLeft: 50}}>{props.balance}</h2>
             </div>
             <Popover
                 open={openPopover}
