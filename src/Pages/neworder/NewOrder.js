@@ -1,59 +1,38 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import './NewOrder.css';
 import Validate from 'validate.js';
-import { makePostRequest } from '../../Utils/Fetch';
+import { makePostRequest, makeGetRequest } from '../../Utils/Fetch';
 
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
-import TextField from '@material-ui/core/TextField';
-import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
-import Paper from '@material-ui/core/Paper';
+import { Container, Button, TextField, Snackbar, Paper, Radio, RadioGroup, FormControlLabel, FormControl} from '@material-ui/core';
 
 import { AddressInput } from '../../Components/AddressInput';
+
 
 export default function NewOrder(props) {
     const [orderPlaced, setOrderPlaced] = useState(false);
 
-    const namePickUp = useRef(null);
-    const phonePickUp = useRef(null);
     const notesPickUp = useRef(null);
-    const [addressPickUp, setAddressPickUp] = useState(null);
+    const [locationPickUp, setlocationPickUp] = useState(null);
+    const [homeLocationObj, setHomeLocationObj] = useState(null);
+    const [homeLocationType, setHomeLocationType] = useState('home');
 
     const nameDropOff = useRef(null);
     const phoneDropOff = useRef(null);
     const notesDropOff = useRef(null);
-    const [addressDropOff, setAddressDropOff] = useState(null);
+    const [locationDropOff, setlocationDropOff] = useState(null);
 
     const [stateObj, setMessage] = useState({
-        namePickUpMessage: null,
-        phonePickUpMessage: null,
         notesPickUpMessage: null,
-        addressPickUpMessage: null,
+        locationPickUpMessage: null,
         nameDropOffMessage: null,
         phoneDropOffMessage: null,
         notesDropOffMessage: null,
-        addressDropOffMessage: null
+        locationDropOffMessage: null
     });
 
     const constraints = {
-        namePickUp: {
-            format: {
-                pattern: "[A-Za-z '’-]+"
-            },
-            presence: {
-                allowEmpty: false
-            }
-        },
-        phonePickUp: {
-            format: {
-                pattern: "[0-9 ()+-]+"
-            },
-            presence: {
-                allowEmpty: false
-            }
-        },
-        addressPickUp: {
+        locationPickUp: {
             presence: {
                 allowEmpty: false
             }
@@ -74,48 +53,59 @@ export default function NewOrder(props) {
                 allowEmpty: false
             }
         },
-        addressDropOff: {
+        locationDropOff: {
             presence: {
                 allowEmpty: false
             }
         }
     };
 
-    function handleAddressPickUpSelect(addr) {
-        setAddressPickUp(addr);
+    async function getUserHomeLocation() {
+        var result = await makeGetRequest('/clients/home', { auth: true });
+        if (result) {
+            setHomeLocationObj(result);
+        }
     }
 
-    function handleAddressDropOffSelect(addr) {
-        setAddressDropOff(addr);
+    // fetch user information
+    useEffect(() => {
+        getUserHomeLocation();
+    }, []);
+
+    const handleHomeLocationType = (event) => {
+        setHomeLocationType(event.target.value);
+    };
+
+    function handleSelectLocationPickUp(addr) {
+        setlocationPickUp(addr);
+    }
+
+    function handleSelectLocationDropOff(addr) {
+        setlocationDropOff(addr);
     }
 
     const handleSnackbarClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
-
         setOrderPlaced(false);
     };
 
     async function submitPlaceOrder() {
         let check = Validate({
-            namePickUp: namePickUp.current.value,
-            phonePickUp: phonePickUp.current.value,
-            addressPickUp: addressPickUp,
+            locationPickUp: homeLocationType === 'home' ? homeLocationObj && homeLocationObj.address : locationPickUp,
             nameDropOff: nameDropOff.current.value,
             phoneDropOff: phoneDropOff.current.value,
-            addressDropOff: addressDropOff,
+            locationDropOff: locationDropOff,
         }, constraints);
 
         check && setMessage(prevState => {
             return {
                 ...prevState,
-                namePickUpMessage: check.namePickUp ? (check.namePickUp.length > 1 ? "Required!" : "Enter valid name") : null,
-                phonePickUpMessage: check.phonePickUp ? (check.phonePickUp.length > 1 ? "Required!" : "Enter valid phone number") : null,
-                addressPickUpMessage: check.addressPickUp ? "Required!" : null,
+                locationPickUpMessage: check.locationPickUp ? "Required!" : null,
                 nameDropOffMessage: check.nameDropOff ? (check.nameDropOff.length > 1 ? "Required!" : "Enter valid name") : null,
                 phoneDropOffMessage: check.phoneDropOff ? (check.phoneDropOff.length > 1 ? "Required!" : "Enter valid phone number") : null,
-                addressDropOffMessage: check.addressDropOff ? "Required!" : null,
+                locationDropOffMessage: check.locationDropOff ? "Required!" : null,
             }
         });
 
@@ -125,18 +115,21 @@ export default function NewOrder(props) {
                 body: {
                     cityId: 1,
                     pickup: {
-                        placeId: addressPickUp,
-                        note: ""
+                        placeId: homeLocationType === 'home' ? homeLocationObj && homeLocationObj.address : locationPickUp,
+                        note: notesPickUp
                     },
                     dropoff: {
-                        placeId: addressDropOff,
-                        note: ""
+                        placeId: locationDropOff,
+                        customer_name: nameDropOff.current.value,
+                        customer_phone: phoneDropOff.current.value,
+                        note: notesDropOff
                     }
                 }
             }
 
             let result = await makePostRequest('/orders/place', opts);
-            if (result){
+            console.log('RESULT: ', result);
+            if (result) {
                 //Success BE order placed
                 setOrderPlaced(true);
             } else {
@@ -150,29 +143,17 @@ export default function NewOrder(props) {
             <Paper style={{ padding: '3% 5% 4% 5%', width: '60%' }}>
                 <div style={{ position: 'relative', display: 'grid', width: '100%', gridRowGap: 25, gridTemplateRows: 'auto' }}>
                     <h2 style={{ fontWeight: '500', margin: '0' }}>Pick up information</h2>
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
-                        <TextField
-                            label='Name'
-                            variant='outlined'
-                            fullWidth={true}
-                            inputRef={namePickUp}
-                            error={stateObj.namePickUpMessage}
-                            helperText={stateObj.namePickUpMessage}
-                            style={{ marginRight: 25 }}
-                        />
-                        <TextField
-                            label='Phone'
-                            variant='outlined'
-                            fullWidth={true}
-                            inputRef={phonePickUp}
-                            error={stateObj.phonePickUpMessage}
-                            helperText={stateObj.phonePickUpMessage}
-                        />
-                    </div>
+                    <FormControl component="fieldset">
+                        <RadioGroup aria-label="home-location" value={homeLocationType} onChange={handleHomeLocationType}>
+                            <FormControlLabel value="home" control={<Radio color="primary" />} label={'Home location (' + (homeLocationObj && homeLocationObj.address) + ')'} />
+                            <FormControlLabel value="new" control={<Radio color="primary" />} label="Different location" />
+                        </RadioGroup>
+                    </FormControl>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <AddressInput
-                            errorMessage={stateObj.addressPickUpMessage}
-                            selectedAddress={handleAddressPickUpSelect} />
+                            errorMessage={stateObj.locationPickUpMessage}
+                            selectedAddress={handleSelectLocationPickUp}
+                            disabled={homeLocationType === 'home'} />
                         <TextField
                             label='Notes'
                             variant='outlined'
@@ -181,11 +162,9 @@ export default function NewOrder(props) {
                             style={{ marginLeft: 25 }}
                         />
                     </div>
-                    
                 </div>
             </Paper>
-
-            <Paper style={{ padding: '3% 5% 4% 5%', width: '60%', marginTop: 35}}>
+            <Paper style={{ padding: '3% 5% 4% 5%', width: '60%', marginTop: 35 }}>
                 <div style={{ position: 'relative', display: 'grid', width: '100%', gridRowGap: 25, gridTemplateRows: 'auto' }}>
                     <h2 style={{ fontWeight: '500', margin: '0' }}>Drop off information</h2>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -209,8 +188,8 @@ export default function NewOrder(props) {
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                         <AddressInput
-                            errorMessage={stateObj.addressDropOffMessage}
-                            selectedAddress={handleAddressDropOffSelect} />
+                            errorMessage={stateObj.locationDropOffMessage}
+                            selectedAddress={handleSelectLocationDropOff} />
                         <TextField
                             label='Notes'
                             variant='outlined'
@@ -219,10 +198,9 @@ export default function NewOrder(props) {
                             style={{ marginLeft: 25 }}
                         />
                     </div>
-                    
+
                 </div>
             </Paper>
-
             <Button variant='contained'
                 color='primary'
                 style={{ display: 'flex', margin: '50px auto' }}

@@ -10,22 +10,26 @@ import { makeGetRequest } from '../../../Utils/Fetch';
 
 export default function Placed(props) {
     const [ordersList, setOrdersList] = useState([]);
+    const [orderUpdated, setOrderUpdated] = useState(true);
 
     useEffect(() => {
         async function effect(){
-            var placedOrders = await makeGetRequest('/orders/list', {auth: true, query: {cityId: 1, active: false}}) ?? [];
-            var activeOrders = await makeGetRequest('/orders/list', {auth: true, query: {cityId: 1, active: true}}) ?? [];
-            setOrdersList(placedOrders.concat(activeOrders));
+            var placedOrders = await makeGetRequest('/orders/list', {auth: true, query: {cityId: 1, active: true}}) ?? [];
+            setOrdersList(placedOrders);
         }
-        effect();
-    },[]);
+
+        if (orderUpdated){
+            effect();
+            setOrderUpdated(false);
+        }
+    },[orderUpdated]);
 
     function _renderComponents() {
         if (ordersList.length > 0) {
             return (
                 <>
                     <OrdersTableHeader header={true}/>
-                    <OrdersMap orders={ordersList} showPlaced={true}/>
+                    <OrdersMap orders={ordersList} showPlaced={true} onUpdate={() => setOrderUpdated(true)}/>
                 </>
             );
         } else {
