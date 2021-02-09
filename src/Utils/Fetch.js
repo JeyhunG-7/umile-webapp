@@ -2,8 +2,9 @@ import { GetAuthToken } from "../Components/Helpers/LocalStorage";
 
 export async function makeGetRequest(url, { auth = false, query = {} }) {
     try {
-        var u = new URL(`http://localhost:8080/api${url}`);
+        var u = new URL(`http://localhost/api${url}`);
         u.search = new URLSearchParams(query).toString();
+        let relative_url = u.pathname + u.search;
         try{
             var result = null;
             if (auth){
@@ -12,7 +13,7 @@ export async function makeGetRequest(url, { auth = false, query = {} }) {
                     return false;
                 }
 
-                result = await fetch(u, {
+                result = await fetch(relative_url, {
                     method: 'GET',
                     mode: 'cors',
                     headers: {
@@ -56,7 +57,6 @@ export async function makeGetRequest(url, { auth = false, query = {} }) {
  * @param {function} err for error message
  */
 export async function makePostRequest(url, { auth = false, body = {} }) {
-    var u = new URL(`http://localhost:8080/api${url}`);
     try{
 
         let headers = {
@@ -73,9 +73,7 @@ export async function makePostRequest(url, { auth = false, body = {} }) {
             headers.Authorization = `Bearer ${auth_token}`;
         }
 
-        console.log('BODY: ', body);
-
-        var result = await fetch(u, {
+        var result = await fetch(`/api/${url}`, {
             method: 'POST',
             mode: 'cors',
             headers: headers,
