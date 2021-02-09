@@ -130,12 +130,15 @@ export default function NewOrder(props) {
                     },
                     dropoff: {
                         placeId: addressDropOff,
+                        customer_name: nameDropOff.current.value,
+                        customer_phone: phoneDropOff.current.value,
                         note: ""
                     }
                 }
             }
 
             let result = await makePostRequest('/orders/place', opts);
+            console.log('RESULT: ', result);
             if (result){
                 //Success BE order placed
                 setOrderPlaced(true);

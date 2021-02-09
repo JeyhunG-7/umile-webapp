@@ -6,6 +6,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import { makePostRequest } from '../../../Utils/Fetch';
 
 
 export default function PlacedOrder(props) {
@@ -21,16 +22,36 @@ export default function PlacedOrder(props) {
         setAnchorEl(null);
     };
 
-    function handleUnsubmit() {
-        // BE call
+    function orderIsUpdated(){
+        props.onUpdate();
+        handleCloseMenu();
     }
 
-    function handleDelete() {
-        // BE call
+    async function handleUnsubmit() {
+        let result = await makePostRequest('/orders/status', { auth: true, body: {orderId: order.id, submit: false}});
+        if (result){
+            orderIsUpdated();
+        } else {
+            alert('TODO: Failure');
+        }
     }
 
-    function handleSubmitForDelivery(){
-        // BE call
+    async function handleDelete() {
+        let result = await makePostRequest('/orders/delete', { auth: true, body: {orderId: order.id}});
+        if (result){
+            orderIsUpdated();
+        } else {
+            alert('TODO: Failure');
+        }
+    }
+
+    async function handleSubmitForDelivery(){
+        let result = await makePostRequest('/orders/status', { auth: true, body: {orderId: order.id, submit: true}});
+        if (result){
+            orderIsUpdated();
+        } else {
+            alert('TODO: Failure');
+        }
     }
 
     function _renderRow() {
@@ -66,7 +87,7 @@ export default function PlacedOrder(props) {
                             open={Boolean(anchorEl)}
                             onClose={handleCloseMenu}
                         >
-                            {order.status === 3 && <MenuItem onClick={handleUnsubmit}>Unsubmit for delivery</MenuItem>}
+                            {order.status.id === 2 && <MenuItem onClick={handleUnsubmit}>Unsubmit for delivery</MenuItem>}
                             <MenuItem onClick={handleDelete}>Delete order</MenuItem>
                         </Menu>
                     </li>
@@ -76,7 +97,7 @@ export default function PlacedOrder(props) {
     }
 
     function _renderStatus() {
-        if (order.status === 2) {
+        if (order.status.id === 1) {
             return (
                 <Button variant="contained" color="primary" disableElevation={true} onClick={handleSubmitForDelivery} style={{fontSize: 16, textTransform: 'inherit'}}>
                     Submit for delivery
