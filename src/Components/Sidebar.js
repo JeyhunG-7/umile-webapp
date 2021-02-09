@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './Components.css';
 import { withRouter } from 'react-router-dom';
 
 import { 
@@ -6,22 +7,19 @@ import {
     ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-// icons
-import HomeIcon from '@material-ui/icons/Home';
-import ListIcon from '@material-ui/icons/List';
-import AddBoxIcon from '@material-ui/icons/AddBox';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { logoutAsync } from './Helpers/Authenticator';
+import LogoTransperent from '../Images/logo_transparent.png';
 
-const drawerWidth = 240;
+
+const drawerWidth = 280;
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
     display: "flex"
-  },
+  }
+  ,
   docked: {
     width: drawerWidth,
   },
@@ -88,15 +86,21 @@ function Sidebar(props) {
             <Drawer 
                 variant="permanent" 
                 anchor="left" 
-                className={classes.drawer} 
+                style={{padding: '24px 20px'}}
+                className={`${classes.drawer} sidebar`} 
                 classes={{ paper: classes.drawerPaper, docked: classes.docked }}
             >
+
+                <div style={{padding: '24px 20px'}}>
+                    <img alt="logo" src={LogoTransperent} style={{height: 30, width: 'auto'}}/>
+                </div>
+
                 <div className="sb-header">
                     <ListItem button selected={selectedPage === PAGES.profile.id} onClick={e => navigateTo(PAGES.profile)}>
                         <ListItemIcon>
-                            <AccountCircleIcon/>
+                            <i className="lni lni-user" style={{fontSize: 26}}></i>
                         </ListItemIcon>
-                        <ListItemText primary="Profile" />
+                        <ListItemText primary="Profile" style={{letterSpacing: '0.025em'}}/>
                     </ListItem>
                 </div>
 
@@ -105,31 +109,30 @@ function Sidebar(props) {
                 <div className={`sb-body ${classes.mainDrawerItems}`}>
                     <ListItem button selected={selectedPage === PAGES.dashboard.id} onClick={e => navigateTo(PAGES.dashboard)}>
                         <ListItemIcon>
-                            <HomeIcon/>
+                            <i className="lni lni-dashboard" style={{fontSize: 26}}></i>
                         </ListItemIcon>
                         <ListItemText primary="Dashboard" />
                     </ListItem>
 
                     <ListItem button selected={selectedPage === PAGES.orders.id} onClick={e => navigateTo(PAGES.orders)}>
                         <ListItemIcon>
-                            <ListIcon/>
+                            <i className="lni lni-list" style={{fontSize: 26}}></i>
                         </ListItemIcon>
                         <ListItemText primary="Order History" />
                     </ListItem>
 
                     <ListItem button selected={selectedPage === PAGES.neworder.id} onClick={e => navigateTo(PAGES.neworder)}>
                         <ListItemIcon>
-                            <AddBoxIcon/>
+                            <i className="lni lni-add-files" style={{fontSize: 26}}></i>
                         </ListItemIcon>
                         <ListItemText primary="New Order" />
                     </ListItem>
                 </div>
                 
-
                 <div className="sb-footer">
                     <ListItem button onClick={e => logout()}>
                         <ListItemIcon>
-                            <ExitToAppIcon/>
+                            <i className="lni lni-exit" style={{fontSize: 26}}></i>
                         </ListItemIcon>
                         <ListItemText primary="Logout" />
                     </ListItem>

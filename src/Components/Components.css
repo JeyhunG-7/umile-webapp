@@ -1,89 +1,19 @@
-/** Header & Footer**/
-.header{
-    position: fixed;
-    background-color: #ffffff;
-    box-shadow: 0 10px 10px -10px rgba(33,35,38,0.1);
-    height: 80px;
+/* Sidebar */
+.sidebar .MuiButtonBase-root{
+    margin: 5px 0;
 }
 
-.footer{
-    box-shadow: 0 10px 10px -10px rgba(33,35,38,0.1);
-    background-color: rgb(255, 255, 255);
-    height: 60px;
+.MuiListItem-root.Mui-selected,
+.Mui-selected .lni{
+    color: #2993ec;
 }
 
-.header,
-.footer{
-    top: 0;
-    left: 0;
-    display: flex;
-    width: 100%;
-    z-index: 10;
+.sidebar .MuiTypography-body1{
+    font-size: 18px;
+    letter-spacing: 0.015em;
 }
 
-.header .hdr-body,
-.footer .ftr-body{
-    width: 1260px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-}
-
-.header .a-logo img{
-    height: 30px;
-    padding-top: 23px;
-}
-
-.header .sec-link-btn{
-    padding: 0;
-    outline: none;
-    border: none;
-    background-color: transparent;
-}
-
-.header .sec-link-btn:hover{
-    cursor: pointer;
-}
-
-.header .page-link,
-.header .sec-link-btn{
-    line-height: 80px;
-    color: #42474c;
-}
-
-.footer .page-link,
-.footer .copywrite{
-    line-height: 60px;
-    color: #95999e;
-    user-select: none;
-}
-
-.header .page-link,
-.footer .page-link,
-.footer .copywrite,
-.header .sec-link-btn{
-    margin: 0 15px;
-    font-size: 1.0625em;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    text-decoration: none;
-}
-
-.sb-header .MuiButtonBase-root{
-    display: flex;
-    flex-direction: row;
-}
-
-
-@media (max-width: 1260px){
-    .header .a-logo{
-        margin-left: 15px;
-    }
-}
-
-@media only screen and (max-device-width: 600px) {
-    /* Header */
-    .header .body-sub-2 .about{
-        display: none;
-    }
+.sidebar .MuiListItem-root.Mui-selected, 
+.sidebar .MuiListItem-root.Mui-selected:hover{
+    background-color: rgba(41, 147, 236, 0.08);
 }
