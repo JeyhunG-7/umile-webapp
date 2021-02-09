@@ -2,7 +2,7 @@ import { GetAuthToken } from "../Components/Helpers/LocalStorage";
 
 export async function makeGetRequest(url, { auth = false, query = {} }) {
     try {
-        var u = new URL(`http://localhost/api${url}`);
+        var u = new URL(`/api/${url}`);
         u.search = new URLSearchParams(query).toString();
         let relative_url = u.pathname + u.search;
         try{

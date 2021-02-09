@@ -82,7 +82,7 @@ export default function SignUp(props) {
             }
 
             try{
-                var rawData = await fetch('http://localhost:8080/api/clients/validate', {
+                var rawData = await fetch('/api/clients/validate', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -128,7 +128,7 @@ export default function SignUp(props) {
         if (!check) {
             try{
                 console.log("Send api call");
-                var rawData = await fetch('http://localhost:8080/api/clients/signup', {
+                var rawData = await fetch('/api/clients/signup', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
