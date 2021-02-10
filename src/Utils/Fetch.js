@@ -2,35 +2,28 @@ import { GetAuthToken } from "../Components/Helpers/LocalStorage";
 
 export async function makeGetRequest(url, { auth = false, query = {} }) {
     try {
-        var u = new URL(`http://localhost/api${url}`);
-        u.search = new URLSearchParams(query).toString();
-        let relative_url = u.pathname + u.search;
+
+        let opts = {
+            method: 'GET'
+        }
+
         try{
-            var result = null;
             if (auth){
                 var auth_token = GetAuthToken();
                 if (!auth_token){
                     return false;
                 }
 
-                result = await fetch(relative_url, {
-                    method: 'GET',
-                    mode: 'cors',
-                    headers: {
-                        'Authorization': `Bearer ${auth_token}`,
-                        "Access-Control-Allow-Origin": "*"
-                    }
-                }); 
-            } else {
-                result = await fetch(u, {
-                    method: 'GET',
-                    mode: 'cors',
-                    headers: {
-                        "Access-Control-Allow-Origin": "*"
-                    }
-                });
+                opts.headers = {
+                    'Authorization': `Bearer ${auth_token}`,
+                }
+                
             }
-            
+
+            var u = new URL(`http:/fakehost/api/${url}`);
+            u.search = new URLSearchParams(query).toString();
+            let relative_url = u.pathname + u.search;
+            let result = await fetch(relative_url, opts); 
             var data = await result.json();
         } catch(e){
             console.error(e);

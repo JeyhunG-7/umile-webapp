@@ -34,7 +34,7 @@ export default function ForgotPass(props) {
 
         if (!check) {
             try{
-                var rawData = await fetch('http://localhost:8080/api/clients/emailforgotpassword', {
+                var rawData = await fetch('/api/clients/emailforgotpassword', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',

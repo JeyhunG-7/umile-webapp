@@ -7,7 +7,7 @@ export async function IsSignedInAsync() {
     }
 
     try{
-        var rawData = await fetch('http://localhost:8080/api/clients/login', {
+        var rawData = await fetch('/api/clients/login', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${auth_token}`
@@ -29,7 +29,7 @@ export async function IsSignedInAsync() {
 
 export async function AuthenticateAsync(email, password) {
     try{
-        var rawData = await fetch('http://localhost:8080/api/clients/login', {
+        var rawData = await fetch('/api/clients/login', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -60,7 +60,7 @@ export async function logoutAsync() {
     }
 
     try{
-        var rawData = await fetch('http://localhost:8080/api/clients/logout', {
+        var rawData = await fetch('/api/clients/logout', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${auth_token}`
