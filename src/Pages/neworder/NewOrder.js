@@ -139,24 +139,24 @@ export default function NewOrder(props) {
     }
 
     return (
-        <Container style={{ padding: 40 }}>
-            <Paper style={{ padding: '3% 5% 4% 5%', width: '60%' }}>
-                <div style={{ position: 'relative', display: 'grid', width: '100%', gridRowGap: 25, gridTemplateRows: 'auto' }}>
-                    <h2 style={{ fontWeight: '500', margin: '0' }}>Pick up information</h2>
+        <Container className="new-order">
+            <Paper className="paper-pick-up" elevation={0}>
+                <div className="div-pick-up">
+                    <h2>Pick up information</h2>
                     <FormControl component="fieldset">
                         <RadioGroup aria-label="home-location" value={homeLocationType} onChange={handleHomeLocationType}>
                             <FormControlLabel value="home" control={<Radio color="primary" />} label={'Home location (' + (homeLocationObj && homeLocationObj.address) + ')'} />
                             <FormControlLabel value="new" control={<Radio color="primary" />} label="Different location" />
                         </RadioGroup>
                     </FormControl>
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <div className="flex-row">
                         <AddressInput
                             errorMessage={stateObj.locationPickUpMessage}
                             selectedAddress={handleSelectLocationPickUp}
                             disabled={homeLocationType === 'home'} />
                         <TextField
-                            label='Notes'
-                            variant='outlined'
+                            label="Notes"
+                            variant="outlined"
                             fullWidth={true}
                             inputRef={notesPickUp}
                             style={{ marginLeft: 25 }}
@@ -164,13 +164,13 @@ export default function NewOrder(props) {
                     </div>
                 </div>
             </Paper>
-            <Paper style={{ padding: '3% 5% 4% 5%', width: '60%', marginTop: 35 }}>
-                <div style={{ position: 'relative', display: 'grid', width: '100%', gridRowGap: 25, gridTemplateRows: 'auto' }}>
-                    <h2 style={{ fontWeight: '500', margin: '0' }}>Drop off information</h2>
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <Paper className="paper-drop-off" elevation={0}>
+                <div className="div-drop-off">
+                    <h2>Drop off information</h2>
+                    <div className="flex-row">
                         <TextField
-                            label='Name'
-                            variant='outlined'
+                            label="Name"
+                            variant="outlined"
                             fullWidth={true}
                             inputRef={nameDropOff}
                             error={stateObj.nameDropOffMessage}
@@ -178,21 +178,21 @@ export default function NewOrder(props) {
                             style={{ marginRight: 25 }}
                         />
                         <TextField
-                            label='Phone'
-                            variant='outlined'
+                            label="Phone"
+                            variant="outlined"
                             fullWidth={true}
                             inputRef={phoneDropOff}
                             error={stateObj.phoneDropOffMessage}
                             helperText={stateObj.phoneDropOffMessage}
                         />
                     </div>
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <div className="flex-row">
                         <AddressInput
                             errorMessage={stateObj.locationDropOffMessage}
                             selectedAddress={handleSelectLocationDropOff} />
                         <TextField
-                            label='Notes'
-                            variant='outlined'
+                            label="Notes"
+                            variant="outlined"
                             fullWidth={true}
                             inputRef={notesDropOff}
                             style={{ marginLeft: 25 }}
@@ -201,11 +201,11 @@ export default function NewOrder(props) {
 
                 </div>
             </Paper>
-            <Button variant='contained'
-                color='primary'
-                style={{ display: 'flex', margin: '50px auto' }}
+            <Button variant="contained"
+                color="primary"
+                className="submit-no"
                 onClick={submitPlaceOrder}>
-                Place order
+                Place Order
             </Button>
             <Snackbar open={orderPlaced}
                 autoHideDuration={6000}

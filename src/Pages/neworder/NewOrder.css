@@ -1,0 +1,46 @@
+.new-order .MuiButton-root{
+    text-transform: inherit;
+    font-size: 17px;
+}
+
+.new-order.MuiContainer-root{
+    margin-left: 0; 
+}
+
+.new-order{
+    padding: 40px;
+    letter-spacing: 0.015em;
+}
+
+.paper-pick-up{
+    padding: 3% 5% 4% 5%;
+    width: 60%;
+    border: 1px solid rgb(235, 238, 240);
+}
+
+.div-pick-up,
+.div-drop-off{
+    position: relative; 
+    width: 100%; 
+    display: grid; 
+    grid-row-gap: 25px;
+    grid-template-rows: auto;
+}
+
+.paper-drop-off{
+    padding: 3% 5% 4% 5%; 
+    width: 60%;
+    margin-top: 35px;
+    border: 1px solid rgb(235, 238, 240);
+}
+
+.paper-drop-off h2,
+.paper-pick-up h2{
+    font-weight: 500; 
+    margin: 0px;
+}
+
+.new-order .submit-no{
+    display: flex; 
+    margin: 50px auto;
+}

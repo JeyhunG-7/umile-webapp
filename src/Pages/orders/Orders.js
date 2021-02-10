@@ -63,8 +63,8 @@ export default function Orders(props) {
     }
 
     return (
-        <div style={{ position: 'relative', padding: 40, display: 'grid', width: '100%', gridRowGap: 45, gridTemplateRows: 'auto' }}>
-            <Paper style={{ padding: '5%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div className="order-history">
+            <Paper className="paper-order-history" elevation={0}>
                 {_renderBody()}
             </Paper>
         </div>

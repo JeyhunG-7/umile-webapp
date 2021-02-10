@@ -1,6 +1,14 @@
 /* Sidebar */
+.sidebar{
+    padding: 24px 20px;
+}
+
+.sidebar i{
+    font-size: 26px;
+}
+
 .sidebar .MuiButtonBase-root{
-    margin: 5px 0;
+    margin: 10px 0;
 }
 
 .MuiListItem-root.Mui-selected,
@@ -16,4 +24,17 @@
 .sidebar .MuiListItem-root.Mui-selected, 
 .sidebar .MuiListItem-root.Mui-selected:hover{
     background-color: rgba(41, 147, 236, 0.08);
+}
+
+.sidebar .MuiDivider-root{
+    background-color: rgb(235, 238, 240);
+}
+
+.sidebar .div-logo{
+    padding: 24px 20px;
+}
+
+.sidebar .div-logo img{
+    height: 30px;
+    width: auto;
 }

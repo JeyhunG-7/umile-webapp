@@ -1,12 +1,33 @@
 body {
   margin: 0;
-  background-color: #f5f8fa !important;
+  background-color: #fafafa !important;
   font-family: 'Muli', sans-serif !important;
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important;
 }
 
+.MuiTypography-body1{
+  font-family: 'Muli', sans-serif !important;
+  letter-spacing: 0.015em !important;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.flex-row{
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column{
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-center{
+  display: flex;
+  justify-items: center;
+  align-items: center;
 }
