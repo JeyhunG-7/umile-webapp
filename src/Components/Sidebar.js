@@ -127,7 +127,7 @@ function Sidebar(props) {
                         <ListItemIcon>
                             <i className="lni lni-exit"></i>
                         </ListItemIcon>
-                        <ListItemText primary="Logout" />
+                        <ListItemText primary="Log out" />
                     </ListItem>
                 </div>
             </Drawer>

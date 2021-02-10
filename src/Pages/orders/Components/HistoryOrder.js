@@ -37,11 +37,11 @@ export default function HistoryOrder(props) {
     function _renderStatus(){
         if(order.status === 4){
             return(
-                <div style={{backgroundColor: '#22bfa0', color: '#fff', padding: '5px 10px', borderRadius: 5, width: 120, margin: 'auto'}}>Delivered</div>
+                <div className="status-delivered">Delivered</div>
             );
         } else if(order.status === 5){
             return(
-                <div style={{backgroundColor: '#d14242', color: '#fff', padding: '5px 10px', borderRadius: 5, width: 120, margin: 'auto'}}>Cancelled</div>
+                <div className="status-cancelled">Cancelled</div>
             );
         }
     }

@@ -38,9 +38,10 @@
 .paper-pick-up h2{
     font-weight: 500; 
     margin: 0px;
+    color: #3a4554;
 }
 
 .new-order .submit-no{
     display: flex; 
-    margin: 50px auto;
+    margin: 50px 0 50px 60%;
 }

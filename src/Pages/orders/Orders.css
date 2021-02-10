@@ -32,7 +32,7 @@
     display: grid;
     align-items: center;
     justify-content: space-around;
-    border: 1px solid grey;
+    border: 1px solid rgb(214, 220, 224);
     border-radius: 15px;
     padding: 10px 5px;
     list-style: none;
@@ -46,4 +46,41 @@
 .ul-row-history-order-table li{
     text-align: center; 
     line-height: 20px;
+}
+
+.ul-hdr-history-order-table li{
+    color: #3a4554;
+}
+
+.div-no-orders h2{
+    text-align: center;
+    font-weight: 500;
+    letter-spacing: 0.015em;
+    color: #3a4554;
+}
+
+.div-no-orders p{
+    letter-spacing: 0.015em;
+}
+
+.div-no-orders p a{
+    text-decoration: none; 
+    color: #2993ec;
+}
+
+.order-history .status-delivered,
+.order-history .status-cancelled{
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    width: 120px;
+    margin: auto;
+}
+
+.order-history .status-delivered{
+    background-color: #22bfa0;
+}
+
+.order-history .status-cancelled{
+    background-color: #d14242;
 }
