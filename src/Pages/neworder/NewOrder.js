@@ -93,7 +93,7 @@ export default function NewOrder(props) {
 
     async function submitPlaceOrder() {
         let check = Validate({
-            locationPickUp: homeLocationType === 'home' ? homeLocationObj && homeLocationObj.address : locationPickUp,
+            locationPickUp: homeLocationType === 'home' ? homeLocationObj && homeLocationObj.id : locationPickUp,
             nameDropOff: nameDropOff.current.value,
             phoneDropOff: phoneDropOff.current.value,
             locationDropOff: locationDropOff,
@@ -109,13 +109,15 @@ export default function NewOrder(props) {
             }
         });
 
+        console.log(homeLocationObj);
+
         if (!check) {
             let opts = {
                 auth: true,
                 body: {
                     cityId: 1,
                     pickup: {
-                        placeId: homeLocationType === 'home' ? homeLocationObj && homeLocationObj.address : locationPickUp,
+                        placeId: homeLocationType === 'home' ? homeLocationObj && homeLocationObj.id : locationPickUp,
                         note: notesPickUp.current.value
                     },
                     dropoff: {
