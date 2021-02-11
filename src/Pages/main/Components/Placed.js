@@ -40,8 +40,8 @@ export default function Placed(props) {
     }
 
     return (
-        <Paper style={{ padding: '5%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <h3 style={{ width: '100%', textAlign: 'left', margin: '0 0 30px 0' }}>Placed Orders</h3>
+        <Paper className="paper-placed flex-column">
+            <h3>Placed Orders</h3>
             {_renderComponents()}
         </Paper>
     );
