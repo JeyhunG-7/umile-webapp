@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import '../Profile.css';
 import Map from '../../../Components/Map';
 import Validate from 'validate.js';
@@ -27,6 +27,10 @@ export default function Profile(props) {
             }
         }
     };
+
+    useEffect(() => {
+        setShowAddressUpdate(false);
+    }, [props.addressObj])
 
     const handleClickInfo = (e, val) => {
         setOpenPopover(true);
