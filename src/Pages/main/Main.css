@@ -1,3 +1,40 @@
+.dashboard{
+    position: relative; 
+    padding: 40px; 
+    display: grid;
+    width: 100%; 
+    grid-row-gap: 45px;
+    grid-template-rows: auto;
+}
+
+.paper-scheduled,
+.paper-placed{
+    padding: 5%; 
+    align-items: center;
+}
+
+.paper-scheduled h3,
+.paper-placed h3{
+    width: 100%; 
+    margin: 0 0 30px 0;
+    text-align: left; 
+    font-weight: 500;
+    letter-spacing: 0.015em;
+    color: #3a4554;
+}
+
+.paper-scheduled h2,
+.paper-placed h2{
+    text-align: center;
+    letter-spacing: 0.015em;
+    color: #3a4554;
+}
+
+.paper-scheduled p,
+.paper-placed p{
+    letter-spacing: 0.015em;
+}
+
 .ul-hdr-placed-order-table,
 .ul-hdr-scheduled-order-table{
     position: relative;

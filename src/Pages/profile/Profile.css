@@ -1,0 +1,65 @@
+.profile{
+    padding: 40px;
+}
+
+.profile.MuiContainer-root{
+    margin-left: 0px;
+}
+
+.paper-ui,
+.paper-location,
+.paper-balance{
+    border: 1px solid rgb(235, 238, 240);
+}
+
+.paper-ui{
+    padding: 5%; 
+    align-items: center;
+}
+
+.paper-balance{
+    padding: 5%;
+}
+
+.paper-location{
+    padding: 5%; 
+    align-items: center;
+}
+
+.profile .info-header{
+    justify-content: center; 
+    align-items: center; 
+    margin-bottom: 10px;
+    letter-spacing: 0.015em;
+    color: #3a4554;
+}
+
+.paper-balance .info-header{
+    margin-bottom: 0;
+}
+
+.profile .info-header h2{
+    letter-spacing: 0.015em;
+    color: #3a4554;
+}
+
+.info-header .lft{
+    margin-right: 8px;
+    text-align: center; 
+    font-weight: 500; 
+    letter-spacing: 0.015em;
+    color: #3a4554;
+}
+
+.info-header .rht{
+    margin-left: 50px;
+    text-align: center; 
+    font-weight: 500; 
+    letter-spacing: 0.015em;
+    color: #3a4554;
+}
+
+.profile .MuiButton-root{
+    text-transform: inherit;
+    font-size: 17px;
+}

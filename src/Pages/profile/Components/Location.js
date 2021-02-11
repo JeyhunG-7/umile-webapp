@@ -51,7 +51,6 @@ export default function Profile(props) {
 
     function handleAddressPickUpSelect(val) {
         setLocation(val);
-        console.log("val: ", val);
     }
 
     async function handleAddressUpdate() {
@@ -124,7 +123,7 @@ export default function Profile(props) {
                         color='primary'
                         style={{ display: 'flex', margin: '20px auto' }}
                         onClick={handleAddressUpdate}>
-                        Update
+                        Save
                     </Button>
                 </div>
             )
@@ -141,9 +140,9 @@ export default function Profile(props) {
     }
 
     return (
-        <Paper style={{ padding: '5%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 10 }}>
-                <h2 style={{ fontWeight: '500', textAlign: 'center', marginRight: 8 }}>Default Pick up Address</h2>
+        <Paper className="paper-location flex-column" elevation={0}>
+            <div className="info-header flex-row">
+                <h2 className="lft">Default Pick up Address</h2>
                 <InfoIcon aria-haspopup="true" onMouseEnter={handleClickInfo} onMouseLeave={handleClosePopover} />
             </div>
             <Popover

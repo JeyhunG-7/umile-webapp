@@ -8,7 +8,7 @@ export default function Main(props) {
     
 
     return (
-        <div style={{ position: 'relative', padding: 40, display: 'grid', width: '100%', gridRowGap: 45, gridTemplateRows: 'auto' }}>
+        <div className="dashboard">
             <Scheduled/>
             <Placed/>
         </div>

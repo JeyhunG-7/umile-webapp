@@ -35,8 +35,8 @@ export default function Scheduled(props) {
     }
 
     return (
-        <Paper style={{ padding: '5%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <h3 style={{ width: '100%', textAlign: 'left', margin: '0 0 30px 0' }}>Scheduled for delivery</h3>
+        <Paper className="paper-scheduled flex-column">
+            <h3>Scheduled for delivery</h3>
             {_renderComponents()}
         </Paper>
     );
