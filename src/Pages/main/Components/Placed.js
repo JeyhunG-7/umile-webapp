@@ -14,8 +14,11 @@ export default function Placed(props) {
 
     useEffect(() => {
         async function effect(){
-            var placedOrders = await makeGetRequest('/orders/list', {auth: true, query: {cityId: 1, active: true}}) ?? [];
-            setOrdersList(placedOrders);
+            var placedOrders = await makeGetRequest('/orders/list', {auth: true, query: {cityId: 1, active: true}});
+            if (placedOrders){
+                placedOrders = placedOrders.filter((o) => o.status.id < 3);
+                setOrdersList(placedOrders);
+            }
         }
 
         if (orderUpdated){
