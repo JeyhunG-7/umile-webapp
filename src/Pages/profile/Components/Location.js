@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import '../Profile.css';
 import Map from '../../../Components/Map';
 import Validate from 'validate.js';
 
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
+import {Paper, Button, Popover, Typography} from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
-import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui/core/Typography';
 
 import { AddressInput } from '../../../Components/AddressInput';
 import { makePostRequest } from '../../../Utils/Fetch';
@@ -30,10 +27,6 @@ export default function Profile(props) {
             }
         }
     };
-
-    useEffect(() => {
-        handleShowAddressUpdate();
-    }, [props.addressObj])
 
     const handleClickInfo = (e, val) => {
         setOpenPopover(true);
