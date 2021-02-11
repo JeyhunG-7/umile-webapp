@@ -13,6 +13,8 @@ export class MapContainer extends Component {
         super();
         this.state = {
             coords: {
+                lat: 0,
+                lng: 0
             }
         }
     }
