@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { makeGetRequest } from '../../Utils/Fetch';
 import './Profile.css';
 
-import Container from '@material-ui/core/Container';
+import { Container, Snackbar } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 
 import UserInfo from './Components/UserInfo';
 import Balance from './Components/Balance';
@@ -17,6 +18,8 @@ export default function Profile(props) {
     const [balance, setBalance] = useState('');
     const [addressObj, setAddressObj] = useState(null);
 
+    const [addressUpdated, setAddressUpdated] = useState(null);
+
     async function refreshUserInfo() {
         var result = await makeGetRequest('/clients/info', { auth: true });
         if (!result) {
@@ -30,7 +33,7 @@ export default function Profile(props) {
         }
 
         result = await makeGetRequest('/clients/home', { auth: true });
-        if (result){
+        if (result) {
             setAddressObj(result);
         }
     }
@@ -48,33 +51,45 @@ export default function Profile(props) {
                 setCompanyName(result.company);
                 setBalance(result.balance);
             }
-    
+
             result = await makeGetRequest('/clients/home', { auth: true });
-            if (result){
+            if (result) {
                 setAddressObj(result);
             }
         }
         effect();
     }, []);
+
+    function handleAddressUpdateNotif(){
+        setAddressUpdated(true);
+    }
     
+    const handleSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setAddressUpdated(false);
+    };
+
     return (
         <Container className="profile">
-            <div style={{ position: 'relative', display: 'grid', gridTemplateColumns: '1fr 1fr',  width: '100%', gridColumnGap: 40, gridTemplateRows: 'auto' }}>
-                <div style={{ position: 'relative', display: 'grid', width: '100%', gridRowGap: 40, gridTemplateRows: 'auto' }}>
+            <div className="div-profile">
+                <div className="col-left">
                     <UserInfo
                         name={name}
                         companyName={companyName}
                         email={email}
-                        phone={phone}/>
-                    <Balance 
-                        balance={balance}/>
+                        phone={phone} />
+                    <Balance
+                        balance={balance} />
                 </div>
                 <Location
                     refresh={refreshUserInfo}
-                    addressObj={addressObj}/>
+                    addressObj={addressObj} 
+                    notify={handleAddressUpdateNotif}/>
             </div>
 
-            {/* <Snackbar open={orderPlaced}
+            <Snackbar open={addressUpdated}
                 autoHideDuration={6000}
                 onClose={handleSnackbarClose}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
@@ -83,9 +98,9 @@ export default function Profile(props) {
                     severity="success"
                     elevation={6}
                     variant="filled">
-                    Oder has been successfully placed.
+                    Address updated!
                     </Alert>
-            </Snackbar> */}
+            </Snackbar>
         </Container>
     );
 }

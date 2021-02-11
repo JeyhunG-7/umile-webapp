@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import '../Profile.css';
 import Map from '../../../Components/Map';
 import Validate from 'validate.js';
 
-import {Paper, Button, Popover, Typography} from '@material-ui/core';
+import { Paper, Button, Popover, Typography } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 
 import { AddressInput } from '../../../Components/AddressInput';
@@ -32,7 +32,7 @@ export default function Profile(props) {
         setShowAddressUpdate(false);
     }, [props.addressObj])
 
-    const handleClickInfo = (e, val) => {
+    const handleHoverInfo = (e, val) => {
         setOpenPopover(true);
         setAnchorEl(e.currentTarget);
     };
@@ -70,8 +70,9 @@ export default function Profile(props) {
                 }
             }
             let result = await makePostRequest('/clients/home', opts);
-            if (result){
+            if (result) {
                 props.refresh();
+                props.notify();
             } else {
                 //TODO: show error
             }
@@ -82,43 +83,43 @@ export default function Profile(props) {
     function _renderAddressInput() {
         if (showAddressUpdate) {
             return (
-                <div style={{ height: 250, width: '70%', margin: 'auto'}}>
+                <div className="ai-address">
                     <AddressInput
                         errorMessage={stateObj.locationMessage}
                         selectedAddress={handleAddressPickUpSelect} />
                 </div>
             );
         } else {
-            if (props.addressObj){
+            if (props.addressObj) {
                 return (
-                    <div style={{ border: '1px solid #ebeef0', width: 300, height: 250, margin: 'auto', borderRadius: 3, overflow: 'hidden' }}>
+                    <div className="ai-map">
                         <Map lat={props.addressObj && props.addressObj.lat} lng={props.addressObj && props.addressObj.lng} />
                     </div>
                 );
             }
 
             return (
-                <div style={{ margin: 'auto', borderRadius: 3, overflow: 'hidden' }}>
+                <div className="ai-no-info">
                     No information
                 </div>
             );
-            
+
         }
     }
 
     function _renderUpdateButtons() {
         if (showAddressUpdate) {
             return (
-                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: 300 }}>
+                <div className="div-location-btns flex-row">
                     <Button variant='contained'
                         color='primary'
-                        style={{ display: 'flex', margin: '20px auto' }}
+                        className="btn-location-action"
                         onClick={handleShowAddressUpdate}>
                         Cancel
                     </Button>
                     <Button variant='contained'
                         color='primary'
-                        style={{ display: 'flex', margin: '20px auto' }}
+                        className="btn-location-action"
                         onClick={handleAddressUpdate}>
                         Save
                     </Button>
@@ -128,7 +129,7 @@ export default function Profile(props) {
             return (
                 <Button variant='contained'
                     color='primary'
-                    style={{ display: 'flex', margin: '20px auto' }}
+                    className="btn-location-action"
                     onClick={handleShowAddressUpdate}>
                     Update
                 </Button>
@@ -140,12 +141,12 @@ export default function Profile(props) {
         <Paper className="paper-location flex-column" elevation={0}>
             <div className="info-header flex-row">
                 <h2 className="lft">Default Pick up Address</h2>
-                <InfoIcon aria-haspopup="true" onMouseEnter={handleClickInfo} onMouseLeave={handleClosePopover} />
+                <InfoIcon aria-haspopup="true" onMouseEnter={handleHoverInfo} onMouseLeave={handleClosePopover} />
             </div>
             <Popover
                 open={openPopover}
                 anchorEl={anchorEl}
-                style={{ pointerEvents: 'none'}}
+                style={{ pointerEvents: 'none' }}
                 onClose={handleClosePopover}
                 anchorOrigin={{
                     vertical: 'top',
@@ -156,12 +157,12 @@ export default function Profile(props) {
                     horizontal: 'left',
                 }}
             >
-                <Typography style={{ padding: 10, maxWidth: 300, textAlign: 'center' }}>
+                <Typography className="text-info">
                     Having this will make adding new orders faster.
                             </Typography>
             </Popover>
             {_renderAddressInput()}
-            <p>{props.addressObj && props.addressObj.address}</p>
+            <p>{!showAddressUpdate && props.addressObj && props.addressObj.address}</p>
             {_renderUpdateButtons()}
         </Paper>
     );

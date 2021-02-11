@@ -1,10 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import '../Profile.css';
 
-import Paper from '@material-ui/core/Paper';
+import { Paper, Popover, Typography } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
-import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui/core/Typography';
 
 
 export default function Balance(props) {
@@ -43,7 +41,7 @@ export default function Balance(props) {
                 }}
                 disableRestoreFocus
             >
-                <Typography style={{ padding: 10, maxWidth: 300, textAlign: 'center' }}>
+                <Typography className="text-info">
                     This is balance for the current running month.
                 </Typography>
             </Popover>

@@ -2,6 +2,23 @@
     padding: 40px;
 }
 
+.div-profile{
+    position: relative; 
+    display: grid; 
+    grid-template-columns: 1fr 1fr;  
+    width: 100%; 
+    grid-column-gap: 40px; 
+    grid-template-rows: auto;
+}
+
+.div-profile .col-left{
+    position: relative;
+    display: grid;
+    width: 100%;
+    grid-row-gap: 40px;
+    grid-template-rows: auto;
+}
+
 .profile.MuiContainer-root{
     margin-left: 0px;
 }
@@ -62,4 +79,47 @@
 .profile .MuiButton-root{
     text-transform: inherit;
     font-size: 17px;
+}
+
+.profile .text-info{
+    padding: 10px;
+    max-width: 300px; 
+    text-align: center;
+}
+
+.paper-ui .input-ui{
+    margin-bottom: 20px; 
+    width: 350px;
+}
+
+.btn-location-action{
+    display: flex; 
+    margin: 20px auto;
+}
+
+.div-location-btns{
+    width: 300px;
+    justify-content: space-between; 
+}
+
+/* ai - address input section */
+.ai-no-info{
+    margin: auto;
+    border-radius: 3px; 
+    overflow: hidden;
+}
+
+.ai-map{
+    width: 300px; 
+    height: 250px; 
+    border: 1px solid #ebeef0; 
+    margin: auto; 
+    border-radius: 3px; 
+    overflow: hidden;
+}
+
+.ai-address{
+    width: 70%; 
+    height: 250px; 
+    margin: auto;
 }

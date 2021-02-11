@@ -1,11 +1,8 @@
 import React, { useState } from 'react'
 import '../Profile.css';
 
-import Paper from '@material-ui/core/Paper';
+import { Paper, Popover, Typography, TextField }  from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
-import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
 
 
 export default function Userinfo(props) {
@@ -42,14 +39,14 @@ export default function Userinfo(props) {
                     horizontal: 'left',
                 }}
             >
-                <Typography style={{ padding: 10, maxWidth: 300, textAlign: 'center' }}>
+                <Typography className="text-info">
                     To update your information please contact us. We currently don't support this through our web platform.
                             </Typography>
             </Popover>
             <TextField
                 label='Contact name'
                 variant='outlined'
-                style={{ marginBottom: 20, width: 350 }}
+                className="input-ui"
                 fullWidth={true}
                 value={props.name}
                 disabled={true}
@@ -57,7 +54,7 @@ export default function Userinfo(props) {
             <TextField
                 label='Company name'
                 variant='outlined'
-                style={{ marginBottom: 20, width: 350 }}
+                className="input-ui"
                 fullWidth={true}
                 value={props.companyName}
                 disabled={true}
@@ -65,7 +62,7 @@ export default function Userinfo(props) {
             <TextField
                 label='Email'
                 variant='outlined'
-                style={{ marginBottom: 20, width: 350 }}
+                className="input-ui"
                 fullWidth={true}
                 value={props.email}
                 disabled={true}
@@ -73,7 +70,7 @@ export default function Userinfo(props) {
             <TextField
                 label='Phone'
                 variant='outlined'
-                style={{ marginBottom: 20, width: 350 }}
+                className="input-ui"
                 fullWidth={true}
                 value={props.phone}
                 disabled={true}
