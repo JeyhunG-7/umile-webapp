@@ -37,7 +37,24 @@ export default function Profile(props) {
 
     // fetch user information
     useEffect(() => {
-        refreshUserInfo();
+        async function effect() {
+            var result = await makeGetRequest('/clients/info', { auth: true });
+            if (!result) {
+                // TODO: show error
+            } else {
+                setEmail(result.email);
+                setName(`${result.first_name} ${result.last_name}`);
+                setPhone(result.phone);
+                setCompanyName(result.company);
+                setBalance(result.balance);
+            }
+    
+            result = await makeGetRequest('/clients/home', { auth: true });
+            if (result){
+                setAddressObj(result);
+            }
+        }
+        effect();
     }, []);
     
     return (
