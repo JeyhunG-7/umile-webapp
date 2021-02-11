@@ -116,13 +116,13 @@ export default function NewOrder(props) {
                     cityId: 1,
                     pickup: {
                         placeId: homeLocationType === 'home' ? homeLocationObj && homeLocationObj.address : locationPickUp,
-                        note: notesPickUp
+                        note: notesPickUp.current.value
                     },
                     dropoff: {
                         placeId: locationDropOff,
                         customer_name: nameDropOff.current.value,
                         customer_phone: phoneDropOff.current.value,
-                        note: notesDropOff
+                        note: notesDropOff.current.value
                     }
                 }
             }
