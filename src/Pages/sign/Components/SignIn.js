@@ -38,7 +38,7 @@ function SignInComponent(props) {
         }
 
         effect();
-    }, [])
+    });
 
 
     const submitSignIn = async e => {

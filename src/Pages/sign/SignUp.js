@@ -75,6 +75,7 @@ export default function SignUp(props) {
 
     useEffect(() => {
         async function effect() {
+            console.log('Effect');
             if (!params.token){
                 setLoading(false);
                 setErrorMessage('Sign up is invitation only');
@@ -101,7 +102,7 @@ export default function SignUp(props) {
             }
         }
         effect();
-    }, []);
+    }, [params]);
 
     const submitSignIn = async e => {
         let check = Validate({

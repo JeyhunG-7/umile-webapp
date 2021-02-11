@@ -1,9 +1,10 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 import './index.css';
 
 import { ThemeProvider } from '@material-ui/core/styles';
+
 import Theme from './Components/MUITheme';
 import Sidebar from './Components/Sidebar';
 

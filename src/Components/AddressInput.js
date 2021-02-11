@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { makeGetRequest, makePostRequest } from '../Utils/Fetch';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField } from '@material-ui/core';
-
-var g_api = "AIzaSyB0XEPXM2X4A6eB2l1G9bYaYJWmoE6mX88";
 
 const google = window.google;
 const googleAutocomplete = new google.maps.places.AutocompleteService();
@@ -11,12 +9,10 @@ const googlePlaces = new google.maps.places.PlacesService(document.createElement
 
 export function AddressInput(props) {
 
-    const [value, setValue] = useState('');
     const [list, setAutocompleteList] = useState([]);
 
     async function onInputChange(e) {
         let inputValue = e.target.value;
-        setValue(inputValue);
 
         // doesn't make sense to check for autocomplete options when removing values
         if (e.nativeEvent.inputType.includes('delete')){
@@ -85,7 +81,7 @@ export function AddressInput(props) {
                 }
 
                 //TODO: save id to db
-                var result = await makePostRequest('/places/save', opts);
+                result = await makePostRequest('/places/save', opts);
                 if (result){
                     props.selectedAddress(result);   
                 }

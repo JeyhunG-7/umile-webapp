@@ -6,7 +6,6 @@ import Paper from '@material-ui/core/Paper';
 import OrdersMap from '../../../Components/OrdersMap';
 import NoScheduledOrders from './NoScheduledOrders';
 import OrdersTableHeader from './ScheduledOrder';
-import { makeGetRequest } from '../../../Utils/Fetch';
 
 
 export default function Scheduled(props) {

@@ -32,7 +32,7 @@ export default function Profile(props) {
     };
 
     useEffect(() => {
-        handleShowAddressUpdate();
+        setShowAddressUpdate(false);
     }, [props.addressObj])
 
     const handleClickInfo = (e, val) => {
