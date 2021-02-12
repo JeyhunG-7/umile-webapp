@@ -3,16 +3,17 @@ import '../Main.css';
 import Moment from 'react-moment';
 
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import Alert from '@material-ui/lab/Alert';
+import { Button, Menu, MenuItem, Snackbar} from '@material-ui/core';
+
 import { makePostRequest } from '../../../Utils/Fetch';
+import DeleteOrder from './DeleteOrderModal';
 
 
 export default function PlacedOrder(props) {
     let order = props.order;
-
     const [anchorEl, setAnchorEl] = useState(null);
+    const [orderDeleted, setOrderDeleted] = useState(false);
 
     const handleOpenMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -22,36 +23,42 @@ export default function PlacedOrder(props) {
         setAnchorEl(null);
     };
 
-    function orderIsUpdated(){
+    function orderIsUpdated() {
         props.onUpdate();
         handleCloseMenu();
     }
 
     async function handleUnsubmit() {
-        let result = await makePostRequest('/orders/status', { auth: true, body: {orderId: order.id, submit: false}});
-        if (result){
+        let result = await makePostRequest('/orders/status', { auth: true, body: { orderId: order.id, submit: false } });
+        if (result) {
             orderIsUpdated();
         } else {
             alert('TODO: Failure');
         }
     }
 
-    async function handleDelete() {
-        let result = await makePostRequest('/orders/delete', { auth: true, body: {orderId: order.id}});
-        if (result){
+    async function handleSubmitForDelivery() {
+        let result = await makePostRequest('/orders/status', { auth: true, body: { orderId: order.id, submit: true } });
+        if (result) {
             orderIsUpdated();
         } else {
             alert('TODO: Failure');
         }
     }
 
-    async function handleSubmitForDelivery(){
-        let result = await makePostRequest('/orders/status', { auth: true, body: {orderId: order.id, submit: true}});
-        if (result){
-            orderIsUpdated();
-        } else {
-            alert('TODO: Failure');
+    function handleModalClose() {
+        handleCloseMenu();
+    }
+
+    const handleSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
         }
+        setOrderDeleted(false);
+    };
+
+    function handleOrderDeleted(){
+        setOrderDeleted(true);
     }
 
     function _renderRow() {
@@ -79,7 +86,7 @@ export default function PlacedOrder(props) {
                         {_renderStatus()}
                     </li>
                     <li>
-                        <Button style={{ width: 50, backgroundColor: 'transparent' }} variant="contained" disableElevation={true} onClick={handleOpenMenu}>
+                        <Button className="btn-menu" variant="contained" disableElevation={true} onClick={handleOpenMenu}>
                             <MoreVertIcon />
                         </Button>
                         <Menu
@@ -88,7 +95,9 @@ export default function PlacedOrder(props) {
                             onClose={handleCloseMenu}
                         >
                             {order.status.id === 2 && <MenuItem onClick={handleUnsubmit}>Unsubmit for delivery</MenuItem>}
-                            <MenuItem onClick={handleDelete}>Delete order</MenuItem>
+                            <DeleteOrder id={order && order.id} 
+                                modalClose={handleModalClose} 
+                                orderDeleted={handleOrderDeleted}/>
                         </Menu>
                     </li>
                 </>
@@ -99,7 +108,7 @@ export default function PlacedOrder(props) {
     function _renderStatus() {
         if (order.status.id === 1) {
             return (
-                <Button variant="contained" color="primary" disableElevation={true} onClick={handleSubmitForDelivery} style={{fontSize: 16, textTransform: 'inherit'}}>
+                <Button className="btn-submit-delivery" variant="contained" color="primary" disableElevation={true} onClick={handleSubmitForDelivery}>
                     Submit for delivery
                 </Button>
             );
@@ -113,6 +122,18 @@ export default function PlacedOrder(props) {
     return (
         <ul key={order && order.received_date} className={props.header ? 'ul-hdr-placed-order-table' : 'ul-row-placed-order-table'}>
             {_renderRow()}
+            <Snackbar open={orderDeleted}
+                autoHideDuration={6000}
+                onClose={handleSnackbarClose}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            >
+                <Alert onClose={handleSnackbarClose}
+                    severity="success"
+                    elevation={6}
+                    variant="filled">
+                    Order has been deleted.
+                    </Alert>
+            </Snackbar>
         </ul>
     );
 }

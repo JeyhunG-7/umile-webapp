@@ -64,6 +64,8 @@ export default function NewOrder(props) {
         var result = await makeGetRequest('/clients/home', { auth: true });
         if (result) {
             setHomeLocationObj(result);
+        } else{
+            setHomeLocationType('new');
         }
     }
 
@@ -109,8 +111,6 @@ export default function NewOrder(props) {
             }
         });
 
-        console.log(homeLocationObj);
-
         if (!check) {
             let opts = {
                 auth: true,
@@ -134,9 +134,22 @@ export default function NewOrder(props) {
             if (result) {
                 //Success BE order placed
                 setOrderPlaced(true);
+                // TO-DO update drop off values to empty
             } else {
                 //TODO: show error
             }
+        }
+    }
+
+    function _renderHomeLocationRadio(){
+        if(homeLocationObj && homeLocationObj.address){
+            return(
+                <FormControlLabel value="home" control={<Radio color="primary" />} label={'Home location (' + (homeLocationObj && homeLocationObj.address) + ')'} />
+            );
+        } else{
+            return(
+                <FormControlLabel value="home" control={<Radio color="primary" />} label="Home location" />
+            );
         }
     }
 
@@ -147,7 +160,7 @@ export default function NewOrder(props) {
                     <h2>Pick up information</h2>
                     <FormControl component="fieldset">
                         <RadioGroup aria-label="home-location" value={homeLocationType} onChange={handleHomeLocationType}>
-                            <FormControlLabel value="home" control={<Radio color="primary" />} label={'Home location (' + (homeLocationObj && homeLocationObj.address) + ')'} />
+                            {_renderHomeLocationRadio()}
                             <FormControlLabel value="new" control={<Radio color="primary" />} label="Different location" />
                         </RadioGroup>
                     </FormControl>

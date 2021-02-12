@@ -11,6 +11,7 @@
 .paper-placed{
     padding: 5%; 
     align-items: center;
+    border: 1px solid rgb(235, 238, 240);
 }
 
 .paper-scheduled h3,
@@ -63,7 +64,7 @@
     display: grid;
     align-items: center;
     justify-content: space-around;
-    border: 1px solid grey;
+    border: 1px solid rgb(214, 220, 224);
     border-radius: 15px;
     padding: 10px 5px;
     list-style: none;
@@ -88,4 +89,41 @@
 .ul-row-scheduled-order-table li{
     text-align: center; 
     line-height: 20px;
+}
+
+.ul-hdr-placed-order-table li,
+.ul-hdr-scheduled-order-table li{
+    color: #3a4554;
+}
+
+.ul-row-placed-order-table .btn-submit-delivery,
+.modal-delete-order .btn-delete-order{
+    font-size: 16px; 
+    text-transform: inherit;
+}
+
+.modal-delete-order .btn-delete-order{
+    display: flex;
+    margin: 10px auto;
+}
+
+.ul-row-placed-order-table .btn-menu{
+    width: 50px; 
+    background-color: transparent;
+}
+
+.modal-delete-order div{
+    outline: none;
+}
+
+.modal-delete-order div h2{
+    text-align: center;
+    color: #3a4554;
+}
+
+.modal-delete-order div p{
+    width: 350px;
+    text-align: center;
+    color: rgb(101, 119, 134);
+    font-size: 17px;
 }

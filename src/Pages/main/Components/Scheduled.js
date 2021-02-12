@@ -39,7 +39,7 @@ export default function Scheduled(props) {
     }
 
     return (
-        <Paper className="paper-scheduled flex-column">
+        <Paper className="paper-scheduled flex-column" elevation={0}>
             <h3>Scheduled for delivery</h3>
             {_renderComponents()}
         </Paper>

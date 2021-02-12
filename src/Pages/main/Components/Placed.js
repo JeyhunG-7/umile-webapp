@@ -18,6 +18,8 @@ export default function Placed(props) {
             if (placedOrders){
                 placedOrders = placedOrders.filter((o) => o.status.id < 3);
                 setOrdersList(placedOrders);
+
+                console.log("placedOrders: ", placedOrders);
             }
         }
 
@@ -43,7 +45,7 @@ export default function Placed(props) {
     }
 
     return (
-        <Paper className="paper-placed flex-column">
+        <Paper className="paper-placed flex-column" elevation={0}>
             <h3>Placed Orders</h3>
             {_renderComponents()}
         </Paper>
