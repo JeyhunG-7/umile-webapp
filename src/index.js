@@ -30,7 +30,7 @@ class App extends React.Component {
     }
   }
 
-  async componentWillMount() {
+  async UNSAFE_componentWillMount() {
     this.setState({
       isLoading: true
     })
