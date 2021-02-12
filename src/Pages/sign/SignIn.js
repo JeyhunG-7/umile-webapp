@@ -20,7 +20,9 @@ export default function SignIn(props) {
     return (
         <div id="main" className="main sign-in-page">
             <div className="div-logo">
-                <img alt="logo" src={LogoTransperent} />
+                <a href="https://umile.xyz/">
+                    <img alt="logo" src={LogoTransperent} />
+                </a>
             </div>
             <div className="bg-square"></div>
             <Fade>
