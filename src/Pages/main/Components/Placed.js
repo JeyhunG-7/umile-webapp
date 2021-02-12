@@ -18,8 +18,6 @@ export default function Placed(props) {
             if (placedOrders){
                 placedOrders = placedOrders.filter((o) => o.status.id < 3);
                 setOrdersList(placedOrders);
-
-                console.log("placedOrders: ", placedOrders);
             }
         }
 

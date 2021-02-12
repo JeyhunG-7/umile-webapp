@@ -11,7 +11,7 @@ export default function OrdersMap(props) {
     if (props.orders.length > 0) {
         if (props.showScheduled) {
             listOrders = props.orders
-                .filter(order => order.status === 3).map((order) =>
+                .map((order) =>
                     <ScheduledOrder
                         key={order.id}
                         order={order} />

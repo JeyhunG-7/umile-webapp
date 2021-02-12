@@ -20,7 +20,7 @@ export default function HistoryOrder(props) {
         } else {
             return (
                 <>
-                    <li>{order.dropoff.name}</li>
+                    <li>{order.dropoff.customerName}</li>
                     <li>{order.pickup.address}</li>
                     <li>{order.dropoff.address}</li>
                     <li>
@@ -35,11 +35,11 @@ export default function HistoryOrder(props) {
     }
 
     function _renderStatus(){
-        if(order.status === 4){
+        if(order.status.id === 5){
             return(
                 <div className="status-delivered">Delivered</div>
             );
-        } else if(order.status === 5){
+        } else if(order.status === 6){
             return(
                 <div className="status-cancelled">Cancelled</div>
             );

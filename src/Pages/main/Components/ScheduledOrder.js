@@ -20,7 +20,7 @@ export default function ScheduledOrder(props) {
         } else {
             return (
                 <>
-                    <li>{order.dropoff.name}</li>
+                    <li>{order.dropoff.customerName}</li>
                     <li>{order.pickup.address}</li>
                     <li>{order.dropoff.address}</li>
                     <li>
