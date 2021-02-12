@@ -39,7 +39,7 @@ export default function HistoryOrder(props) {
             return(
                 <div className="status-delivered">Delivered</div>
             );
-        } else if(order.status === 6){
+        } else if(order.status.id === 6){
             return(
                 <div className="status-cancelled">Cancelled</div>
             );
