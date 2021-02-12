@@ -7,6 +7,8 @@ const google = window.google;
 const googleAutocomplete = new google.maps.places.AutocompleteService();
 const googlePlaces = new google.maps.places.PlacesService(document.createElement('div'));
 
+//TODO: need to make this controlled component i.e. to able to feed value to props. 
+// So it can be reset when need (e.g. when order submitted we need to clear values)
 export function AddressInput(props) {
 
     const [list, setAutocompleteList] = useState([]);

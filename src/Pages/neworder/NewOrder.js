@@ -1,26 +1,26 @@
-import React, { useRef, useState, useEffect } from 'react';
-import './NewOrder.css';
+import React, { useState, useEffect } from 'react';
 import Validate from 'validate.js';
 import { makePostRequest, makeGetRequest } from '../../Utils/Fetch';
-
-import Alert from '@material-ui/lab/Alert';
-import { Container, Button, TextField, Snackbar, Paper, Radio, RadioGroup, FormControlLabel, FormControl} from '@material-ui/core';
-
 import { AddressInput } from '../../Components/AddressInput';
-
+import Alert from '@material-ui/lab/Alert';
+import './NewOrder.css';
+import {
+    Container, Button, TextField, Snackbar, Paper, Radio,
+    RadioGroup, FormControlLabel, FormControl
+} from '@material-ui/core';
 
 export default function NewOrder(props) {
-    const [orderPlaced, setOrderPlaced] = useState(false);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-    const notesPickUp = useRef(null);
     const [locationPickUp, setlocationPickUp] = useState(null);
     const [homeLocationObj, setHomeLocationObj] = useState(null);
     const [homeLocationType, setHomeLocationType] = useState('home');
-
-    const nameDropOff = useRef(null);
-    const phoneDropOff = useRef(null);
-    const notesDropOff = useRef(null);
     const [locationDropOff, setlocationDropOff] = useState(null);
+
+    const [notesPickUp, setNotesPickup] = useState(null);
+    const [nameDropOff, setNameDropOff] = useState(null);
+    const [phoneDropOff, setPhoneDropOff] = useState(null);
+    const [notesDropOff, setNotesDropOff] = useState(null);
 
     const [stateObj, setMessage] = useState({
         notesPickUpMessage: null,
@@ -64,7 +64,7 @@ export default function NewOrder(props) {
         var result = await makeGetRequest('/clients/home', { auth: true });
         if (result) {
             setHomeLocationObj(result);
-        } else{
+        } else {
             setHomeLocationType('new');
         }
     }
@@ -78,26 +78,16 @@ export default function NewOrder(props) {
         setHomeLocationType(event.target.value);
     };
 
-    function handleSelectLocationPickUp(addr) {
-        setlocationPickUp(addr);
-    }
-
-    function handleSelectLocationDropOff(addr) {
-        setlocationDropOff(addr);
-    }
-
     const handleSnackbarClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOrderPlaced(false);
+        if (reason === 'clickaway') return;
+        setSnackbarOpen(false);
     };
 
     async function submitPlaceOrder() {
         let check = Validate({
             locationPickUp: homeLocationType === 'home' ? homeLocationObj && homeLocationObj.id : locationPickUp,
-            nameDropOff: nameDropOff.current.value,
-            phoneDropOff: phoneDropOff.current.value,
+            nameDropOff: nameDropOff,
+            phoneDropOff: phoneDropOff,
             locationDropOff: locationDropOff,
         }, constraints);
 
@@ -117,40 +107,44 @@ export default function NewOrder(props) {
                 body: {
                     cityId: 1,
                     pickup: {
-                        placeId: homeLocationType === 'home' ? homeLocationObj && homeLocationObj.id : locationPickUp,
-                        note: notesPickUp.current.value
+                        placeId: homeLocationType === 'home' ? homeLocationObj?.id : locationPickUp,
+                        note: notesPickUp
                     },
                     dropoff: {
                         placeId: locationDropOff,
-                        customer_name: nameDropOff.current.value,
-                        customer_phone: phoneDropOff.current.value,
-                        note: notesDropOff.current.value
+                        customer_name: nameDropOff,
+                        customer_phone: phoneDropOff,
+                        note: notesDropOff
                     }
                 }
             }
 
-            let result = await makePostRequest('/orders/place', opts);
-            console.log('RESULT: ', result);
-            if (result) {
-                //Success BE order placed
-                setOrderPlaced(true);
-                // TO-DO update drop off values to empty
-            } else {
-                //TODO: show error
-            }
+            const result = await makePostRequest('/orders/place', opts);
+            if (!result) return console.error('TODO: handle error ->', result);
+
+            setNotesPickup(null);
+            setNameDropOff(null);
+            setPhoneDropOff(null);
+            setNotesDropOff(null);
+            setlocationDropOff(null);
+            setSnackbarOpen(true);
         }
     }
 
-    function _renderHomeLocationRadio(){
-        if(homeLocationObj && homeLocationObj.address){
-            return(
-                <FormControlLabel value="home" control={<Radio color="primary" />} label={'Home location (' + (homeLocationObj && homeLocationObj.address) + ')'} />
-            );
-        } else{
-            return(
-                <FormControlLabel value="home" control={<Radio color="primary" />} label="Home location" />
-            );
-        }
+    function _renderHomeLocationRadio() {
+        return (
+            homeLocationObj?.address ?
+                <FormControlLabel
+                    value="home"
+                    control={<Radio color="primary" />}
+                    label={`Home location (${homeLocationObj?.address})`}
+                /> :
+                <FormControlLabel
+                    value="home"
+                    label="Home location"
+                    control={<Radio color="primary" />}
+                />
+        );
     }
 
     return (
@@ -164,65 +158,74 @@ export default function NewOrder(props) {
                             <FormControlLabel value="new" control={<Radio color="primary" />} label="Different location" />
                         </RadioGroup>
                     </FormControl>
+
                     <div className="flex-row">
                         <AddressInput
+                            disabled={homeLocationType === 'home'}
                             errorMessage={stateObj.locationPickUpMessage}
-                            selectedAddress={handleSelectLocationPickUp}
-                            disabled={homeLocationType === 'home'} />
+                            selectedAddress={(addr) => setlocationPickUp(addr)}
+                        />
                         <TextField
                             label="Notes"
                             variant="outlined"
                             fullWidth={true}
-                            inputRef={notesPickUp}
+                            value={notesPickUp || ''}
                             style={{ marginLeft: 25 }}
+                            onChange={({ target: { value } }) => setNotesPickup(value)}
                         />
                     </div>
                 </div>
             </Paper>
+
             <Paper className="paper-drop-off" elevation={0}>
                 <div className="div-drop-off">
                     <h2>Drop off information</h2>
                     <div className="flex-row">
                         <TextField
                             label="Name"
-                            variant="outlined"
                             fullWidth={true}
-                            inputRef={nameDropOff}
+                            variant="outlined"
+                            value={nameDropOff || ''}
+                            style={{ marginRight: 25 }}
                             error={stateObj.nameDropOffMessage}
                             helperText={stateObj.nameDropOffMessage}
-                            style={{ marginRight: 25 }}
+                            onChange={({ target: { value } }) => setNameDropOff(value)}
                         />
                         <TextField
                             label="Phone"
-                            variant="outlined"
                             fullWidth={true}
-                            inputRef={phoneDropOff}
+                            variant="outlined"
+                            value={phoneDropOff || ''}
                             error={stateObj.phoneDropOffMessage}
                             helperText={stateObj.phoneDropOffMessage}
+                            onChange={({ target: { value } }) => setPhoneDropOff(value)}
                         />
                     </div>
                     <div className="flex-row">
                         <AddressInput
                             errorMessage={stateObj.locationDropOffMessage}
-                            selectedAddress={handleSelectLocationDropOff} />
+                            selectedAddress={(addr) => setlocationDropOff(addr)} />
                         <TextField
                             label="Notes"
-                            variant="outlined"
                             fullWidth={true}
-                            inputRef={notesDropOff}
+                            variant="outlined"
+                            value={notesDropOff || ''}
                             style={{ marginLeft: 25 }}
+                            onChange={({ target: { value } }) => setNotesDropOff(value)}
                         />
                     </div>
 
                 </div>
             </Paper>
+
             <Button variant="contained"
                 color="primary"
                 className="submit-no"
                 onClick={submitPlaceOrder}>
                 Place Order
             </Button>
-            <Snackbar open={orderPlaced}
+
+            <Snackbar open={snackbarOpen}
                 autoHideDuration={6000}
                 onClose={handleSnackbarClose}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
@@ -232,7 +235,7 @@ export default function NewOrder(props) {
                     elevation={6}
                     variant="filled">
                     Oder has been successfully placed.
-                    </Alert>
+                </Alert>
             </Snackbar>
         </Container>
     );
