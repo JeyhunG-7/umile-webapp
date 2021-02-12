@@ -13,7 +13,8 @@ import DeleteOrder from './DeleteOrderModal';
 export default function PlacedOrder(props) {
     let order = props.order;
     const [anchorEl, setAnchorEl] = useState(null);
-    const [orderDeleted, setOrderDeleted] = useState(false);
+    const [showNotif, setShowNotif] = useState(false);
+    const [notifMessage, setNotifMessage] = useState(null);
 
     const handleOpenMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -32,6 +33,7 @@ export default function PlacedOrder(props) {
         let result = await makePostRequest('/orders/status', { auth: true, body: { orderId: order.id, submit: false } });
         if (result) {
             orderIsUpdated();
+            notifyOrderUnsubmitedForDelivery();
         } else {
             alert('TODO: Failure');
         }
@@ -41,6 +43,7 @@ export default function PlacedOrder(props) {
         let result = await makePostRequest('/orders/status', { auth: true, body: { orderId: order.id, submit: true } });
         if (result) {
             orderIsUpdated();
+            notifyOrderSubmitedForDelivery();
         } else {
             alert('TODO: Failure');
         }
@@ -50,15 +53,26 @@ export default function PlacedOrder(props) {
         handleCloseMenu();
     }
 
-    const handleSnackbarClose = (event, reason) => {
+    const handleNotifClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
-        setOrderDeleted(false);
+        setShowNotif(false);
     };
 
-    function handleOrderDeleted(){
-        setOrderDeleted(true);
+    function notifyOrderDeleted(){
+        setShowNotif(true);
+        setNotifMessage('Order has been deleted.');
+    }
+
+    function notifyOrderSubmitedForDelivery(){
+        setShowNotif(true);
+        setNotifMessage('Order submitted for delivery.');
+    }
+
+    function notifyOrderUnsubmitedForDelivery(){
+        setShowNotif(true);
+        setNotifMessage('Order unsubmitted for delivery.');
     }
 
     function _renderRow() {
@@ -76,7 +90,7 @@ export default function PlacedOrder(props) {
         } else {
             return (
                 <>
-                    <li>{order.dropoff.name}</li>
+                    <li>{order.dropoff.customerName}</li>
                     <li>{order.pickup.address}</li>
                     <li>{order.dropoff.address}</li>
                     <li>
@@ -97,7 +111,7 @@ export default function PlacedOrder(props) {
                             {order.status.id === 2 && <MenuItem onClick={handleUnsubmit}>Unsubmit for delivery</MenuItem>}
                             <DeleteOrder id={order && order.id} 
                                 modalClose={handleModalClose} 
-                                orderDeleted={handleOrderDeleted}/>
+                                orderDeleted={notifyOrderDeleted}/>
                         </Menu>
                     </li>
                 </>
@@ -114,7 +128,7 @@ export default function PlacedOrder(props) {
             );
         } else {
             return (
-                <>Submitted for delivery</>
+                <div className="status-submitted">Submitted for delivery</div>
             );
         }
     }
@@ -122,16 +136,16 @@ export default function PlacedOrder(props) {
     return (
         <ul key={order && order.received_date} className={props.header ? 'ul-hdr-placed-order-table' : 'ul-row-placed-order-table'}>
             {_renderRow()}
-            <Snackbar open={orderDeleted}
+            <Snackbar open={showNotif}
                 autoHideDuration={6000}
-                onClose={handleSnackbarClose}
+                onClose={handleNotifClose}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             >
-                <Alert onClose={handleSnackbarClose}
+                <Alert onClose={handleNotifClose}
                     severity="success"
                     elevation={6}
                     variant="filled">
-                    Order has been deleted.
+                    {notifMessage}
                     </Alert>
             </Snackbar>
         </ul>

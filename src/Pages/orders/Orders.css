@@ -83,3 +83,12 @@
 .order-history .status-cancelled{
     background-color: #d14242;
 }
+
+
+.status-submitted{
+    background-color: rgb(240, 240, 240);
+    padding: 10px 10px;
+    border-radius: 5px;
+    width: auto;
+    margin: auto;
+}
