@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../Sign.css';
-import { IsSignedInAsync, AuthenticateAsync }  from './../../../Components/Helpers/Authenticator';
 import Validate from 'validate.js';
 import { withRouter } from 'react-router-dom';
+
+import { IsSignedInAsync, AuthenticateAsync } from './../../../Components/Helpers/Authenticator';
+import DynamicIcon from '../../../Components/Helpers/DynamicIcon';
+
 
 function SignInComponent(props) {
     const email = useRef(null);
@@ -32,7 +35,7 @@ function SignInComponent(props) {
     useEffect(() => {
         async function effect() {
             var isSignedIn = await IsSignedInAsync();
-            if (isSignedIn){
+            if (isSignedIn) {
                 props.history.push('/');
             }
         }
@@ -42,6 +45,7 @@ function SignInComponent(props) {
 
 
     const submitSignIn = async e => {
+        setProcessing(true);
         let check = Validate({
             email: email.current.value,
             password: password.current.value
@@ -56,16 +60,16 @@ function SignInComponent(props) {
         });
 
         if (!check) {
-            setProcessing(true);
             var result = await AuthenticateAsync(email.current.value, password.current.value);
-            setProcessing(false);
-            
-            // result[0] -> isSuccess, result[1] -> errorMessage
-            if (result[0]){
-                window.location.reload();
+            if (result[0]) {
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1000);
             } else {
                 setErrorMessage(result[1]);
             }
+        } else {
+            setProcessing(false);
         }
     }
 
@@ -84,6 +88,18 @@ function SignInComponent(props) {
 
     function handleShowForgotPass() {
         props.handleShowForgotPass();
+    }
+
+    function _renderSignButtopn() {
+        if (isProcessing) {
+            return (
+                <DynamicIcon type="loadingWhiteCircle" width={39} height={39} />
+            );
+        } else {
+            return (
+                <>Sign in</>
+            );
+        }
     }
 
     return (
@@ -112,7 +128,7 @@ function SignInComponent(props) {
                         onKeyPress={handleOnKeyPress} />
                     <span className="helper-txt">{stateObj.passMessage}</span>
                 </div>
-                <button className="btn-sign" onClick={submitSignIn}>{ isProcessing ? 'Loading...' : 'Sign In'}</button>
+                <button className="btn-sign" onClick={submitSignIn}>{_renderSignButtopn()}</button>
                 <span className="error-txt">
                     {errorMessage}
                 </span>

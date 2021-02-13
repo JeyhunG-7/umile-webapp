@@ -43,5 +43,9 @@
 
 .new-order .submit-no{
     display: flex; 
-    margin: 50px 0 50px 60%;
+    margin: 50px 0 50px calc(70% - 130px);
+    width: 130px;
+    height: 40px;
+    padding: 0;
+    overflow: hidden;
 }
