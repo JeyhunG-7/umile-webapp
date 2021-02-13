@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { makeGetRequest } from '../../Utils/Fetch';
 import './Profile.css';
+import { Helmet } from 'react-helmet';
 
 import { Container, Snackbar } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
@@ -60,10 +61,10 @@ export default function Profile(props) {
         effect();
     }, []);
 
-    function handleAddressUpdateNotif(){
+    function handleAddressUpdateNotif() {
         setAddressUpdated(true);
     }
-    
+
     const handleSnackbarClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -72,35 +73,40 @@ export default function Profile(props) {
     };
 
     return (
-        <Container className="profile">
-            <div className="div-profile">
-                <div className="col-left">
-                    <UserInfo
-                        name={name}
-                        companyName={companyName}
-                        email={email}
-                        phone={phone} />
-                    <Balance
-                        balance={balance} />
+        <>
+            <Helmet>
+                <title>{'UMile | Profile'}</title>
+            </Helmet>
+            <Container className="profile">
+                <div className="div-profile">
+                    <div className="col-left">
+                        <UserInfo
+                            name={name}
+                            companyName={companyName}
+                            email={email}
+                            phone={phone} />
+                        <Balance
+                            balance={balance} />
+                    </div>
+                    <Location
+                        refresh={refreshUserInfo}
+                        addressObj={addressObj}
+                        notify={handleAddressUpdateNotif} />
                 </div>
-                <Location
-                    refresh={refreshUserInfo}
-                    addressObj={addressObj} 
-                    notify={handleAddressUpdateNotif}/>
-            </div>
 
-            <Snackbar open={addressUpdated}
-                autoHideDuration={6000}
-                onClose={handleSnackbarClose}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            >
-                <Alert onClose={handleSnackbarClose}
-                    severity="success"
-                    elevation={6}
-                    variant="filled">
-                    Address updated!
+                <Snackbar open={addressUpdated}
+                    autoHideDuration={6000}
+                    onClose={handleSnackbarClose}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                >
+                    <Alert onClose={handleSnackbarClose}
+                        severity="success"
+                        elevation={6}
+                        variant="filled">
+                        Address updated!
                     </Alert>
-            </Snackbar>
-        </Container>
+                </Snackbar>
+            </Container>
+        </>
     );
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Orders.css';
+import { Helmet } from 'react-helmet';
 
 import Paper from '@material-ui/core/Paper';
 
@@ -36,10 +37,15 @@ export default function Orders(props) {
     }
 
     return (
-        <div className="order-history">
-            <Paper className="paper-order-history" elevation={0}>
-                {_renderBody()}
-            </Paper>
-        </div>
+        <>
+            <Helmet>
+                    <title>{'UMile | Order history'}</title>
+                </Helmet>
+            <div className="order-history">
+                <Paper className="paper-order-history" elevation={0}>
+                    {_renderBody()}
+                </Paper>
+            </div>
+        </>
     );
 }

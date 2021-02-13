@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import Validate from 'validate.js';
-import { makePostRequest, makeGetRequest } from '../../Utils/Fetch';
-import { AddressInput } from '../../Components/AddressInput';
-import Alert from '@material-ui/lab/Alert';
 import './NewOrder.css';
+import Validate from 'validate.js';
+import { Helmet } from 'react-helmet';
+
+import Alert from '@material-ui/lab/Alert';
 import {
     Container, Button, TextField, Snackbar, Paper, Radio,
     RadioGroup, FormControlLabel, FormControl
 } from '@material-ui/core';
+
+import { makePostRequest, makeGetRequest } from '../../Utils/Fetch';
+import { AddressInput } from '../../Components/AddressInput';
+
 
 export default function NewOrder(props) {
     const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -148,95 +152,100 @@ export default function NewOrder(props) {
     }
 
     return (
-        <Container className="new-order">
-            <Paper className="paper-pick-up" elevation={0}>
-                <div className="div-pick-up">
-                    <h2>Pick up information</h2>
-                    <FormControl component="fieldset">
-                        <RadioGroup aria-label="home-location" value={homeLocationType} onChange={handleHomeLocationType}>
-                            {_renderHomeLocationRadio()}
-                            <FormControlLabel value="new" control={<Radio color="primary" />} label="Different location" />
-                        </RadioGroup>
-                    </FormControl>
+        <>
+            <Helmet>
+                <title>{'UMile | New order'}</title>
+            </Helmet>
+            <Container className="new-order">
+                <Paper className="paper-pick-up" elevation={0}>
+                    <div className="div-pick-up">
+                        <h2>Pick up information</h2>
+                        <FormControl component="fieldset">
+                            <RadioGroup aria-label="home-location" value={homeLocationType} onChange={handleHomeLocationType}>
+                                {_renderHomeLocationRadio()}
+                                <FormControlLabel value="new" control={<Radio color="primary" />} label="Different location" />
+                            </RadioGroup>
+                        </FormControl>
 
-                    <div className="flex-row">
-                        <AddressInput
-                            disabled={homeLocationType === 'home'}
-                            errorMessage={stateObj.locationPickUpMessage}
-                            selectedAddress={(addr) => setlocationPickUp(addr)}
-                        />
-                        <TextField
-                            label="Notes"
-                            variant="outlined"
-                            fullWidth={true}
-                            value={notesPickUp || ''}
-                            style={{ marginLeft: 25 }}
-                            onChange={({ target: { value } }) => setNotesPickup(value)}
-                        />
+                        <div className="flex-row">
+                            <AddressInput
+                                disabled={homeLocationType === 'home'}
+                                errorMessage={stateObj.locationPickUpMessage}
+                                selectedAddress={(addr) => setlocationPickUp(addr)}
+                            />
+                            <TextField
+                                label="Notes"
+                                variant="outlined"
+                                fullWidth={true}
+                                value={notesPickUp || ''}
+                                style={{ marginLeft: 25 }}
+                                onChange={({ target: { value } }) => setNotesPickup(value)}
+                            />
+                        </div>
                     </div>
-                </div>
-            </Paper>
+                </Paper>
 
-            <Paper className="paper-drop-off" elevation={0}>
-                <div className="div-drop-off">
-                    <h2>Drop off information</h2>
-                    <div className="flex-row">
-                        <TextField
-                            label="Name"
-                            fullWidth={true}
-                            variant="outlined"
-                            value={nameDropOff || ''}
-                            style={{ marginRight: 25 }}
-                            error={stateObj.nameDropOffMessage}
-                            helperText={stateObj.nameDropOffMessage}
-                            onChange={({ target: { value } }) => setNameDropOff(value)}
-                        />
-                        <TextField
-                            label="Phone"
-                            fullWidth={true}
-                            variant="outlined"
-                            value={phoneDropOff || ''}
-                            error={stateObj.phoneDropOffMessage}
-                            helperText={stateObj.phoneDropOffMessage}
-                            onChange={({ target: { value } }) => setPhoneDropOff(value)}
-                        />
+                <Paper className="paper-drop-off" elevation={0}>
+                    <div className="div-drop-off">
+                        <h2>Drop off information</h2>
+                        <div className="flex-row">
+                            <TextField
+                                label="Name"
+                                fullWidth={true}
+                                variant="outlined"
+                                value={nameDropOff || ''}
+                                style={{ marginRight: 25 }}
+                                error={stateObj.nameDropOffMessage}
+                                helperText={stateObj.nameDropOffMessage}
+                                onChange={({ target: { value } }) => setNameDropOff(value)}
+                            />
+                            <TextField
+                                label="Phone"
+                                fullWidth={true}
+                                variant="outlined"
+                                value={phoneDropOff || ''}
+                                error={stateObj.phoneDropOffMessage}
+                                helperText={stateObj.phoneDropOffMessage}
+                                onChange={({ target: { value } }) => setPhoneDropOff(value)}
+                            />
+                        </div>
+                        <div className="flex-row">
+                            <AddressInput
+                                errorMessage={stateObj.locationDropOffMessage}
+                                selectedAddress={(addr) => setlocationDropOff(addr)} />
+                            <TextField
+                                label="Notes"
+                                fullWidth={true}
+                                variant="outlined"
+                                value={notesDropOff || ''}
+                                style={{ marginLeft: 25 }}
+                                onChange={({ target: { value } }) => setNotesDropOff(value)}
+                            />
+                        </div>
+
                     </div>
-                    <div className="flex-row">
-                        <AddressInput
-                            errorMessage={stateObj.locationDropOffMessage}
-                            selectedAddress={(addr) => setlocationDropOff(addr)} />
-                        <TextField
-                            label="Notes"
-                            fullWidth={true}
-                            variant="outlined"
-                            value={notesDropOff || ''}
-                            style={{ marginLeft: 25 }}
-                            onChange={({ target: { value } }) => setNotesDropOff(value)}
-                        />
-                    </div>
+                </Paper>
 
-                </div>
-            </Paper>
-
-            <Button variant="contained"
-                color="primary"
-                className="submit-no"
-                onClick={submitPlaceOrder}>
-                Place Order
+                <Button variant="contained"
+                    color="primary"
+                    className="submit-no"
+                    onClick={submitPlaceOrder}>
+                    Place Order
             </Button>
 
-            <Snackbar open={snackbarOpen}
-                autoHideDuration={6000}
-                onClose={handleSnackbarClose}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            >
-                <Alert onClose={handleSnackbarClose}
-                    severity="success"
-                    elevation={6}
-                    variant="filled">
-                    Oder has been successfully placed.
+                <Snackbar open={snackbarOpen}
+                    autoHideDuration={6000}
+                    onClose={handleSnackbarClose}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                >
+                    <Alert onClose={handleSnackbarClose}
+                        severity="success"
+                        elevation={6}
+                        variant="filled">
+                        Oder has been successfully placed.
                 </Alert>
-            </Snackbar>
-        </Container>
+                </Snackbar>
+            </Container>
+        </>
     );
 }

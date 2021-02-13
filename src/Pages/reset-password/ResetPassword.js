@@ -1,5 +1,6 @@
-import React, {  useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import './ResetPassword.css';
+import { Helmet } from 'react-helmet';
 import Validate from 'validate.js';
 import DynamicIcon from '../../Components/Helpers/DynamicIcon';
 import Fade from 'react-reveal/Fade';
@@ -46,8 +47,8 @@ export default function ResetPassword(props) {
         }
     }
 
-    function handleRsetPassword(){
-        if(pass1.current.value !== pass2.current.value){
+    function handleRsetPassword() {
+        if (pass1.current.value !== pass2.current.value) {
             setMessage(prevState => {
                 return {
                     ...prevState,
@@ -75,6 +76,9 @@ export default function ResetPassword(props) {
 
     return (
         <>
+            <Helmet>
+                <title>{'UMile | Reset password'}</title>
+            </Helmet>
             <div className="main">
                 <div className="body">
                     <div className="sec-reset-password">
