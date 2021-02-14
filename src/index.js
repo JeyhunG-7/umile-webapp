@@ -65,7 +65,7 @@ class App extends React.Component {
                 <PrivateRoute exact path="/orders" auth={this.state.isLoggedIn} component={Orders} pageName="Orders" />
                 <PrivateRoute exact path="/neworder" auth={this.state.isLoggedIn} component={NewOrder} pageName="New Order" />
 
-                <Redirect from='*' to='/404' />
+                <Redirect from='*' to='/' />
               </Switch>
             </Router>
           </ThemeProvider>
