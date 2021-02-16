@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { GlobalContextProvider } from './Components/GlobalContext';
+import Alert from './Components/Alert';
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 import './index.css';
 
@@ -13,7 +15,6 @@ import Main from './Pages/main/Main';
 import Profile from './Pages/profile/Profile';
 import Orders from './Pages/orders/Orders';
 import NewOrder from './Pages/neworder/NewOrder';
-import NotFound from './Pages/404/404';
 import ResetPassword from './Pages/reset-password/ResetPassword';
 import SignIn from './Pages/sign/SignIn';
 import SignUp from './Pages/sign/SignUp';
@@ -48,28 +49,31 @@ class App extends React.Component {
       return <></>
     } else {
       return (
-        <div style={{ display: "flex" }}>
-          <ThemeProvider theme={Theme}>
-            <Router>
-              {this.state.isLoggedIn ? <Sidebar /> : <></>}
-              <Switch>
-                {/* Public Routes */}
-                <Route exact path="/signin" render={(props) => <SignIn {...props} pageName="Sign In" />} />
-                <Route exact path="/reset-password" render={(props) => <ResetPassword {...props} pageName="Reset Password" />} />
-                <Route path="/signup/:token" render={(props) => <SignUp {...props} pageName="Sign Up" />} />
-                <Route path="/404" render={(props) => <NotFound {...props} pageName="404" />} />
+        <GlobalContextProvider>
+          <div style={{ display: "flex" }}>
+            <ThemeProvider theme={Theme}>
+              <Router>
+                {this.state.isLoggedIn ? <Sidebar /> : <></>}
+                <Switch>
+                  {/* Public Routes */}
+                  <Route exact path="/signin" render={(props) => <SignIn {...props} pageName="Sign In" />} />
+                  <Route exact path="/reset-password" render={(props) => <ResetPassword {...props} pageName="Reset Password" />} />
+                  <Route path="/signup/:token" render={(props) => <SignUp {...props} pageName="Sign Up" />} />
 
-                {/* Private Routes */}
-                <PrivateRoute exact path="/" auth={this.state.isLoggedIn} component={Main} pageName="Main" />
-                <PrivateRoute exact path="/profile" auth={this.state.isLoggedIn} component={Profile} pageName="Profile" />
-                <PrivateRoute exact path="/orders" auth={this.state.isLoggedIn} component={Orders} pageName="Orders" />
-                <PrivateRoute exact path="/neworder" auth={this.state.isLoggedIn} component={NewOrder} pageName="New Order" />
+                  {/* Private Routes */}
+                  <PrivateRoute exact path="/" auth={this.state.isLoggedIn} component={Main} pageName="Main" />
+                  <PrivateRoute exact path="/profile" auth={this.state.isLoggedIn} component={Profile} pageName="Profile" />
+                  <PrivateRoute exact path="/orders" auth={this.state.isLoggedIn} component={Orders} pageName="Orders" />
+                  <PrivateRoute exact path="/neworder" auth={this.state.isLoggedIn} component={NewOrder} pageName="New Order" />
 
-                <Redirect from='*' to='/404' />
-              </Switch>
-            </Router>
-          </ThemeProvider>
-        </div>
+                  <Redirect from='*' to='/=' />
+                </Switch>
+              </Router>
+            </ThemeProvider>
+          </div>
+
+          <Alert />
+        </GlobalContextProvider>
       )
     }
   }

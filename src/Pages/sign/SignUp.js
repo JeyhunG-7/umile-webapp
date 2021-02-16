@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import './Sign.css';
 import Validate from 'validate.js';
 import Fade from 'react-reveal/Fade';
@@ -7,9 +7,12 @@ import { Helmet } from 'react-helmet';
 import LogoTransperent from '../../Images/logo_transparent.png';
 import Loading from '../../Components/Loading';
 import DynamicIcon from '../../Components/Helpers/DynamicIcon';
+import { GlobalContext, SEVERITY } from '.././../Components/GlobalContext';
 
 
 export default function SignUp(props) {
+    const { setAlert } = useContext(GlobalContext);
+
     const [email, setEmail] = useState(null);
     const [fname, setFname] = useState(null);
     const [lname, setLname] = useState(null);
@@ -153,8 +156,7 @@ export default function SignUp(props) {
                 }
             } catch (e) {
                 console.log(e);
-                // TODO: Show error
-                return;
+                return setAlert({ message: 'Error while signing up', severity: SEVERITY.ERROR });
             }
         } else{
             setSubmitLoading(false);
