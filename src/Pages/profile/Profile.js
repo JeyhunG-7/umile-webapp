@@ -48,7 +48,6 @@ export default function Profile(props) {
             setBalance(result.balance);
 
             result = await makeGetRequest('/clients/home', { auth: true });
-            if (!result) return setAlert({ message: 'Error while getting home address', severity: SEVERITY.ERROR });
 
             setAddressObj(result);
         }

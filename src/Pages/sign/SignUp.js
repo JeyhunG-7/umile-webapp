@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import './Sign.css';
 import Validate from 'validate.js';
 import Fade from 'react-reveal/Fade';

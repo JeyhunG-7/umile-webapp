@@ -68,9 +68,8 @@ function SignInComponent(props) {
             } else {
                 setErrorMessage(result[1]);
             }
-        } else {
-            setProcessing(false);
         }
+        setProcessing(false);
     }
 
     function handleOnKeyPress(e) {

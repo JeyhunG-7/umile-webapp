@@ -9,6 +9,8 @@
 }
 
 .sign-body{
+    display: flex;
+    flex-direction: column;
     position: relative;
     width: 480px;
     height: auto;
@@ -17,7 +19,7 @@
     box-shadow: 0 25px 75px rgba(16,30,54,.25);
     border-radius: 6px;
     padding: 30px 60px 26px;
-    transition: all ease-in-out 0.15em;
+    transition: all ease-in-out 0.15s;
 }
 
 .sign-header{
@@ -221,4 +223,10 @@
 .sign-up-page .div-logo img{
     height: 30px;
     width: auto;
+}
+
+.p-message{
+    text-align: center;
+    letter-spacing: 0.015em;
+    color: #3a4554;
 }

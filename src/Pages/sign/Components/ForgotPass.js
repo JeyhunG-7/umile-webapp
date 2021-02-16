@@ -2,6 +2,9 @@ import React, { useRef, useState } from 'react';
 import '../Sign.css';
 import Validate from 'validate.js';
 
+import DynamicIcon from '../../../Components/Helpers/DynamicIcon';
+
+
 export default function ForgotPass(props) {
     const email = useRef(null);
 
@@ -93,8 +96,9 @@ export default function ForgotPass(props) {
     function _renderSuccessView(){
         return (
             <>
-                <i className="lni lni-checkmark-circle email-icon" style={{color: 'green'}}></i>
-                <label>{successMessage}</label>
+                <DynamicIcon type="emailSent" width={150} height={150} />
+                <p className="p-message">{successMessage}</p>
+
             </>
         )
     }
@@ -102,7 +106,7 @@ export default function ForgotPass(props) {
     return (
         <div className="sign-sec">
             <div className="sign-body">
-                <div className="sign-header">Forgot password?</div>
+                <div className="sign-header">{showSuccess ? 'Email on its way' : 'Forgot password?'}</div>
                 {showSuccess ? _renderSuccessView() : _renderInputView()}
             </div>
         </div>
