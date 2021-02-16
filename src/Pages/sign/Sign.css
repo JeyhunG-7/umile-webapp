@@ -1,14 +1,11 @@
-.sign-sec{
+.sign-up-page,
+.sign-in-page{
     flex-grow: 1;
     width: 100%;
     min-height: calc(100vh - 60px);
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.sign-sec.signup{
-    padding-top: 60px;
 }
 
 .sign-body{
@@ -188,14 +185,16 @@
 }
 
 
-.sign-in-page{
+.sign-in-page,
+.sign-up-page{
     position: relative;
     height: 100vh;
     width: 100vw;
     overflow: hidden;
 }
 
-.sign-in-page .bg-square{
+.sign-in-page .bg-square,
+.sign-up-page .bg-square{
     position: absolute;
     top: -22vw;
     right: -75vw;
@@ -208,13 +207,18 @@
     z-index: 0;
 }
 
-.sign-in-page .div-logo{
+.sign-in-page .div-logo,
+.sign-up-page .div-logo{
     position: fixed;
+    top: 0;
+    left: 0;
     padding: 20px;
     z-index: 10;
+
 }
 
-.sign-in-page .div-logo img{
+.sign-in-page .div-logo img,
+.sign-up-page .div-logo img{
     height: 30px;
     width: auto;
 }
