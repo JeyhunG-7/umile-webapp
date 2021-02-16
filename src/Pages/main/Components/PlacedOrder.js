@@ -1,28 +1,21 @@
-import React, { useState } from 'react';
-import '../Main.css';
-import Moment from 'react-moment';
-
+import React, { useState, useContext } from 'react';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Alert from '@material-ui/lab/Alert';
-import { Button, Menu, MenuItem, Snackbar} from '@material-ui/core';
-
+import { Button, Menu, MenuItem } from '@material-ui/core';
 import { makePostRequest } from '../../../Utils/Fetch';
+import { GlobalContext, SEVERITY } from '.././../../Components/GlobalContext';
 import DeleteOrder from './DeleteOrderModal';
-
+import Moment from 'react-moment';
+import '../Main.css';
 
 export default function PlacedOrder(props) {
     let order = props.order;
+
+    const { setAlert } = useContext(GlobalContext);
     const [anchorEl, setAnchorEl] = useState(null);
-    const [showNotif, setShowNotif] = useState(false);
-    const [notifMessage, setNotifMessage] = useState(null);
 
-    const handleOpenMenu = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
+    const handleOpenMenu = (event) => setAnchorEl(event.currentTarget);
 
-    const handleCloseMenu = () => {
-        setAnchorEl(null);
-    };
+    const handleCloseMenu = () => setAnchorEl(null);
 
     function orderIsUpdated() {
         props.onUpdate();
@@ -30,49 +23,19 @@ export default function PlacedOrder(props) {
     }
 
     async function handleUnsubmit() {
-        let result = await makePostRequest('/orders/status', { auth: true, body: { orderId: order.id, submit: false } });
-        if (result) {
-            orderIsUpdated();
-            notifyOrderUnsubmitedForDelivery();
-        } else {
-            alert('TODO: Failure');
-        }
+        const result = await makePostRequest('/orders/status', { auth: true, body: { orderId: order.id, submit: false } });
+        if (!result) return setAlert({ message: 'Request error', severity: SEVERITY.ERROR });
+
+        orderIsUpdated();
+        setAlert({ message: 'Order unsubmitted for delivery.', severity: SEVERITY.SUCCESS });
     }
 
     async function handleSubmitForDelivery() {
-        let result = await makePostRequest('/orders/status', { auth: true, body: { orderId: order.id, submit: true } });
-        if (result) {
-            orderIsUpdated();
-            notifyOrderSubmitedForDelivery();
-        } else {
-            alert('TODO: Failure');
-        }
-    }
+        const result = await makePostRequest('/orders/status', { auth: true, body: { orderId: order.id, submit: true } });
+        if (!result) return setAlert({ message: 'Request error', severity: SEVERITY.ERROR });
 
-    function handleModalClose() {
-        handleCloseMenu();
-    }
-
-    const handleNotifClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setShowNotif(false);
-    };
-
-    function notifyOrderDeleted(){
-        setShowNotif(true);
-        setNotifMessage('Order has been deleted.');
-    }
-
-    function notifyOrderSubmitedForDelivery(){
-        setShowNotif(true);
-        setNotifMessage('Order submitted for delivery.');
-    }
-
-    function notifyOrderUnsubmitedForDelivery(){
-        setShowNotif(true);
-        setNotifMessage('Order unsubmitted for delivery.');
+        orderIsUpdated();
+        setAlert({ message: 'Order submitted for delivery.', severity: SEVERITY.SUCCESS });
     }
 
     function _renderRow() {
@@ -109,9 +72,12 @@ export default function PlacedOrder(props) {
                             onClose={handleCloseMenu}
                         >
                             {order.status.id === 2 && <MenuItem onClick={handleUnsubmit}>Unsubmit for delivery</MenuItem>}
-                            <DeleteOrder id={order && order.id} 
-                                modalClose={handleModalClose} 
-                                orderDeleted={notifyOrderDeleted}/>
+
+                            <DeleteOrder
+                                id={order && order.id}
+                                modalClose={handleCloseMenu}
+                                orderDeleted={() => setAlert({ message: 'Request error', severity: SEVERITY.SUCCESS })}
+                            />
                         </Menu>
                     </li>
                 </>
@@ -136,18 +102,6 @@ export default function PlacedOrder(props) {
     return (
         <ul key={order && order.received_date} className={props.header ? 'ul-hdr-placed-order-table' : 'ul-row-placed-order-table'}>
             {_renderRow()}
-            <Snackbar open={showNotif}
-                autoHideDuration={6000}
-                onClose={handleNotifClose}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            >
-                <Alert onClose={handleNotifClose}
-                    severity="success"
-                    elevation={6}
-                    variant="filled">
-                    {notifMessage}
-                    </Alert>
-            </Snackbar>
         </ul>
     );
 }

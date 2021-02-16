@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { makeGetRequest } from '../../Utils/Fetch';
-import './Profile.css';
+import { GlobalContext, SEVERITY } from '.././../Components/GlobalContext';
 import { Helmet } from 'react-helmet';
-
-import { Container, Snackbar } from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
+import { Container } from '@material-ui/core';
 
 import UserInfo from './Components/UserInfo';
 import Balance from './Components/Balance';
 import Location from './Components/Location';
-
+import './Profile.css';
 
 export default function Profile(props) {
+    const { setAlert } = useContext(GlobalContext);
+
     const [email, setEmail] = useState('');
     const [companyName, setCompanyName] = useState('');
     const [name, setName] = useState('');
@@ -19,58 +19,42 @@ export default function Profile(props) {
     const [balance, setBalance] = useState('');
     const [addressObj, setAddressObj] = useState(null);
 
-    const [addressUpdated, setAddressUpdated] = useState(null);
-
     async function refreshUserInfo() {
-        var result = await makeGetRequest('/clients/info', { auth: true });
-        if (!result) {
-            // TODO: show error
-        } else {
-            setEmail(result.email);
-            setName(`${result.first_name} ${result.last_name}`);
-            setPhone(result.phone);
-            setCompanyName(result.company);
-            setBalance(result.balance);
-        }
+        let result = await makeGetRequest('/clients/info', { auth: true });
+        if (!result) return setAlert({ message: 'Error while getting client info', severity: SEVERITY.ERROR });
+
+        setEmail(result.email);
+        setName(`${result.first_name} ${result.last_name}`);
+        setPhone(result.phone);
+        setCompanyName(result.company);
+        setBalance(result.balance);
 
         result = await makeGetRequest('/clients/home', { auth: true });
-        if (result) {
-            setAddressObj(result);
-        }
+        if (!result) return setAlert({ message: 'Error while getting home address', severity: SEVERITY.ERROR });
+
+        setAddressObj(result);
     }
 
     // fetch user information
     useEffect(() => {
         async function effect() {
-            var result = await makeGetRequest('/clients/info', { auth: true });
-            if (!result) {
-                // TODO: show error
-            } else {
-                setEmail(result.email);
-                setName(`${result.first_name} ${result.last_name}`);
-                setPhone(result.phone);
-                setCompanyName(result.company);
-                setBalance(result.balance);
-            }
+            let result = await makeGetRequest('/clients/info', { auth: true });
+            if (!result) return setAlert({ message: 'Error while getting client info', severity: SEVERITY.ERROR });
+
+            setEmail(result.email);
+            setName(`${result.first_name} ${result.last_name}`);
+            setPhone(result.phone);
+            setCompanyName(result.company);
+            setBalance(result.balance);
 
             result = await makeGetRequest('/clients/home', { auth: true });
-            if (result) {
-                setAddressObj(result);
-            }
+            if (!result) return setAlert({ message: 'Error while getting home address', severity: SEVERITY.ERROR });
+
+            setAddressObj(result);
         }
+
         effect();
-    }, []);
-
-    function handleAddressUpdateNotif() {
-        setAddressUpdated(true);
-    }
-
-    const handleSnackbarClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setAddressUpdated(false);
-    };
+    }, [setAlert]);
 
     return (
         <>
@@ -84,28 +68,18 @@ export default function Profile(props) {
                             name={name}
                             companyName={companyName}
                             email={email}
-                            phone={phone} />
-                        <Balance
-                            balance={balance} />
-                    </div>
-                    <Location
-                        refresh={refreshUserInfo}
-                        addressObj={addressObj}
-                        notify={handleAddressUpdateNotif} />
-                </div>
+                            phone={phone}
+                        />
 
-                <Snackbar open={addressUpdated}
-                    autoHideDuration={6000}
-                    onClose={handleSnackbarClose}
-                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                >
-                    <Alert onClose={handleSnackbarClose}
-                        severity="success"
-                        elevation={6}
-                        variant="filled">
-                        Address updated!
-                    </Alert>
-                </Snackbar>
+                        <Balance balance={balance} />
+                    </div>
+
+                    <Location
+                        addressObj={addressObj}
+                        refresh={refreshUserInfo}
+                        notify={() => setAlert({ message: 'Address updated!', severity: SEVERITY.SUCCESS })}
+                    />
+                </div>
             </Container>
         </>
     );

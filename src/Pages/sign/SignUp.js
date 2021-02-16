@@ -1,9 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import './Sign.css';
 import Validate from 'validate.js';
 import Fade from 'react-reveal/Fade';
+import { GlobalContext, SEVERITY } from '.././../Components/GlobalContext';
 
 export default function SignUp(props) {
+    const { setAlert } = useContext(GlobalContext);
+
     const fname = useRef(null);
     const lname = useRef(null);
     const email = useRef(null);
@@ -76,28 +79,28 @@ export default function SignUp(props) {
     useEffect(() => {
         async function effect() {
             console.log('Effect');
-            if (!params.token){
+            if (!params.token) {
                 setLoading(false);
                 setErrorMessage('Sign up is invitation only');
                 return;
             }
 
-            try{
+            try {
                 var rawData = await fetch('/api/clients/validate', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({token: params.token})
+                    body: JSON.stringify({ token: params.token })
                 });
                 var response = await rawData.json();
-            } catch(e){
+            } catch (e) {
                 return;
             }
 
             setLoading(false);
-            if (!response.success){
+            if (!response.success) {
                 setErrorMessage('Invalid token');
             }
         }
@@ -127,7 +130,7 @@ export default function SignUp(props) {
         });
 
         if (!check) {
-            try{
+            try {
                 console.log("Send api call");
                 var rawData = await fetch('/api/clients/signup', {
                     method: 'POST',
@@ -147,10 +150,9 @@ export default function SignUp(props) {
                 });
                 var response = await rawData.json();
                 console.log(response);
-            } catch(e){
+            } catch (e) {
                 console.log(e);
-                // TODO: Show error
-                return;
+                return setAlert({ message: 'Error while signing up', severity: SEVERITY.ERROR });
             }
         }
     }
@@ -171,7 +173,7 @@ export default function SignUp(props) {
         }
     }
 
-    function renderLoadingUi(){
+    function renderLoadingUi() {
         return (
             <div className="sign-sec signup">
                 <p>Loading...</p>
@@ -179,7 +181,7 @@ export default function SignUp(props) {
         )
     }
 
-    function renderErrorMessageUi(){
+    function renderErrorMessageUi() {
         return (
             <div className="sign-sec signup">
                 <p>{errorMessage}</p>
@@ -187,7 +189,7 @@ export default function SignUp(props) {
         )
     }
 
-    function renderSignupUi(){
+    function renderSignupUi() {
         return (
             <div className="sign-sec signup">
                 <div className="sign-body">
@@ -265,9 +267,9 @@ export default function SignUp(props) {
     }
 
     var uiToRender;
-    if (isLoading){
+    if (isLoading) {
         uiToRender = renderLoadingUi();
-    } else if (errorMessage !== ''){
+    } else if (errorMessage !== '') {
         uiToRender = renderErrorMessageUi();
     } else {
         uiToRender = renderSignupUi();
