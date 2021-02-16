@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../Profile.css';
 import Map from '../../../Components/Map';
 import Validate from 'validate.js';
 
 import { Paper, Button, Popover, Typography } from '@material-ui/core';
-import { GlobalContext, SEVERITY } from '.././../../Components/GlobalContext';
 import InfoIcon from '@material-ui/icons/Info';
 
 import { AddressInput } from '../../../Components/AddressInput';
@@ -12,8 +11,6 @@ import { makePostRequest } from '../../../Utils/Fetch';
 
 
 export default function Profile(props) {
-    const { setAlert } = useContext(GlobalContext);
-
     const [anchorEl, setAnchorEl] = useState(null);
     const [openPopover, setOpenPopover] = useState(false);
     const [showAddressUpdate, setShowAddressUpdate] = useState(false);
@@ -72,12 +69,13 @@ export default function Profile(props) {
                     placeId: location
                 }
             }
-
-            const result = await makePostRequest('/clients/home', opts);
-            if (!result) return setAlert({ message: 'Error while request', severity: SEVERITY.ERROR });
-
-            props.refresh();
-            props.notify();
+            let result = await makePostRequest('/clients/home', opts);
+            if (result) {
+                props.refresh();
+                props.notify();
+            } else {
+                //TODO: show error
+            }
         }
     }
 
@@ -105,6 +103,7 @@ export default function Profile(props) {
                     No information
                 </div>
             );
+
         }
     }
 

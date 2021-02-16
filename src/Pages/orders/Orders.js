@@ -40,7 +40,7 @@ export default function Orders(props) {
         <>
             <Helmet>
                     <title>{'UMile | Order history'}</title>
-            </Helmet>
+                </Helmet>
             <div className="order-history">
                 <Paper className="paper-order-history" elevation={0}>
                     {_renderBody()}

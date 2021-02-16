@@ -1,17 +1,20 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import './NewOrder.css';
 import Validate from 'validate.js';
 import { Helmet } from 'react-helmet';
-import { makePostRequest, makeGetRequest } from '../../Utils/Fetch';
-import { GlobalContext, SEVERITY } from '.././../Components/GlobalContext';
-import { AddressInput } from '../../Components/AddressInput';
+
+import Alert from '@material-ui/lab/Alert';
 import {
-    Container, Button, TextField, Paper, Radio,
+    Container, Button, TextField, Snackbar, Paper, Radio,
     RadioGroup, FormControlLabel, FormControl
 } from '@material-ui/core';
 
+import { makePostRequest, makeGetRequest } from '../../Utils/Fetch';
+import { AddressInput } from '../../Components/AddressInput';
+
+
 export default function NewOrder(props) {
-    const { setAlert } = useContext(GlobalContext);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
 
     const [locationPickUp, setlocationPickUp] = useState(null);
     const [homeLocationObj, setHomeLocationObj] = useState(null);
@@ -79,6 +82,11 @@ export default function NewOrder(props) {
         setHomeLocationType(event.target.value);
     };
 
+    const handleSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') return;
+        setSnackbarOpen(false);
+    };
+
     async function submitPlaceOrder() {
         let check = Validate({
             locationPickUp: homeLocationType === 'home' ? homeLocationObj && homeLocationObj.id : locationPickUp,
@@ -116,14 +124,14 @@ export default function NewOrder(props) {
             }
 
             const result = await makePostRequest('/orders/place', opts);
-            if (!result) return setAlert({ message: 'Request error', severity: SEVERITY.ERROR });
+            if (!result) return console.error('TODO: handle error ->', result);
 
             setNotesPickup(null);
             setNameDropOff(null);
             setPhoneDropOff(null);
             setNotesDropOff(null);
             setlocationDropOff(null);
-            setAlert({ message: 'Order has been submitted', severity: SEVERITY.SUCCESS });
+            setSnackbarOpen(true);
         }
     }
 
@@ -223,7 +231,20 @@ export default function NewOrder(props) {
                     className="submit-no"
                     onClick={submitPlaceOrder}>
                     Place Order
-                </Button>
+            </Button>
+
+                <Snackbar open={snackbarOpen}
+                    autoHideDuration={6000}
+                    onClose={handleSnackbarClose}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                >
+                    <Alert onClose={handleSnackbarClose}
+                        severity="success"
+                        elevation={6}
+                        variant="filled">
+                        Oder has been successfully placed.
+                </Alert>
+                </Snackbar>
             </Container>
         </>
     );
