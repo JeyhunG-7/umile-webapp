@@ -75,31 +75,31 @@ export default function SignUp(props) {
 
     useEffect(() => {
         async function effect() {
-            console.log('Effect');
-            if (!params.token){
-                setLoading(false);
-                setErrorMessage('Sign up is invitation only');
-                return;
-            }
+            // console.log('Effect');
+            // if (!params.token){
+            //     setLoading(false);
+            //     setErrorMessage('Sign up is invitation only');
+            //     return;
+            // }
 
-            try{
-                var rawData = await fetch('/api/clients/validate', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({token: params.token})
-                });
-                var response = await rawData.json();
-            } catch(e){
-                return;
-            }
+            // try{
+            //     var rawData = await fetch('/api/clients/validate', {
+            //         method: 'POST',
+            //         headers: {
+            //             'Accept': 'application/json',
+            //             'Content-Type': 'application/json'
+            //         },
+            //         body: JSON.stringify({token: params.token})
+            //     });
+            //     var response = await rawData.json();
+            // } catch(e){
+            //     return;
+            // }
 
-            setLoading(false);
-            if (!response.success){
-                setErrorMessage('Invalid token');
-            }
+            // setLoading(false);
+            // if (!response.success){
+            //     setErrorMessage('Invalid token');
+            // }
         }
         effect();
     }, [params]);

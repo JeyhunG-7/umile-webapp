@@ -13,7 +13,6 @@ import Main from './Pages/main/Main';
 import Profile from './Pages/profile/Profile';
 import Orders from './Pages/orders/Orders';
 import NewOrder from './Pages/neworder/NewOrder';
-import NotFound from './Pages/404/404';
 import ResetPassword from './Pages/reset-password/ResetPassword';
 import SignIn from './Pages/sign/SignIn';
 import SignUp from './Pages/sign/SignUp';
@@ -57,7 +56,6 @@ class App extends React.Component {
                 <Route exact path="/signin" render={(props) => <SignIn {...props} pageName="Sign In" />} />
                 <Route exact path="/reset-password" render={(props) => <ResetPassword {...props} pageName="Reset Password" />} />
                 <Route path="/signup/:token" render={(props) => <SignUp {...props} pageName="Sign Up" />} />
-                <Route path="/404" render={(props) => <NotFound {...props} pageName="404" />} />
 
                 {/* Private Routes */}
                 <PrivateRoute exact path="/" auth={this.state.isLoggedIn} component={Main} pageName="Main" />
@@ -65,7 +63,7 @@ class App extends React.Component {
                 <PrivateRoute exact path="/orders" auth={this.state.isLoggedIn} component={Orders} pageName="Orders" />
                 <PrivateRoute exact path="/neworder" auth={this.state.isLoggedIn} component={NewOrder} pageName="New Order" />
 
-                <Redirect from='*' to='/404' />
+                <Redirect from='*' to='/' />
               </Switch>
             </Router>
           </ThemeProvider>

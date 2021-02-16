@@ -11,6 +11,7 @@ import {
 
 import { makePostRequest, makeGetRequest } from '../../Utils/Fetch';
 import { AddressInput } from '../../Components/AddressInput';
+import DynamicIcon from '../../Components/Helpers/DynamicIcon';
 
 
 export default function NewOrder(props) {
@@ -25,6 +26,8 @@ export default function NewOrder(props) {
     const [nameDropOff, setNameDropOff] = useState(null);
     const [phoneDropOff, setPhoneDropOff] = useState(null);
     const [notesDropOff, setNotesDropOff] = useState(null);
+
+    const [loadingSubmit, setLoadingSubmit] = useState(false);
 
     const [stateObj, setMessage] = useState({
         notesPickUpMessage: null,
@@ -88,6 +91,7 @@ export default function NewOrder(props) {
     };
 
     async function submitPlaceOrder() {
+        setLoadingSubmit(true);
         let check = Validate({
             locationPickUp: homeLocationType === 'home' ? homeLocationObj && homeLocationObj.id : locationPickUp,
             nameDropOff: nameDropOff,
@@ -112,13 +116,13 @@ export default function NewOrder(props) {
                     cityId: 1,
                     pickup: {
                         placeId: homeLocationType === 'home' ? homeLocationObj?.id : locationPickUp,
-                        note: notesPickUp
+                        note: notesPickUp ?? ''
                     },
                     dropoff: {
                         placeId: locationDropOff,
                         customer_name: nameDropOff,
                         customer_phone: phoneDropOff,
-                        note: notesDropOff
+                        note: notesDropOff ?? ''
                     }
                 }
             }
@@ -126,12 +130,17 @@ export default function NewOrder(props) {
             const result = await makePostRequest('/orders/place', opts);
             if (!result) return console.error('TODO: handle error ->', result);
 
-            setNotesPickup(null);
-            setNameDropOff(null);
-            setPhoneDropOff(null);
-            setNotesDropOff(null);
-            setlocationDropOff(null);
-            setSnackbarOpen(true);
+            setTimeout(function () {
+                setNotesPickup(null);
+                setNameDropOff(null);
+                setPhoneDropOff(null);
+                setNotesDropOff(null);
+                setlocationDropOff(null);
+                setLoadingSubmit(false);
+                setSnackbarOpen(true);
+            }, 1000);
+        } else {
+            setLoadingSubmit(false);
         }
     }
 
@@ -149,6 +158,18 @@ export default function NewOrder(props) {
                     control={<Radio color="primary" />}
                 />
         );
+    }
+
+    function _renderSubmitButton() {
+        if (loadingSubmit) {
+            return (
+                <DynamicIcon type="loadingWhiteCircle" width={39} height={39} />
+            );
+        } else {
+            return (
+                <>Place Order</>
+            );
+        }
     }
 
     return (
@@ -222,7 +243,6 @@ export default function NewOrder(props) {
                                 onChange={({ target: { value } }) => setNotesDropOff(value)}
                             />
                         </div>
-
                     </div>
                 </Paper>
 
@@ -230,8 +250,8 @@ export default function NewOrder(props) {
                     color="primary"
                     className="submit-no"
                     onClick={submitPlaceOrder}>
-                    Place Order
-            </Button>
+                    {_renderSubmitButton()}
+                </Button>
 
                 <Snackbar open={snackbarOpen}
                     autoHideDuration={6000}

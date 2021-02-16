@@ -8,6 +8,7 @@ import * as notFound from "../../Lottie/not-found.json";
 import * as resetPassword from "../../Lottie/reset-password.json";
 import * as loading from "../../Lottie/loader-circle.json";
 import * as doneLoading from "../../Lottie/done-loading.json";
+import * as loadingWhiteCircle from "../../Lottie/loader-circle-white.json";
 
 import * as dfe_1 from "../../Lottie/designed-for-everyone-1.json";
 import * as dfe_2 from "../../Lottie/designed-for-everyone-2.json";
@@ -85,6 +86,14 @@ export default function DynamicIcon(props) {
             loop: showLoop,
             autoplay: true,
             animationData: loading.default,
+            rendererSettings: {
+                preserveAspectRatio: "xMidYMid slice"
+            }
+        },
+        loadingWhiteCircle: {
+            loop: showLoop,
+            autoplay: true,
+            animationData: loadingWhiteCircle.default,
             rendererSettings: {
                 preserveAspectRatio: "xMidYMid slice"
             }

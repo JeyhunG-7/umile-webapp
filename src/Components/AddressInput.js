@@ -44,7 +44,8 @@ export function AddressInput(props) {
                 return;
             }
 
-            predictions.map(p => localSearch.push(p.description));
+            // Remove extra parts of address
+            predictions.map(p => localSearch.push(p.description.split(",", 3).join(",")));
             setAutocompleteList(localSearch.splice(0, 5));
         });
     }
@@ -70,6 +71,10 @@ export function AddressInput(props) {
         googlePlaces.findPlaceFromQuery(opts, async (result) => {
             if (result && result.length === 1){
                 var {formatted_address, place_id, geometry} = result[0];
+
+                // Regex to find Postal code and everything after
+                let regEx = /\ [A-Z]{1}[0-9]{1}[A-Z]{1}\ [0-9]{1}[A-Z]{1}[0-9]{1}.*/
+                formatted_address = formatted_address.replace(regEx, "");
 
                 opts = {
                     auth: true, 
