@@ -1,11 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-
-import { Modal, Backdrop, Fade, MenuItem} from '@material-ui/core';
-
+import { GlobalContext, SEVERITY } from '.././../../Components/GlobalContext';
 import { makePostRequest } from '../../../Utils/Fetch';
-
+import { Modal, Backdrop, Fade, MenuItem, Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -20,12 +17,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DeleteOrderModal = React.forwardRef((props, ref) => {
+    const { setAlert } = useContext(GlobalContext);
     const classes = useStyles();
+
     const [open, setOpen] = useState(false);
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
+    const handleOpen = () => setOpen(true);
 
     const handleClose = () => {
         setOpen(false);
@@ -33,27 +30,23 @@ const DeleteOrderModal = React.forwardRef((props, ref) => {
     };
 
     async function handleDelete() {
-        let result = await makePostRequest('/orders/delete', { auth: true, body: { orderId: props.id } });
-        if (result) {
-            props.orderDeleted();
-            handleClose();
-        } else {
-            alert('TODO: Failure');
-        }
+        const result = await makePostRequest('/orders/delete', { auth: true, body: { orderId: props.id } });
+        if (!result) return setAlert({ message: 'Error while deleting the order', severity: SEVERITY.ERROR });
+
+        props.orderDeleted();
+        handleClose();
     }
 
     return (
         <div>
             <MenuItem onClick={handleOpen}>Delete order</MenuItem>
             <Modal
-                className={`${classes.modal} modal-delete-order`}
                 open={open}
+                className={`${classes.modal} modal-delete-order`}
                 onClose={handleClose}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}
+                BackdropProps={{ timeout: 500 }}
             >
                 <Fade in={open}>
                     <div className={classes.paper}>

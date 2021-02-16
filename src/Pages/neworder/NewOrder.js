@@ -1,21 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './NewOrder.css';
 import Validate from 'validate.js';
 import { Helmet } from 'react-helmet';
-
-import Alert from '@material-ui/lab/Alert';
+import { makePostRequest, makeGetRequest } from '../../Utils/Fetch';
+import { GlobalContext, SEVERITY } from '.././../Components/GlobalContext';
+import { AddressInput } from '../../Components/AddressInput';
 import {
-    Container, Button, TextField, Snackbar, Paper, Radio,
+    Container, Button, TextField, Paper, Radio,
     RadioGroup, FormControlLabel, FormControl
 } from '@material-ui/core';
-
-import { makePostRequest, makeGetRequest } from '../../Utils/Fetch';
-import { AddressInput } from '../../Components/AddressInput';
 import DynamicIcon from '../../Components/Helpers/DynamicIcon';
 
 
 export default function NewOrder(props) {
-    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const { setAlert } = useContext(GlobalContext);
 
     const [locationPickUp, setlocationPickUp] = useState(null);
     const [homeLocationObj, setHomeLocationObj] = useState(null);
@@ -85,11 +83,6 @@ export default function NewOrder(props) {
         setHomeLocationType(event.target.value);
     };
 
-    const handleSnackbarClose = (event, reason) => {
-        if (reason === 'clickaway') return;
-        setSnackbarOpen(false);
-    };
-
     async function submitPlaceOrder() {
         setLoadingSubmit(true);
         let check = Validate({
@@ -128,7 +121,7 @@ export default function NewOrder(props) {
             }
 
             const result = await makePostRequest('/orders/place', opts);
-            if (!result) return console.error('TODO: handle error ->', result);
+            if (!result) return setAlert({ message: 'Request error', severity: SEVERITY.ERROR });
 
             setTimeout(function () {
                 setNotesPickup(null);
@@ -137,7 +130,7 @@ export default function NewOrder(props) {
                 setNotesDropOff(null);
                 setlocationDropOff(null);
                 setLoadingSubmit(false);
-                setSnackbarOpen(true);
+                setAlert({ message: 'Order has been submitted', severity: SEVERITY.SUCCESS });
             }, 1000);
         } else {
             setLoadingSubmit(false);
@@ -252,19 +245,6 @@ export default function NewOrder(props) {
                     onClick={submitPlaceOrder}>
                     {_renderSubmitButton()}
                 </Button>
-
-                <Snackbar open={snackbarOpen}
-                    autoHideDuration={6000}
-                    onClose={handleSnackbarClose}
-                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                >
-                    <Alert onClose={handleSnackbarClose}
-                        severity="success"
-                        elevation={6}
-                        variant="filled">
-                        Oder has been successfully placed.
-                </Alert>
-                </Snackbar>
             </Container>
         </>
     );
