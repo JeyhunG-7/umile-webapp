@@ -7,7 +7,6 @@ export default () => {
     const { alert: { message, severity }, setAlert } = useContext(GlobalContext);
 
     const handleAlertClose = (event, reason) => {
-        console.log('sdfdsfdsfdsfdsfs');
         if (reason === 'clickaway') return;
         setAlert({});
     };
