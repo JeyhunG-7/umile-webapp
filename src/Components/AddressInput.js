@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeGetRequest, makePostRequest } from '../Utils/Fetch';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField } from '@material-ui/core';
@@ -12,9 +12,24 @@ const googlePlaces = new google.maps.places.PlacesService(document.createElement
 export function AddressInput(props) {
 
     const [list, setAutocompleteList] = useState([]);
+    const [searchText, setSearchText] = useState('');
+
+    function clearText(){
+        console.log('Clearing text');
+        setSearchText('');
+    }
+
+    useEffect(() => {
+        if (props.clear){
+            clearText();
+            props.onClear();
+        }
+    }, [props.clear]);
 
     async function onInputChange(e) {
         let inputValue = e.target.value;
+        setSearchText(inputValue);
+        console.log("Search text: ", searchText);
 
         // doesn't make sense to check for autocomplete options when removing values
         if (e.nativeEvent.inputType.includes('delete')) {
@@ -108,11 +123,13 @@ export function AddressInput(props) {
             fullWidth
             style={{ width: props.width, backgroundColor: (props.disabled ? 'rgb(240, 240, 240)' : '#fff') }}
             disabled={props.disabled}
+            value={searchText}
             renderInput={
                 (params) => <TextField {...params}
                     onChange={onInputChange}
                     variant="outlined"
                     label="Address"
+                    value={searchText}
                     error={props.errorMessage}
                     helperText={props.errorMessage}
                     inputProps={{ ...params.inputProps, autoComplete: 'new-password' }} />

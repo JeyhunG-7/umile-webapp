@@ -27,6 +27,8 @@ export default function NewOrder(props) {
 
     const [loadingSubmit, setLoadingSubmit] = useState(false);
 
+    const [clearLocations, setClearLocations] = useState(false);
+
     const [stateObj, setMessage] = useState({
         notesPickUpMessage: null,
         locationPickUpMessage: null,
@@ -130,6 +132,7 @@ export default function NewOrder(props) {
                 setNotesDropOff(null);
                 setlocationDropOff(null);
                 setLoadingSubmit(false);
+                setClearLocations(true);
                 setAlert({ message: 'Order has been submitted', severity: SEVERITY.SUCCESS });
             }, 1000);
         } else {
@@ -183,6 +186,8 @@ export default function NewOrder(props) {
 
                         <div className="flex-row">
                             <AddressInput
+                                clear={clearLocations}
+                                onClear={() => setClearLocations(false)}
                                 disabled={homeLocationType === 'home'}
                                 errorMessage={stateObj.locationPickUpMessage}
                                 selectedAddress={(addr) => setlocationPickUp(addr)}
@@ -225,6 +230,8 @@ export default function NewOrder(props) {
                         </div>
                         <div className="flex-row">
                             <AddressInput
+                                clear={clearLocations}
+                                onClear={() => setClearLocations(false)}
                                 errorMessage={stateObj.locationDropOffMessage}
                                 selectedAddress={(addr) => setlocationDropOff(addr)} />
                             <TextField
