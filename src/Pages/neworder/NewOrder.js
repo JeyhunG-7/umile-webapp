@@ -28,11 +28,9 @@ export default function NewOrder(props) {
     const [loadingSubmit, setLoadingSubmit] = useState(false);
 
     const [stateObj, setMessage] = useState({
-        notesPickUpMessage: null,
         locationPickUpMessage: null,
         nameDropOffMessage: null,
         phoneDropOffMessage: null,
-        notesDropOffMessage: null,
         locationDropOffMessage: null
     });
 
@@ -69,8 +67,6 @@ export default function NewOrder(props) {
         var result = await makeGetRequest('/clients/home', { auth: true });
         if (result) {
             setHomeLocationObj(result);
-        } else {
-            setHomeLocationType('new');
         }
     }
 
@@ -145,20 +141,17 @@ export default function NewOrder(props) {
         }
     }
 
-    function _renderHomeLocationRadio() {
-        return (
-            homeLocationObj?.address ?
-                <FormControlLabel
-                    value="home"
-                    control={<Radio color="primary" />}
-                    label={`Home location (${homeLocationObj?.address})`}
-                /> :
-                <FormControlLabel
-                    value="home"
-                    label="Home location"
-                    control={<Radio color="primary" />}
-                />
-        );
+    function _renderPickUpLocationSelect() {
+        if (homeLocationObj) {
+            return (
+                <FormControl component="fieldset">
+                    <RadioGroup aria-label="home-location" value={homeLocationType} onChange={handleHomeLocationType}>
+                        <FormControlLabel value="home" control={<Radio color="primary" />} label={`Home location (${homeLocationObj?.address})`} />
+                        <FormControlLabel value="new" control={<Radio color="primary" />} label="Different location" />
+                    </RadioGroup>
+                </FormControl>
+            );
+        }
     }
 
     function _renderSubmitButton() {
@@ -182,16 +175,9 @@ export default function NewOrder(props) {
                 <Paper className="paper-pick-up" elevation={0}>
                     <div className="div-pick-up">
                         <h2>Pick up information</h2>
-                        <FormControl component="fieldset">
-                            <RadioGroup aria-label="home-location" value={homeLocationType} onChange={handleHomeLocationType}>
-                                {_renderHomeLocationRadio()}
-                                <FormControlLabel value="new" control={<Radio color="primary" />} label="Different location" />
-                            </RadioGroup>
-                        </FormControl>
-
+                        {_renderPickUpLocationSelect()}
                         <div className="flex-row">
                             <AddressInput
-                                disabled={homeLocationType === 'home'}
                                 errorMessage={stateObj.locationPickUpMessage}
                                 selectedAddress={(addr) => setlocationPickUp(addr)}
                             />
@@ -219,7 +205,15 @@ export default function NewOrder(props) {
                                 style={{ marginRight: 25 }}
                                 error={stateObj.nameDropOffMessage}
                                 helperText={stateObj.nameDropOffMessage}
-                                onChange={({ target: { value } }) => setNameDropOff(value)}
+                                onChange={({ target: { value } }) => {
+                                    setNameDropOff(value);
+                                    setMessage(prevState => {
+                                        return {
+                                            ...prevState,
+                                            nameDropOffMessage: null
+                                        }
+                                    });
+                                }}
                             />
                             <TextField
                                 label="Phone"
@@ -228,7 +222,16 @@ export default function NewOrder(props) {
                                 value={phoneDropOff || ''}
                                 error={stateObj.phoneDropOffMessage}
                                 helperText={stateObj.phoneDropOffMessage}
-                                onChange={({ target: { value } }) => setPhoneDropOff(value)}
+                                onChange={({ target: { value } }) => {
+                                    setPhoneDropOff(value);
+                                    setMessage(prevState => {
+                                        return {
+                                            ...prevState,
+                                            phoneDropOffMessage: null
+                                        }
+                                    });
+                                }
+                            }
                             />
                         </div>
                         <div className="flex-row">
