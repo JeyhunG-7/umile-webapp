@@ -88,7 +88,7 @@ export default function NewOrder(props) {
     async function submitPlaceOrder() {
         setLoadingSubmit(true);
         let check = Validate({
-            locationPickUp: homeLocationType === 'home' ? homeLocationObj && homeLocationObj.id : locationPickUp?.placeId,
+            locationPickUp: homeLocationObj && homeLocationType === 'home' ? homeLocationObj.id : locationPickUp?.placeId,
             nameDropOff: nameDropOff,
             phoneDropOff: phoneDropOff,
             locationDropOff: locationDropOff,
@@ -110,7 +110,7 @@ export default function NewOrder(props) {
                 body: {
                     cityId: 1,
                     pickup: {
-                        placeId: homeLocationType === 'home' ? homeLocationObj?.id : locationPickUp?.placeId,
+                        placeId: homeLocationObj && homeLocationType === 'home' ? homeLocationObj?.id : locationPickUp?.placeId,
                         note: notesPickUp ?? ''
                     },
                     dropoff: {
@@ -185,6 +185,7 @@ export default function NewOrder(props) {
                         <div className="flex-row">
                             <AddressInput
                                 value={locationPickUp?.addrText}
+                                disabled={homeLocationObj && homeLocationType === 'home'}
                                 errorMessage={stateObj.locationPickUpMessage}
                                 selectedAddress={(id, addr) => setlocationPickUp({placeId: id, addrText: addr})}
                             />
