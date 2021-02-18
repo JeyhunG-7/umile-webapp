@@ -15,10 +15,16 @@ import DynamicIcon from '../../Components/Helpers/DynamicIcon';
 export default function NewOrder(props) {
     const { setAlert } = useContext(GlobalContext);
 
-    const [locationPickUp, setlocationPickUp] = useState(null);
     const [homeLocationObj, setHomeLocationObj] = useState(null);
     const [homeLocationType, setHomeLocationType] = useState('home');
-    const [locationDropOff, setlocationDropOff] = useState(null);
+    const [locationDropOff, setlocationDropOff] = useState({
+        placeId: null,
+        addrText: null
+    });
+    const [locationPickUp, setlocationPickUp] = useState({
+        placeId: null,
+        addrText: null
+    });
 
     const [notesPickUp, setNotesPickup] = useState(null);
     const [nameDropOff, setNameDropOff] = useState(null);
@@ -26,8 +32,6 @@ export default function NewOrder(props) {
     const [notesDropOff, setNotesDropOff] = useState(null);
 
     const [loadingSubmit, setLoadingSubmit] = useState(false);
-
-    const [clearLocations, setClearLocations] = useState(false);
 
     const [stateObj, setMessage] = useState({
         notesPickUpMessage: null,
@@ -88,7 +92,7 @@ export default function NewOrder(props) {
     async function submitPlaceOrder() {
         setLoadingSubmit(true);
         let check = Validate({
-            locationPickUp: homeLocationType === 'home' ? homeLocationObj && homeLocationObj.id : locationPickUp,
+            locationPickUp: homeLocationType === 'home' ? homeLocationObj && homeLocationObj.id : locationPickUp?.placeId,
             nameDropOff: nameDropOff,
             phoneDropOff: phoneDropOff,
             locationDropOff: locationDropOff,
@@ -110,11 +114,11 @@ export default function NewOrder(props) {
                 body: {
                     cityId: 1,
                     pickup: {
-                        placeId: homeLocationType === 'home' ? homeLocationObj?.id : locationPickUp,
+                        placeId: homeLocationType === 'home' ? homeLocationObj?.id : locationPickUp?.placeId,
                         note: notesPickUp ?? ''
                     },
                     dropoff: {
-                        placeId: locationDropOff,
+                        placeId: locationDropOff?.placeId,
                         customer_name: nameDropOff,
                         customer_phone: phoneDropOff,
                         note: notesDropOff ?? ''
@@ -130,9 +134,8 @@ export default function NewOrder(props) {
                 setNameDropOff(null);
                 setPhoneDropOff(null);
                 setNotesDropOff(null);
-                setlocationDropOff(null);
+                setlocationDropOff({});
                 setLoadingSubmit(false);
-                setClearLocations(true);
                 setAlert({ message: 'Order has been submitted', severity: SEVERITY.SUCCESS });
             }, 1000);
         } else {
@@ -186,11 +189,10 @@ export default function NewOrder(props) {
 
                         <div className="flex-row">
                             <AddressInput
-                                clear={clearLocations}
-                                onClear={() => setClearLocations(false)}
+                                value={locationPickUp?.addrText}
                                 disabled={homeLocationType === 'home'}
                                 errorMessage={stateObj.locationPickUpMessage}
-                                selectedAddress={(addr) => setlocationPickUp(addr)}
+                                selectedAddress={(id, addr) => setlocationPickUp({placeId: id, addrText: addr})}
                             />
                             <TextField
                                 label="Notes"
@@ -230,10 +232,9 @@ export default function NewOrder(props) {
                         </div>
                         <div className="flex-row">
                             <AddressInput
-                                clear={clearLocations}
-                                onClear={() => setClearLocations(false)}
+                                value={locationDropOff?.addrText}
                                 errorMessage={stateObj.locationDropOffMessage}
-                                selectedAddress={(addr) => setlocationDropOff(addr)} />
+                                selectedAddress={(id, addr) => setlocationDropOff({placeId: id, addrText: addr})} />
                             <TextField
                                 label="Notes"
                                 fullWidth={true}
