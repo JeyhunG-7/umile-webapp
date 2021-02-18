@@ -32,7 +32,8 @@ export default function Placed(props) {
             return (
                 <>
                     <OrdersTableHeader header={true}/>
-                    <OrdersMap orders={ordersList} showPlaced={true} onUpdate={() => setOrderUpdated(true)}/>
+                    <OrdersMap orders={ordersList} showPlaced={true} onUpdate={() => setOrderUpdated(true)} 
+                    />
                 </>
             );
         } else {

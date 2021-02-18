@@ -73,7 +73,7 @@ export function AddressInput(props) {
                 var { formatted_address, place_id, geometry } = result[0];
 
                 // Regex to find Postal code and everything after
-                let regEx = /\ [A-Z]{1}[0-9]{1}[A-Z]{1}\ [0-9]{1}[A-Z]{1}[0-9]{1}.*/
+                let regEx = / [A-Z]{1}[0-9]{1}[A-Z]{1} [0-9]{1}[A-Z]{1}[0-9]{1}.*/
                 formatted_address = formatted_address.replace(regEx, "");
 
                 opts = {

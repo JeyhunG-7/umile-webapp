@@ -22,7 +22,8 @@ export default function OrdersMap(props) {
                     <PlacedOrder
                         key={order.id}
                         order={order}
-                        onUpdate={props.onUpdate} />
+                        onUpdate={props.onUpdate} 
+                    />
                 );
         } else if (props.showHistory) {
             listOrders = props.orders

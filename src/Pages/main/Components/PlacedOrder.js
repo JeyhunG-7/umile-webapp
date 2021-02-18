@@ -76,7 +76,10 @@ export default function PlacedOrder(props) {
                             <DeleteOrder
                                 id={order && order.id}
                                 modalClose={handleCloseMenu}
-                                orderDeleted={() => setAlert({ message: 'Request error', severity: SEVERITY.SUCCESS })}
+                                orderDeleted={() => {
+                                    props.onUpdate();
+                                    setAlert({ message: 'Successfully deleted!', severity: SEVERITY.SUCCESS })
+                                }}
                             />
                         </Menu>
                     </li>

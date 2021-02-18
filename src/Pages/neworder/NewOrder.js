@@ -130,7 +130,15 @@ export default function NewOrder(props) {
                 setNotesDropOff(null);
                 setlocationDropOff(null);
                 setLoadingSubmit(false);
-                setAlert({ message: 'Order has been submitted', severity: SEVERITY.SUCCESS });
+
+                setAlert({
+                    message: (
+                        <div>
+                            Success! To see orders go to
+                            <a href='/' style={{ color: 'rgb(7 37 62)', marginLeft: '4px' }}>dashboard</a>
+                        </div>),
+                    severity: SEVERITY.SUCCESS
+                });
             }, 1000);
         } else {
             setLoadingSubmit(false);
