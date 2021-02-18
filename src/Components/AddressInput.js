@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { makeGetRequest, makePostRequest } from '../Utils/Fetch';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField } from '@material-ui/core';
+import { GlobalContext, SEVERITY } from './GlobalContext';
 
 const google = window.google;
 const googleAutocomplete = new google.maps.places.AutocompleteService();
@@ -11,10 +12,19 @@ const googlePlaces = new google.maps.places.PlacesService(document.createElement
 // So it can be reset when need (e.g. when order submitted we need to clear values)
 export function AddressInput(props) {
 
+    const { setAlert } = useContext(GlobalContext);
+
     const [list, setAutocompleteList] = useState([]);
+    const [searchText, setSearchText] = useState('');
+
+    useEffect(() => {
+        setSearchText(props.value || '');
+    }, [props.value]);
 
     async function onInputChange(e) {
         let inputValue = e.target.value;
+        setSearchText(inputValue);
+        console.log("Search text: ", searchText);
 
         // doesn't make sense to check for autocomplete options when removing values
         if (e.nativeEvent.inputType.includes('delete')) {
@@ -59,7 +69,7 @@ export function AddressInput(props) {
         var localSearch = await makeGetRequest('/places/search', { auth: true, query: { term: val } });
         if (localSearch && localSearch.length === 1) {
             console.log('local address found: ', localSearch);
-            props.selectedAddress(localSearch[0].id);
+            props.selectedAddress(localSearch[0].id, localSearch[0].address);
             return;
         }
 
@@ -87,10 +97,11 @@ export function AddressInput(props) {
                     }
                 }
 
-                //TODO: save id to db
                 result = await makePostRequest('/places/save', opts);
                 if (result) {
-                    props.selectedAddress(result);
+                    props.selectedAddress(result, formatted_address);
+                } else {
+                    setAlert({ message: 'Something went wrong while selecting address', severity: SEVERITY.ERROR });
                 }
             } else {
                 // TODO: show error to user to select precise address
@@ -108,11 +119,13 @@ export function AddressInput(props) {
             fullWidth
             style={{ width: props.width, backgroundColor: (props.disabled ? 'rgb(240, 240, 240)' : '#fff') }}
             disabled={props.disabled}
+            value={searchText}
             renderInput={
                 (params) => <TextField {...params}
                     onChange={onInputChange}
                     variant="outlined"
                     label="Address"
+                    value={searchText}
                     error={props.errorMessage}
                     helperText={props.errorMessage}
                     inputProps={{ ...params.inputProps, autoComplete: 'new-password' }} />
