@@ -15,10 +15,16 @@ import DynamicIcon from '../../Components/Helpers/DynamicIcon';
 export default function NewOrder(props) {
     const { setAlert } = useContext(GlobalContext);
 
-    const [locationPickUp, setlocationPickUp] = useState(null);
     const [homeLocationObj, setHomeLocationObj] = useState(null);
     const [homeLocationType, setHomeLocationType] = useState('home');
-    const [locationDropOff, setlocationDropOff] = useState(null);
+    const [locationDropOff, setlocationDropOff] = useState({
+        placeId: null,
+        addrText: null
+    });
+    const [locationPickUp, setlocationPickUp] = useState({
+        placeId: null,
+        addrText: null
+    });
 
     const [notesPickUp, setNotesPickup] = useState(null);
     const [nameDropOff, setNameDropOff] = useState(null);
@@ -82,7 +88,7 @@ export default function NewOrder(props) {
     async function submitPlaceOrder() {
         setLoadingSubmit(true);
         let check = Validate({
-            locationPickUp: homeLocationType === 'home' ? homeLocationObj && homeLocationObj.id : locationPickUp,
+            locationPickUp: homeLocationType === 'home' ? homeLocationObj && homeLocationObj.id : locationPickUp?.placeId,
             nameDropOff: nameDropOff,
             phoneDropOff: phoneDropOff,
             locationDropOff: locationDropOff,
@@ -104,11 +110,11 @@ export default function NewOrder(props) {
                 body: {
                     cityId: 1,
                     pickup: {
-                        placeId: homeLocationType === 'home' ? homeLocationObj?.id : locationPickUp,
+                        placeId: homeLocationType === 'home' ? homeLocationObj?.id : locationPickUp?.placeId,
                         note: notesPickUp ?? ''
                     },
                     dropoff: {
-                        placeId: locationDropOff,
+                        placeId: locationDropOff?.placeId,
                         customer_name: nameDropOff,
                         customer_phone: phoneDropOff,
                         note: notesDropOff ?? ''
@@ -124,7 +130,7 @@ export default function NewOrder(props) {
                 setNameDropOff(null);
                 setPhoneDropOff(null);
                 setNotesDropOff(null);
-                setlocationDropOff(null);
+                setlocationDropOff({});
                 setLoadingSubmit(false);
 
                 setAlert({
@@ -178,8 +184,9 @@ export default function NewOrder(props) {
                         {_renderPickUpLocationSelect()}
                         <div className="flex-row">
                             <AddressInput
+                                value={locationPickUp?.addrText}
                                 errorMessage={stateObj.locationPickUpMessage}
-                                selectedAddress={(addr) => setlocationPickUp(addr)}
+                                selectedAddress={(id, addr) => setlocationPickUp({placeId: id, addrText: addr})}
                             />
                             <TextField
                                 label="Notes"
@@ -236,8 +243,9 @@ export default function NewOrder(props) {
                         </div>
                         <div className="flex-row">
                             <AddressInput
+                                value={locationDropOff?.addrText}
                                 errorMessage={stateObj.locationDropOffMessage}
-                                selectedAddress={(addr) => setlocationDropOff(addr)} />
+                                selectedAddress={(id, addr) => setlocationDropOff({placeId: id, addrText: addr})} />
                             <TextField
                                 label="Notes"
                                 fullWidth={true}
