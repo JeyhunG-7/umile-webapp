@@ -26,7 +26,8 @@ export default function Profile(props) {
     const constraints = {
         location: {
             presence: {
-                allowEmpty: false
+                allowEmpty: false,
+                message: "Required!"
             }
         }
     };
@@ -56,12 +57,16 @@ export default function Profile(props) {
     async function handleAddressUpdate() {
         let check = Validate({
             location: location
-        }, constraints);
+        }, constraints,
+            {
+                fullMessages: false
+            }
+        );
 
         check && setMessage(prevState => {
             return {
                 ...prevState,
-                locationMessage: check.location ? "Required!" : null
+                locationMessage: check.location ? check.location[0] : null
             }
         });
 

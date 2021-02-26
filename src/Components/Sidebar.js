@@ -90,8 +90,9 @@ function Sidebar(props) {
                 className={`${classes.drawer} sidebar`}
                 classes={{ paper: classes.drawerPaper, docked: classes.docked }}
             >
-                <div className="div-logo">
+                <div className="div-logo dashboard">
                     <img alt="logo" src={LogoTransperent} />
+                    <p>dashboard</p>
                 </div>
                 <div className="sb-header">
                     <ListItem button selected={selectedPage === PAGES.profile.id} onClick={e => navigateTo(PAGES.profile)}>

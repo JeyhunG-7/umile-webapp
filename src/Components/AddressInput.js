@@ -108,7 +108,6 @@ export function AddressInput(props) {
                 // in theory we shouldn't hit this
             }
         });
-
     }
 
     return (
@@ -126,7 +125,7 @@ export function AddressInput(props) {
                     variant="outlined"
                     label="Address"
                     value={searchText}
-                    error={props.errorMessage}
+                    error={props.showError}
                     helperText={props.errorMessage}
                     inputProps={{ ...params.inputProps, autoComplete: 'new-password' }} />
             }

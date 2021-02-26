@@ -31,3 +31,11 @@ code {
   justify-items: center;
   align-items: center;
 }
+
+.info-header{
+  justify-content: center; 
+  align-items: center; 
+  margin-bottom: 10px;
+  letter-spacing: 0.015em;
+  color: #3a4554;
+}

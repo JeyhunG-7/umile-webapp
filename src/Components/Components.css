@@ -31,10 +31,21 @@
 }
 
 .sidebar .div-logo{
+    position: relative;
     padding: 24px 20px;
 }
 
 .sidebar .div-logo img{
     height: 30px;
     width: auto;
+}
+
+.dashboard.div-logo p{
+    margin: 0;
+    font-size: 14px;
+    position: absolute;
+    bottom: 7px;
+    left: 24px;
+    color: #2993ec;
+    letter-spacing: 0.04em;
 }

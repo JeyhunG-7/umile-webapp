@@ -28,6 +28,7 @@ export default function SignIn(props) {
                 <div className="div-logo">
                     <a href="https://umile.xyz/">
                         <img alt="logo" src={LogoTransperent} />
+                        <p>dashboard</p>
                     </a>
                 </div>
                 <div className="bg-square"></div>

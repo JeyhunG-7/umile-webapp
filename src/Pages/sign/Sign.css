@@ -230,3 +230,18 @@
     letter-spacing: 0.015em;
     color: #3a4554;
 }
+
+.div-logo a{
+    position: relative;
+}
+
+.sign-in-page .div-logo p,
+.sign-up-page .div-logo p{
+    position: absolute;
+    bottom: -13px;
+    margin: 0;
+    padding-left: 4px;
+    font-size: 14px;
+    color: #2993ec;
+    letter-spacing: 0.04em;
+}

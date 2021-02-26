@@ -43,28 +43,34 @@ export default function NewOrder(props) {
     const constraints = {
         locationPickUp: {
             presence: {
-                allowEmpty: false
+                allowEmpty: false,
+                message: "Required!"
             }
         },
         nameDropOff: {
             format: {
-                pattern: "[A-Za-z '’-]+"
+                pattern: "[A-Za-z '’-]+",
+                message: "Enter valid name."
             },
             presence: {
-                allowEmpty: false
+                allowEmpty: false,
+                message: "Required!"
             }
         },
         phoneDropOff: {
             format: {
-                pattern: "[0-9 ()+-]+"
+                pattern: "[0-9 ()+-]+",
+                message: "Enter valid phone number."
             },
             presence: {
-                allowEmpty: false
+                allowEmpty: false,
+                message: "Required!"
             }
         },
         locationDropOff: {
             presence: {
-                allowEmpty: false
+                allowEmpty: false,
+                message: "Required!"
             }
         }
     };
@@ -91,16 +97,20 @@ export default function NewOrder(props) {
             locationPickUp: homeLocationObj && homeLocationType === 'home' ? homeLocationObj.id : locationPickUp?.placeId,
             nameDropOff: nameDropOff,
             phoneDropOff: phoneDropOff,
-            locationDropOff: locationDropOff,
-        }, constraints);
+            locationDropOff: locationDropOff?.placeId,
+        }, constraints,
+            {
+                fullMessages: false
+            }
+        );
 
         check && setMessage(prevState => {
             return {
                 ...prevState,
-                locationPickUpMessage: check.locationPickUp ? "Required!" : null,
-                nameDropOffMessage: check.nameDropOff ? (check.nameDropOff.length > 1 ? "Required!" : "Enter valid name") : null,
-                phoneDropOffMessage: check.phoneDropOff ? (check.phoneDropOff.length > 1 ? "Required!" : "Enter valid phone number") : null,
-                locationDropOffMessage: check.locationDropOff ? "Required!" : null,
+                locationPickUpMessage: check.locationPickUp ? check.locationPickUp[0] : null,
+                nameDropOffMessage: check.nameDropOff ? check.nameDropOff[0] : null,
+                phoneDropOffMessage: check.phoneDropOff ? check.phoneDropOff[0] : null,
+                locationDropOffMessage: check.locationDropOff ? check.locationDropOff[0] : null,
             }
         });
 
@@ -186,8 +196,9 @@ export default function NewOrder(props) {
                             <AddressInput
                                 value={locationPickUp?.addrText}
                                 disabled={homeLocationObj && homeLocationType === 'home'}
+                                showError={Boolean(stateObj.locationPickUpMessage)}
                                 errorMessage={stateObj.locationPickUpMessage}
-                                selectedAddress={(id, addr) => setlocationPickUp({placeId: id, addrText: addr})}
+                                selectedAddress={(id, addr) => setlocationPickUp({ placeId: id, addrText: addr })}
                             />
                             <TextField
                                 label="Notes"
@@ -211,7 +222,7 @@ export default function NewOrder(props) {
                                 variant="outlined"
                                 value={nameDropOff || ''}
                                 style={{ marginRight: 25 }}
-                                error={stateObj.nameDropOffMessage}
+                                error={Boolean(stateObj.nameDropOffMessage)}
                                 helperText={stateObj.nameDropOffMessage}
                                 onChange={({ target: { value } }) => {
                                     setNameDropOff(value);
@@ -228,7 +239,7 @@ export default function NewOrder(props) {
                                 fullWidth={true}
                                 variant="outlined"
                                 value={phoneDropOff || ''}
-                                error={stateObj.phoneDropOffMessage}
+                                error={Boolean(stateObj.phoneDropOffMessage)}
                                 helperText={stateObj.phoneDropOffMessage}
                                 onChange={({ target: { value } }) => {
                                     setPhoneDropOff(value);
@@ -239,14 +250,15 @@ export default function NewOrder(props) {
                                         }
                                     });
                                 }
-                            }
+                                }
                             />
                         </div>
                         <div className="flex-row">
                             <AddressInput
                                 value={locationDropOff?.addrText}
+                                showError={Boolean(stateObj.locationDropOffMessage)}
                                 errorMessage={stateObj.locationDropOffMessage}
-                                selectedAddress={(id, addr) => setlocationDropOff({placeId: id, addrText: addr})} />
+                                selectedAddress={(id, addr) => setlocationDropOff({ placeId: id, addrText: addr })} />
                             <TextField
                                 label="Notes"
                                 fullWidth={true}
